@@ -117,7 +117,7 @@ export const ContactSection = () => {
                     Location
                   </h4>
                   <p className="text-slate-600 dark:text-slate-400">
-                    San Francisco, CA, United States
+                    Malabe, Sri Lanka
                   </p>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export const ContactSection = () => {
                     Email
                   </h4>
                   <p className="text-slate-600 dark:text-slate-400">
-                    john@example.com
+                    sachithrai1003@gmail.com
                   </p>
                 </div>
               </div>
@@ -139,7 +139,7 @@ export const ContactSection = () => {
                     Phone
                   </h4>
                   <p className="text-slate-600 dark:text-slate-400">
-                    +1 (555) 123-4567
+                    +94 (76) 3947 735
                   </p>
                 </div>
               </div>
@@ -149,15 +149,13 @@ export const ContactSection = () => {
                 Connect With Me
               </h4>
               <div className="flex space-x-4">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/50 dark:bg-slate-700/50 rounded-full border border-slate-300 dark:border-slate-600 transform transition-all duration-300 hover:scale-110 hover:-translate-y-1" aria-label="GitHub Profile">
+                <a href="https://github.com/Sachithra03" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/50 dark:bg-slate-700/50 rounded-full border border-slate-300 dark:border-slate-600 transform transition-all duration-300 hover:scale-110 hover:-translate-y-1" aria-label="GitHub Profile">
                   <GithubIcon size={20} className="text-slate-700 dark:text-slate-300" />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/50 dark:bg-slate-700/50 rounded-full border border-slate-300 dark:border-slate-600 transform transition-all duration-300 hover:scale-110 hover:-translate-y-1" aria-label="LinkedIn Profile">
+                <a href="https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/50 dark:bg-slate-700/50 rounded-full border border-slate-300 dark:border-slate-600 transform transition-all duration-300 hover:scale-110 hover:-translate-y-1" aria-label="LinkedIn Profile">
                   <LinkedinIcon size={20} className="text-blue-600 dark:text-blue-400" />
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/50 dark:bg-slate-700/50 rounded-full border border-slate-300 dark:border-slate-600 transform transition-all duration-300 hover:scale-110 hover:-translate-y-1" aria-label="Twitter Profile">
-                  <TwitterIcon size={20} className="text-blue-400 dark:text-blue-300" />
-                </a>
+               
               </div>
             </div>
           </div>
@@ -186,7 +184,10 @@ export const ContactSection = () => {
               <div className="text-center">
                 <MapPinIcon size={32} className="text-red-500 mx-auto mb-2" />
                 <p className="text-slate-700 dark:text-slate-300 font-medium">
-                  San Francisco, CA
+                  Malabe, Sri Lanka
+                </p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+                  6.9147° N, 79.9729° E
                 </p>
               </div>
             </div>
