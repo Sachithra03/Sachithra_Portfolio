@@ -39,13 +39,19 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80; // Height of the navbar
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
     setIsMenuOpen(false);
   };
   return <>
@@ -55,7 +61,7 @@ export const Navbar = () => {
           e.preventDefault();
           scrollToSection('home');
         }}>
-            DevPortfolio
+            Sachithra
           </a>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
