@@ -130,7 +130,7 @@ export const AboutSection = () => {
             animationDelay: '1s',
             animation: 'float 6s ease-in-out infinite'
           }}>
-              <span className="text-white font-bold text-xs">K8s</span>
+              <span className="text-white font-bold text-xs">Git</span>
             </div>
             <div className="absolute bottom-10 left-10 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center" style={{
             animationDelay: '2s',

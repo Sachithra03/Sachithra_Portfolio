@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { GithubIcon, LinkedinIcon, MailIcon, ArrowDownIcon } from "lucide-react";
+import { GithubIcon, LinkedinIcon, MailIcon, ArrowDownIcon, DownloadIcon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import { ThemeToggle } from "./ThemeToggle";
 import { useScroll } from "../context/ScrollContext";
 
 export const Header: React.FC = () => {
@@ -27,10 +26,6 @@ export const Header: React.FC = () => {
       id="home"
       className="flex flex-col justify-center items-center w-full min-h-screen px-4 relative"
     >
-      <div className="absolute top-6 right-6">
-        <ThemeToggle />
-      </div>
-
       <div
         className="relative max-w-md w-full p-8 rounded-xl backdrop-blur-md bg-white/20 dark:bg-slate-900/30 border border-white/30 dark:border-slate-700/30 shadow-xl"
         style={{
@@ -129,11 +124,11 @@ export const Header: React.FC = () => {
             View Projects <ArrowDownIcon size={16} className="ml-2" />
           </button>
           <a
-            href="/cv.pdf"
+            href="/src/CV/Sachithra Indrachapa's Resume.pdf"
             className="py-3 px-6 bg-white/10 backdrop-blur-md border border-white/20 dark:bg-slate-800/20 dark:border-slate-700/20 text-slate-800 dark:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-slate-700/20"
-            download
+            download="Sachithra_Indrachapa_CV.pdf"
           >
-            Download CV
+            <DownloadIcon size={16} className="mr-2" /> Download CV
           </a>
         </div>
       </div>

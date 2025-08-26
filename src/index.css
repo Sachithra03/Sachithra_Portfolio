@@ -29,8 +29,14 @@ body {
 }
 /* Hide default cursor on desktop */
 @media (min-width: 769px) {
-  a, button, [role="button"] {
-    cursor: none;
+  * {
+    cursor: none !important;
+  }
+  a, button, [role="button"], 
+  .about-section, .projects-section, 
+  .skills-section, .education-section, 
+  .contact-section {
+    cursor: none !important;
   }
 }
 /* Custom scrollbar */
