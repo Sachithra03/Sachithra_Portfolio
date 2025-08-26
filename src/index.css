@@ -20,24 +20,7 @@ html {
 }
 body {
   font-family: 'Inter', sans-serif;
-  cursor: none;
-}
-@media (max-width: 768px) {
-  body {
-    cursor: auto;
-  }
-}
-/* Hide default cursor on desktop */
-@media (min-width: 769px) {
-  * {
-    cursor: none !important;
-  }
-  a, button, [role="button"], 
-  .about-section, .projects-section, 
-  .skills-section, .education-section, 
-  .contact-section {
-    cursor: none !important;
-  }
+  cursor: auto;
 }
 /* Custom scrollbar */
 ::-webkit-scrollbar {

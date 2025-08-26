@@ -194,5 +194,12 @@ export const ContactSection = () => {
           </div>
         </div>
       </div>
+      <footer className="mt-12">
+        <div className="mx-auto max-w-md rounded-xl p-4 bg-gradient-to-r from-blue-900 to-indigo-900 dark:from-slate-800 dark:to-blue-800 text-white shadow-lg">
+          <p className="text-center text-sm font-medium">
+            © 2025 Sachithra Indrachapa. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </section>;
 };
