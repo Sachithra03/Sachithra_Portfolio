@@ -1,0 +1,92 @@
+/* PLEASE NOTE: THESE TAILWIND IMPORTS SHOULD NEVER BE DELETED */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+:root {
+  --cursor-color: rgba(94, 85, 255, 0.6);
+  --cursor-trail: rgba(94, 85, 255, 0.2);
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  cursor: none;
+}
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
+/* Hide default cursor on desktop */
+@media (min-width: 769px) {
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #555;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+/* Car animation effects */
+.pulse-effect {
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(138, 75, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(138, 75, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(138, 75, 255, 0);
+  }
+}
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(-10px) translateX(-50%); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+/* Checkpoint markers */
+.checkpoint-marker {
+  filter: drop-shadow(0 0 5px rgba(138, 75, 255, 0.7));
+}
+/* Reveal animation */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  animation: reveal 0.8s ease forwards;
+}
+.reveal-delay-1 {
+  animation-delay: 0.2s;
+}
+.reveal-delay-2 {
+  animation-delay: 0.4s;
+}
+.reveal-delay-3 {
+  animation-delay: 0.6s;
+}
