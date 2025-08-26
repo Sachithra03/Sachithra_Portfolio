@@ -20,7 +20,7 @@ export const EducationSection = () => {
     institution: 'Sri Lanka Institute of Information Technology (SLIIT)',
     period: '2020 - Present',
     description: 'Specializing in DevOps and Cloud Computing with a focus on containerization, CI/CD pipelines, and infrastructure as code.',
-    gpa: '3.8/4.0',
+    gpa: '2.8/4.0',
     courses: ['Advanced DevOps Practices', 'Cloud Architecture', 'Software Quality Assurance', 'Distributed Systems'],
     icon: '🎓',
     color: 'from-blue-500 to-purple-500'

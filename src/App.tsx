@@ -9,7 +9,6 @@ import { CertificationsSection } from './components/sections/CertificationsSecti
 import { CustomCursor } from './components/CustomCursor';
 import { AnimatedBackground } from './components/AnimatedBackground';
 import { Navbar } from './components/Navbar';
-import { AnimatedCar } from './components/AnimatedCar';
 import { ThemeProvider } from './context/ThemeContext';
 import { ScrollProvider } from './context/ScrollContext';
 export function App() {
@@ -33,7 +32,6 @@ export function App() {
           <main className="relative z-10 w-full">
             <Header />
             <div className="relative">
-              <AnimatedCar isMobile={isMobile} />
               <AboutSection />
               <ProjectsSection />
               <SkillsSection />

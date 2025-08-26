@@ -22,7 +22,7 @@ export const AboutSection = () => {
             About Me
           </h2>
           <p className="text-slate-600 dark:text-slate-300 mb-6 text-lg">
-            Hello! I'm John, a software engineering student passionate about
+            Hello! I'm Sachithra, a software engineering student passionate about
             DevOps and full-stack development.
           </p>
           <p className="text-slate-600 dark:text-slate-300 mb-6">
@@ -120,7 +120,7 @@ export const AboutSection = () => {
         }} onMouseLeave={e => {
           e.currentTarget.style.transform = 'perspective(1000px)';
         }}>
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="John Doe" className="w-full h-full object-cover" />
+            <img src="/src/Photos/profile.JPG" alt="Sachithra Indrachapa" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 to-transparent"></div>
             {/* Tech icons floating around the profile image */}
             <div className="absolute top-5 left-5 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center animate-float">

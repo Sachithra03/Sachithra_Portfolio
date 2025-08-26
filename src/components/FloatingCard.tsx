@@ -36,7 +36,7 @@ export const FloatingCard: React.FC<FloatingCardProps> = ({
       case 'skills':
         return {
           title: 'Skills',
-          icon: <div size={24} className="text-blue-400" />,
+          icon: <DatabaseIcon size={24} className="text-blue-400" />,
           content: 'Languages, Tools, DevOps & Databases',
           color: 'from-blue-500 to-cyan-500'
         };
