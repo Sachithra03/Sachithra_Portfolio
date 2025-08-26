@@ -126,8 +126,7 @@ export const Header: React.FC = () => {
           <a
             href="/src/CV/Sachithra Indrachapa's Resume.pdf"
             className="py-3 px-6 bg-white/10 backdrop-blur-md border border-white/20 dark:bg-slate-800/20 dark:border-slate-700/20 text-slate-800 dark:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-slate-700/20"
-            download="Sachithra_Indrachapa_CV.pdf"
-          >
+            download="Sachithra_Indrachapa_CV.pdf">
             <DownloadIcon size={16} className="mr-2" /> Download CV
           </a>
         </div>
