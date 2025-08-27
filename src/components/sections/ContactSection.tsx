@@ -25,8 +25,7 @@ export const ContactSection = () => {
         Get In Touch
       </h2>
       <p className="text-center text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
-        Have a project in mind or want to discuss potential opportunities? Feel
-        free to reach out!
+        Have a question or want to work together? Feel free to reach out!
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Form */}

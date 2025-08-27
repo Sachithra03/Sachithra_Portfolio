@@ -16,54 +16,22 @@ export const CertificationsSection = () => {
     }
   }, [registerSection]);
   const certifications = [{
-    title: 'AWS Certified DevOps Engineer - Professional',
-    issuer: 'Amazon Web Services',
-    date: 'Dec 2022',
-    description: 'Advanced certification validating expertise in implementing and managing continuous delivery systems, implementing security controls, and compliance validation on AWS.',
-    image: 'https://images.credly.com/size/340x340/images/bd31ef42-d460-493e-8503-39592aaf0458/image.png',
+    title: 'Getting Started with DevOps on AWS',
+    issuer: 'AWS Training & Certification',
+    date: 'Aug 2025',
+    description: 'Introductory certification covering the fundamentals of DevOps practices and how to apply them using AWS services.',
+    image: '/src/certifications/DevOpsFundamentals.jpg',
     color: 'from-orange-500 to-amber-500',
-    link: '#'
+    link: '/src/certifications/devops-fundamentals.pdf'
   }, {
-    title: 'AWS Certified Solutions Architect - Associate',
-    issuer: 'Amazon Web Services',
-    date: 'Aug 2022',
-    description: 'Certification validating expertise in designing distributed systems on AWS, including implementation of AWS services according to architectural best practices.',
-    image: 'https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png',
+    title: 'Build and Deploy APIs with a Serverless CI/CD',
+    issuer: 'AWS Training & Certification',
+    date: 'Aug 2025',
+    description: 'Certification on building and deploying APIs using AWS services with automated CI/CD pipelines.',
+    image: '/src/certifications/ServerlessCICD.jpg',
     color: 'from-blue-500 to-cyan-500',
-    link: '#'
-  }, {
-    title: 'Certified Kubernetes Administrator (CKA)',
-    issuer: 'Cloud Native Computing Foundation',
-    date: 'Mar 2022',
-    description: 'Certification demonstrating proficiency in Kubernetes installation, configuration, and management in production environments.',
-    image: 'https://images.credly.com/size/340x340/images/8b8ed108-e77d-4396-ac59-2504583b9d54/cka_from_cncfsite__281_29.png',
-    color: 'from-blue-600 to-indigo-600',
-    link: '#'
-  }, {
-    title: 'Docker Certified Associate',
-    issuer: 'Docker, Inc.',
-    date: 'Jan 2022',
-    description: 'Certification validating expertise in Docker technologies, including installation, configuration, and management of Docker environments.',
-    image: 'https://images.credly.com/size/340x340/images/99289602-861e-4929-8277-773e63a2fa6f/image.png',
-    color: 'from-sky-500 to-blue-500',
-    link: '#'
-  }, {
-    title: 'Microsoft Certified: Azure DevOps Engineer Expert',
-    issuer: 'Microsoft',
-    date: 'Oct 2021',
-    description: 'Certification validating expertise in designing and implementing strategies for collaboration, code, infrastructure, source control, security, and compliance on Azure.',
-    image: 'https://images.credly.com/size/340x340/images/c3ab66f8-5d59-4afa-a6c2-0ba30a1989ca/CERT-Expert-DevOps-Engineer-600x600.png',
-    color: 'from-blue-500 to-purple-500',
-    link: '#'
-  }, {
-    title: 'Certified Jenkins Engineer',
-    issuer: 'CloudBees',
-    date: 'Jul 2021',
-    description: 'Certification validating expertise in Jenkins continuous integration and continuous delivery (CI/CD) pipelines.',
-    image: 'https://images.credly.com/size/340x340/images/0007fc2b-5c0f-43e4-9e99-c1fb0ba1e048/jenkins-certified-engineer-2020.png',
-    color: 'from-red-500 to-orange-500',
-    link: '#'
-  }];
+    link: '/src/certifications/ServerlessCICD.pdf'
+  } ];
   return <section ref={sectionRef} id="certifications" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
       <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-slate-800 dark:text-white">
         Professional Certifications
