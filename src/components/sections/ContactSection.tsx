@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import emailjs from 'emailjs-com';
 import { MapPinIcon, PhoneIcon, MailIcon, GithubIcon, LinkedinIcon, TwitterIcon } from 'lucide-react';
 import { useScroll } from '../../context/ScrollContext';
 export const ContactSection = () => {
@@ -15,11 +16,26 @@ export const ContactSection = () => {
       registerSection('contact', offsetTop, offsetTop + offsetHeight);
     }
   }, [registerSection]);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    alert('Thank you for your message! This is a demo form.');
-  };
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  emailjs.sendForm(
+    'service_0o4otsc',     // ✅ your service ID
+    'template_fjv9ivl',    // ✅ replace with your Template ID
+    e.currentTarget,       // ✅ the form element
+    'kLqZck-2vG2bSXG9I'            // ✅ your public key
+  ).then(
+    () => {
+      alert('✅ Message sent successfully!');
+    },
+    (error) => {
+      alert('❌ Failed to send message. Please try again later.');
+      console.error(error);
+    }
+  );
+
+  e.currentTarget.reset();
+};
   return <section ref={sectionRef} id="contact" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
       <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-slate-800 dark:text-white">
         Get In Touch

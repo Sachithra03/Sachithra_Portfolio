@@ -35,14 +35,14 @@ export const ProjectsSection = () => {
     image: '/src/Photos/online_medicine.png',
     technologies: ['React', 'Redux', 'CoinGecko API', 'Chart.js'],
     liveUrl: '#',
-    githubUrl: 'https://github.com'
+    githubUrl: 'https://github.com/Sachithra03/Online-Medicine-Ordering-System'
   }, {
     title: 'BetterHelp Recruitment – Online Recruitment Service ',
     description: 'Recruitment platform with role-based dashboards, secure authentication, session management, input validation, and password recovery, deployed locally with XAMPP.',
     image: '/src/Photos/betterHelp_recruitment.png',
     technologies: ['HTML', 'CSS', 'PHP', 'MySQL', 'XAMPP'],
     liveUrl: '#',
-    githubUrl: 'https://github.com'
+    githubUrl: 'https://github.com/Sachithra03/BetterHelp-Recruitment-Online-Recruitment-Service'
     
   }];
   return <section ref={sectionRef} id="projects" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
