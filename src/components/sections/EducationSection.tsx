@@ -16,30 +16,36 @@ export const EducationSection = () => {
     }
   }, [registerSection]);
   const education = [{
-    degree: 'BSc (Hons) in Software Engineering',
+    degree: 'BSc (Hons) in Information Technology, Specialized in Software Engineering',
     institution: 'Sri Lanka Institute of Information Technology (SLIIT)',
-    period: '2020 - Present',
-    description: 'Specializing in DevOps and Cloud Computing with a focus on containerization, CI/CD pipelines, and infrastructure as code.',
-    gpa: '2.8/4.0',
-    courses: ['Advanced DevOps Practices', 'Cloud Architecture', 'Software Quality Assurance', 'Distributed Systems'],
+    period: '2023 – Expected 2027',
+    description: "Pursuing a bachelor's degree in Information Technology with a focus on Software Engineering and DevOps.",
+    gpa: '2.75/4.0',
+    courses: ['Software Engineering Principles', 'Object-Oriented Programming', 'Web Application Development', 'Database Management Systems','Software Quality Assurance',
+  'Cloud Computing Fundamentals',
+  'DevOps Practices',
+  'Agile & Project Management'],
     icon: '🎓',
     color: 'from-blue-500 to-purple-500'
   }, {
-    degree: 'Higher National Diploma in Computing',
-    institution: 'SLIIT Academy',
-    period: '2018 - 2020',
-    description: 'Focused on software development fundamentals, web technologies, and database management systems.',
-    gpa: '3.7/4.0',
-    courses: ['Web Development', 'Database Systems', 'Object-Oriented Programming', 'System Analysis & Design'],
-    icon: '🖥️',
+    degree: 'English Language and Literature',
+    institution: 'Aquinas College of Higher Studies',
+    period: 'June 2023 - Jan 2025',
+    description: 'Pursuing English Language and Literature, with a 6-month hold due to academic studies.',
+    courses:  [
+    'English Language',
+    'English Literature',
+    'Academic Writing',
+    'Communication Skills'
+  ],
+    icon: '📖',
     color: 'from-purple-500 to-pink-500'
   }, {
     degree: 'Advanced Level Certificate',
-    institution: 'Royal College',
-    period: '2016 - 2018',
-    description: 'Studied Physical Science stream with Mathematics, Physics, and Chemistry.',
-    gpa: 'AAB',
-    courses: ['Mathematics', 'Physics', 'Chemistry', 'General English'],
+    institution: 'Kannangara National College',
+    period: '2019 - 2021',
+    description: 'Studied Technology stream with SFT, ET, and ICT.',
+    courses: ['Science for Technology', 'Engineering Technology', 'Information Technology', 'General English'],
     icon: '📚',
     color: 'from-green-500 to-teal-500'
   }];
