@@ -57,26 +57,26 @@ export const ContactSection = () => {
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Name
                 </label>
-                <input type="text" id="name" name="name" required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" />
+                <input type="text" id="name" name="name" required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" placeholder="Enter your name" />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                   Email
                 </label>
-                <input type="email" id="email" name="email" required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" />
+                <input type="email" id="email" name="email" required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" placeholder="Enter your email"/>
               </div>
             </div>
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 ">
                 Subject
               </label>
-              <input type="text" id="subject" name="subject" className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" />
+              <input type="text" id="subject" name="subject" className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white" placeholder="Subject"/>
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 Message
               </label>
-              <textarea id="message" name="message" rows={5} required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white resize-none"></textarea>
+              <textarea id="message" name="message" rows={5} required className="w-full px-4 py-2 rounded-lg bg-white/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-slate-800 dark:text-white resize-none" placeholder="Your message..."></textarea>
             </div>
             <button type="submit" className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105">
               Send Message
