@@ -116,25 +116,33 @@ export const SkillsSection = () => {
   }];
 
   const toolsSkills = [{
+    name: 'React',
+    level: 90,
+    icon: '⚛️'
+  }, {
+    name: 'Node.js',
+    level: 85,
+    icon: '�'
+  }, {
+    name: 'Express.js',
+    level: 85,
+    icon: '⚡'
+  }, {
+    name: 'MongoDB',
+    level: 85,
+    icon: '🍃'
+  }, {
     name: 'Git',
     level: 90,
-    icon: '📊'
+    icon: '�'
   }, {
     name: 'VS Code',
     level: 95,
     icon: '💻'
   }, {
-    name: 'Jira',
-    level: 85,
-    icon: '📝'
-  }, {
     name: 'Postman',
     level: 90,
     icon: '📬'
-  }, {
-    name: 'Figma',
-    level: 85,
-    icon: '🎯'
   }, {
     name: 'npm/yarn',
     level: 90,
@@ -300,56 +308,7 @@ export const SkillsSection = () => {
               </div>)}
           </div>
         </div>
-        {/* MERN Stack */}
-        <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal reveal-delay-3" style={{
-        transform: 'perspective(1000px)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s ease'
-      }} onMouseMove={e => {
-        if (window.innerWidth >= 768) {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = (y - centerY) / 30;
-          const rotateY = (centerX - x) / 30;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
-      }} onMouseLeave={e => {
-        e.currentTarget.style.transform = 'perspective(1000px)';
-      }}>
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center mr-3">
-              <span className="text-xl">⚛️</span>
-            </div>
-            <h3 className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-              MERN Stack
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {mernSkills.map((skill, index) => <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-2">{skill.icon}</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    {skill.level}%
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full" style={{
-                width: `${skill.level}%`,
-                transition: 'width 1s ease-in-out'
-              }}></div>
-                </div>
-              </div>)}
-          </div>
-        </div>
+       
         {/* Tools */}
         <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal reveal-delay-4" style={{
         transform: 'perspective(1000px)',
