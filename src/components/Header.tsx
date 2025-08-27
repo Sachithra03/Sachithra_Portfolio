@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
           Sachithra Indrachapa
         </h1>
         <h2 className="text-xl md:text-2xl font-medium mb-4 text-slate-700 dark:text-slate-300 text-center">
-          DevOps Engineer & Software Engineer
+          Software Engineer & DevOps Engineer
         </h2>
         <p className="text-slate-600 dark:text-slate-400 mb-6 text-center">
           Software engineering student passionate about DevOps and full-stack development.
