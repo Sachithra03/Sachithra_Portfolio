@@ -91,13 +91,13 @@ export const AboutSection = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-4">
-            <a href="/CV/sachithracv.pdf" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium rounded-lg transition-all duration-300 flex items-center">
+            <a href="/CV/Sachithra_Indrachapa_Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium rounded-lg transition-all duration-300 flex items-center">
               <FileTextIcon size={18} className="mr-2" /> View Resume
             </a>
             <a
-              href="/CV/sachithracv.pdf"
+              href="/CV/Sachithra_Indrachapa_Resume.pdf"
               className="py-3 px-6 bg-white/10 backdrop-blur-md border border-white/20 dark:bg-slate-800/20 dark:border-slate-700/20 text-slate-800 dark:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-slate-700/20"
-              download="Sachithra Indrachapa's Resume.pdf">
+              download="Sachithra_Indrachapa_Resume.pdf">
                 <DownloadIcon size={16} className="mr-2" /> Download CV
             </a>
           </div>
@@ -123,7 +123,7 @@ export const AboutSection = () => {
         }} onMouseLeave={e => {
           e.currentTarget.style.transform = 'perspective(1000px)';
         }}>
-            <img src="/Photos/profile.JPG" alt="Sachithra Indrachapa" className="w-full h-full object-cover" />
+            <img src="/Photos/profile.jpg" alt="Sachithra Indrachapa" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 to-transparent"></div>
             {/* Tech icons floating around the profile image */}
             <div className="absolute top-5 left-5 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center animate-float">
