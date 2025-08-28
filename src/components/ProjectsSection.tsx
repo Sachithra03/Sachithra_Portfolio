@@ -18,28 +18,28 @@ export const ProjectsSection = () => {
   const projects = [{
     title: 'Xaphora Dress - E-Commerce Platform',
     description: 'MERN-based clothing store with role-based access, JWT auth, user management, admin dashboard, and AI-powered customer support.',
-    image: '/src/Photos/xaphora-logo.png',
+    image: '/Photos/xaphora-logo.png',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT', 'Chatgpt API'],
     liveUrl: '#',
     githubUrl: 'https://github.com/TeamITPY2S2/Xaphora-Dress'
   }, {
     title: 'CashBuddy – Personal Finance Manager',
     description: 'Android app for tracking income & expenses with offline storage, daily logs, balance overview, and spending reports using Room DB and Material Design.',
-    image: '/src/Photos/cashbuddy.png',
+    image: '/Photos/cashbuddy.png',
     technologies: ['Kotlin', 'Android Studio', 'Room', 'SQLite'],
     liveUrl: '#',
     githubUrl: 'https://github.com/Sachithra03/CashBuddy'
   }, {
     title: 'Online Medicine Ordering System',
     description: 'Pharmacy system where customers can order medicines and admins manage users and orders with secure role-based access.',
-    image: '/src/Photos/online_medicine.png',
+    image: '/Photos/online_medicine.png',
     technologies: ['React', 'Redux', 'CoinGecko API', 'Chart.js'],
     liveUrl: '#',
     githubUrl: 'https://github.com/Sachithra03/Online-Medicine-Ordering-System'
   }, {
     title: 'BetterHelp Recruitment – Online Recruitment Service ',
     description: 'Recruitment platform with role-based dashboards, secure authentication, session management, input validation, and password recovery, deployed locally with XAMPP.',
-    image: '/src/Photos/betterHelp_recruitment.png',
+    image: '/Photos/betterHelp_recruitment.png',
     technologies: ['HTML', 'CSS', 'PHP', 'MySQL', 'XAMPP'],
     liveUrl: '#',
     githubUrl: 'https://github.com/Sachithra03/BetterHelp-Recruitment-Online-Recruitment-Service'

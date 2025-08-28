@@ -59,7 +59,7 @@ export const Header: React.FC = () => {
           <div className="w-full h-full rounded-full border-4 border-purple-500 dark:border-purple-400 p-1 bg-white/20 dark:bg-slate-900/50 backdrop-blur-md">
             {/* ✅ Served from public/ (no import, no typings) */}
             <img
-              src="/src/Photos/profile.jpg"
+              src="/Photos/profile.jpg"
               alt="Sachithra Indrachapa"
               className="w-full h-full object-cover rounded-full"
               loading="eager"
@@ -125,9 +125,9 @@ export const Header: React.FC = () => {
           </button>
           
           <a
-            href="/src/CV/Sachithra Indrachapa's Resume.pdf"
+            href="/CV/sachithracv.pdf"
             className="py-3 px-6 bg-white/10 backdrop-blur-md border border-white/20 dark:bg-slate-800/20 dark:border-slate-700/20 text-slate-800 dark:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-slate-700/20"
-            download="sachithracv.pdf">
+            download="Sachithra Indrachapa's Resume.pdf">
             <DownloadIcon size={16} className="mr-2" /> Download CV
           </a>
         </div>
