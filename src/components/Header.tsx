@@ -59,7 +59,7 @@ export const Header: React.FC = () => {
           <div className="w-full h-full rounded-full border-4 border-purple-500 dark:border-purple-400 p-1 bg-white/20 dark:bg-slate-900/50 backdrop-blur-md">
             {/* ✅ Served from public/ (no import, no typings) */}
             <img
-              src="/src/Photos/profile.JPG"
+              src="/src/Photos/profile.jpg"
               alt="Sachithra Indrachapa"
               className="w-full h-full object-cover rounded-full"
               loading="eager"
