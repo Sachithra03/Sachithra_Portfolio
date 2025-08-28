@@ -20,17 +20,17 @@ export const CertificationsSection = () => {
     issuer: 'AWS Training & Certification',
     date: 'Aug 2025',
     description: 'Introductory certification covering the fundamentals of DevOps practices and how to apply them using AWS services.',
-    image: '/src/certifications/DevOpsFundamentals.jpg',
+    image: '/certifications/DevOpsFundamentals.jpg',
     color: 'from-orange-500 to-amber-500',
-    link: '/src/certifications/devops-fundamentals.pdf'
+    link: '/certifications/devops-fundamentals.pdf'
   }, {
     title: 'Build and Deploy APIs with a Serverless CI/CD',
     issuer: 'AWS Training & Certification',
     date: 'Aug 2025',
     description: 'Certification on building and deploying APIs using AWS services with automated CI/CD pipelines.',
-    image: '/src/certifications/ServerlessCICD.jpg',
+    image: '/certifications/ServerlessCICD.jpg',
     color: 'from-blue-500 to-cyan-500',
-    link: '/src/certifications/ServerlessCICD.pdf'
+    link: '/certifications/ServerlessCICD.pdf'
   } ];
   return <section ref={sectionRef} id="certifications" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
       <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-slate-800 dark:text-white">
