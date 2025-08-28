@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { MapPinIcon, PhoneIcon, MailIcon, GithubIcon, LinkedinIcon } from 'lucide-react';
 import { useScroll } from '../../context/ScrollContext';
@@ -6,6 +6,7 @@ import { useScroll } from '../../context/ScrollContext';
 export const ContactSection = () => {
   const { registerSection } = useScroll();
   const sectionRef = useRef<HTMLElement>(null);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -31,7 +32,8 @@ export const ContactSection = () => {
       .catch((err) => {
         console.error('EmailJS error:', err?.status, err?.text, err);
         alert('❌ Failed to send message. Please try again later.');
-      });
+      })
+      .finally(() => setSending(false));
   };
 
   return (
