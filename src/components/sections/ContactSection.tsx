@@ -15,25 +15,33 @@ export const ContactSection = () => {
     }
   }, [registerSection]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;        // ✅ capture once (stable reference)
+    if (sending) return;                 // ✅ prevent double fires
+    setSending(true);
 
-    emailjs
-      .sendForm(
+    try {
+      const res = await emailjs.sendForm(
         'service_0o4otsc',
-        'template_y4glzo9',                 // <-- your real template id
-        e.currentTarget,
-        { publicKey: 'kLqZck-2vG2bSXG9I' }  // <-- new SDK expects an object
-      )
-      .then(() => {
+        'template_y4glzo9',               // your real template id
+        form,
+        { publicKey: 'kLqZck-2vG2bSXG9I' }
+      );
+
+      // EmailJS returns { status: 200, text: 'OK' } on success
+      if (res?.status === 200) {
         alert('✅ Message sent successfully!');
-        e.currentTarget.reset();
-      })
-      .catch((err) => {
-        console.error('EmailJS error:', err?.status, err?.text, err);
-        alert('❌ Failed to send message. Please try again later.');
-      })
-      .finally(() => setSending(false));
+        form.reset();
+        return;                           // ✅ stop here—no fallthrough
+      }
+      throw new Error(`EmailJS responded ${res?.status} ${res?.text}`);
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      alert('❌ Failed to send message. Please try again later.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
