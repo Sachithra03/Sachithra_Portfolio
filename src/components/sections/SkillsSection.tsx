@@ -53,12 +53,8 @@ export const SkillsSection = () => {
   }];
   const devopsSkills = [{
     name: 'Docker',
-    level: 90,
-    icon: '🐳'
-  }, {
-    name: 'Kubernetes',
     level: 50,
-    icon: '☸️'
+    icon: '🐳'
   }, {
     name: 'AWS',
     level: 80,
@@ -67,14 +63,6 @@ export const SkillsSection = () => {
     name: 'CI/CD',
     level: 75,
     icon: '🔄'
-  }, {
-    name: 'Terraform',
-    level: 45,
-    icon: '🏗️'
-  }, {
-    name: 'Jenkins',
-    level: 40,
-    icon: '🤖'
   }];
   const databaseSkills = [{
     name: 'MongoDB',

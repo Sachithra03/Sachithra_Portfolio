@@ -72,7 +72,7 @@ export const AboutSection = () => {
                   DevOps
                 </h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Docker, AWS, CI/CD, Kubernetes
+                  Docker, AWS, CI/CD
                 </p>
               </div>
             </div>
@@ -85,7 +85,7 @@ export const AboutSection = () => {
                   Cloud
                 </h4>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  AWS, Azure, Serverless
+                  AWS, Serverless
                 </p>
               </div>
             </div>
