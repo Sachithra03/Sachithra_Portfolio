@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsSection } from './components/sections/SkillsSection';
@@ -6,12 +7,32 @@ import { AboutSection } from './components/sections/AboutSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { CertificationsSection } from './components/sections/CertificationsSection';
 import { Navbar } from './components/Navbar';
+import { LoadingScreen } from './components/LoadingScreen';
+import { CustomCursor } from './components/CustomCursor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ScrollProvider } from './context/ScrollContext';
+
 export function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3500); // 3.5 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return <ThemeProvider>
       <ScrollProvider>
-        <div className="relative w-full min-h-screen font-sans bg-black text-white overflow-x-hidden">
+        {isLoading && <LoadingScreen />}
+        <CustomCursor />
+        <div 
+          className={`relative w-full min-h-screen font-sans bg-black text-white overflow-x-hidden transition-opacity duration-500 cursor-none ${
+            isLoading ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
           <Navbar />
           <main className="relative z-10 w-full">
             <Header />
