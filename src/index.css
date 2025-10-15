@@ -22,8 +22,13 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: #000000;
   color: var(--text-light);
-  cursor: auto;
+  cursor: none;
   overflow-x: hidden;
+}
+
+/* Hide default cursor globally */
+* {
+  cursor: none !important;
 }
 
 /* Custom scrollbar */

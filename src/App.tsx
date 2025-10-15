@@ -8,6 +8,7 @@ import { ContactSection } from './components/sections/ContactSection';
 import { CertificationsSection } from './components/sections/CertificationsSection';
 import { Navbar } from './components/Navbar';
 import { LoadingScreen } from './components/LoadingScreen';
+import { CustomCursor } from './components/CustomCursor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ScrollProvider } from './context/ScrollContext';
 
@@ -26,8 +27,9 @@ export function App() {
   return <ThemeProvider>
       <ScrollProvider>
         {isLoading && <LoadingScreen />}
+        <CustomCursor />
         <div 
-          className={`relative w-full min-h-screen font-sans bg-black text-white overflow-x-hidden transition-opacity duration-500 ${
+          className={`relative w-full min-h-screen font-sans bg-black text-white overflow-x-hidden transition-opacity duration-500 cursor-none ${
             isLoading ? 'opacity-0' : 'opacity-100'
           }`}
         >
