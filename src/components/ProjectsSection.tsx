@@ -27,21 +27,19 @@ export const ProjectsSection = () => {
     description: 'Android app for tracking income & expenses with offline storage, daily logs, balance overview, and spending reports using Room DB and Material Design.',
     image: '/Photos/cashbuddy.png',
     technologies: ['Kotlin', 'Android Studio', 'Room', 'SQLite'],
-    liveUrl: '#',
     githubUrl: 'https://github.com/Sachithra03/CashBuddy'
   }, {
     title: 'Online Medicine Ordering System',
     description: 'Pharmacy system where customers can order medicines and admins manage users and orders with secure role-based access.',
     image: '/Photos/online_medicine.png',
     technologies: ['React', 'Redux', 'CoinGecko API', 'Chart.js'],
-    liveUrl: '#',
     githubUrl: 'https://github.com/Sachithra03/Online-Medicine-Ordering-System'
   }, {
     title: 'BetterHelp Recruitment – Online Recruitment Service ',
     description: 'Recruitment platform with role-based dashboards, secure authentication, session management, input validation, and password recovery, deployed locally with XAMPP.',
     image: '/Photos/betterHelp_recruitment.png',
     technologies: ['HTML', 'CSS', 'PHP', 'MySQL', 'XAMPP'],
-    liveUrl: '#',
+   
     githubUrl: 'https://github.com/Sachithra03/BetterHelp-Recruitment-Online-Recruitment-Service'
     
   }];

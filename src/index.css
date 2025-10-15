@@ -99,11 +99,14 @@ body {
   border-radius: 8px;
   transition: all 0.3s ease;
   background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-outline:hover {
   background: #00FF87;
-  color: #0A0E27;
+  color: #000000;
   transform: translateY(-2px);
 }
 

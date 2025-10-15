@@ -189,7 +189,7 @@ export const AboutSection: React.FC = () => {
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Cloud Architecture</h4>
-                    <p className="text-gray-500 text-sm">AWS, Azure, GCP</p>
+                    <p className="text-gray-500 text-sm">AWS</p>
                   </div>
                 </div>
               </div>
@@ -199,14 +199,14 @@ export const AboutSection: React.FC = () => {
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">DevOps & CI/CD</h4>
-                    <p className="text-gray-500 text-sm">Docker, Kubernetes, Jenkins</p>
+                    <p className="text-gray-500 text-sm">Docker</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Database Management</h4>
-                    <p className="text-gray-500 text-sm">MySQL, MongoDB, PostgreSQL</p>
+                    <p className="text-gray-500 text-sm">MySQL, MongoDB</p>
                   </div>
                 </div>
               </div>
@@ -239,15 +239,15 @@ export const AboutSection: React.FC = () => {
         {/* Additional Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 fade-in-up delay-400">
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">3+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
             <p className="text-gray-400">Years of Experience</p>
           </div>
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">25+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">5+</div>
             <p className="text-gray-400">Projects Completed</p>
           </div>
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">15+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
             <p className="text-gray-400">Happy Clients</p>
           </div>
         </div>

@@ -33,47 +33,34 @@ export const EducationSection: React.FC = () => {
       description:
         "Specialized in Software Engineering with focus on cloud computing, DevOps practices, and modern web technologies.",
       achievements: [
-        "Dean's List - Multiple semesters",
-        "Completed advanced coursework in Cloud Computing",
         "Led multiple team projects using Agile methodologies",
       ],
     },
+
+    {
+  id: 4,
+  type: "education",
+  title: "Diploma in English Language and Literature",
+  institution: "Aquinas College of Higher Studies",
+  period: "June 2023 - Jan 2025",
+  description:
+    "Completed a comprehensive diploma program focused on English language proficiency, communication, and literature studies.",
+  achievements: [
+    "Enhanced professional communication and writing skills",
+    "Developed strong presentation and interpersonal abilities",
+    "Applied English skills effectively in academic and project contexts",
+  ],
+},
+ 
+
     {
       id: 2,
-      type: "experience",
-      title: "DevOps Engineer Intern",
-      institution: "Tech Solutions Inc.",
-      period: "2023 - 2024",
-      description:
-        "Worked on implementing CI/CD pipelines and managing cloud infrastructure for production applications.",
-      achievements: [
-        "Reduced deployment time by 60% through automation",
-        "Implemented monitoring solutions using Prometheus & Grafana",
-        "Managed Kubernetes clusters for microservices",
-      ],
-    },
-    {
-      id: 3,
       type: "education",
       title: "Advanced Level (A/L)",
-      institution: "Richmond College, Galle",
-      period: "2018 - 2020",
+      institution: "C W W Kannangara National College, Hunumulla",
+      period: "2019 - 2021",
       description:
-        "Physical Science stream with Mathematics, Physics, and Chemistry. Achieved excellent results in national examination.",
-    },
-    {
-      id: 4,
-      type: "experience",
-      title: "Full-Stack Developer (Freelance)",
-      institution: "Self-Employed",
-      period: "2022 - Present",
-      description:
-        "Building custom web applications for clients using MERN stack and modern DevOps practices.",
-      achievements: [
-        "Delivered 15+ successful projects",
-        "Maintained 98% client satisfaction rate",
-        "Specialized in e-commerce and business applications",
-      ],
+        "Technology stream with subjects in Science for Technology (SFT), Engineering Technology (ET), and Information and Communication Technology (ICT).",
     },
   ];
 

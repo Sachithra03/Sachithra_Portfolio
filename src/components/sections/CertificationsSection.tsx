@@ -21,7 +21,7 @@ export const CertificationsSection = () => {
     date: 'Aug 2025',
     description: 'Introductory certification covering the fundamentals of DevOps practices and how to apply them using AWS services.',
     image: '/certifications/DevOpsFundamentals.jpg',
-    color: 'from-orange-500 to-amber-500',
+    color: 'from-green-500 to-green-100',
     link: '/certifications/devops-fundamentals.pdf'
   }, {
     title: 'Build and Deploy APIs with a Serverless CI/CD',
@@ -29,9 +29,20 @@ export const CertificationsSection = () => {
     date: 'Aug 2025',
     description: 'Certification on building and deploying APIs using AWS services with automated CI/CD pipelines.',
     image: '/certifications/ServerlessCICD.jpg',
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-green-500 to-green-100',
     link: '/certifications/ServerlessCICD.pdf'
-  } ];
+  },
+  {
+  title: 'DevOps Workshop',
+  issuer: 'SLIIT Software Engineering Student Community (SESC)',
+  date: 'October 2025',
+  description: 'Certificate of participation for actively attending the DevOps Workshop organized by the SLIIT Software Engineering Student Community on 3rd October 2025.',
+  image: '/certifications/DevOpsWorkshopSLIIT.png',
+  color: 'from-green-500 to-green-100',
+  link: '/certifications/DevOpsWorkshopSLIIT.pdf'
+},
+
+];
   return <section ref={sectionRef} id="certifications" className="section-padding relative overflow-hidden bg-dark-100">
       {/* Background decoration */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>

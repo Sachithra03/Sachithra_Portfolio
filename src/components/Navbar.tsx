@@ -10,8 +10,8 @@ export const Navbar = () => {
   const navLinks = [
     { id: 'home', label: 'HOME' },
     { id: 'about', label: 'ABOUT' },
-    { id: 'services', label: 'SERVICES' },
     { id: 'projects', label: 'PROJECTS' },
+    { id: 'skills', label: 'SERVICES' },
     { id: 'education', label: 'EXPERIENCE' },
     { id: 'contact', label: 'CONTACT' },
   ];

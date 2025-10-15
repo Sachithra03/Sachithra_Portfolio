@@ -49,7 +49,7 @@ export const SkillsSection: React.FC = () => {
       title: "Cloud Solutions",
       description:
         "Architecting and deploying cloud-native applications on major platforms.",
-      skills: ["AWS", "Azure", "GCP", "Terraform", "CloudFormation"],
+      skills: ["AWS"],
     },
     {
       id: 3,
@@ -57,7 +57,7 @@ export const SkillsSection: React.FC = () => {
       title: "DevOps Engineering",
       description:
         "Implementing CI/CD pipelines and automating deployment workflows.",
-      skills: ["Jenkins", "GitLab CI", "GitHub Actions", "ArgoCD"],
+      skills: ["GitHub Actions"],
     },
     {
       id: 4,
@@ -65,7 +65,7 @@ export const SkillsSection: React.FC = () => {
       title: "Container Orchestration",
       description:
         "Managing containerized applications with Kubernetes and Docker.",
-      skills: ["Kubernetes", "Docker", "Helm", "Docker Swarm"],
+      skills: ["Docker"],
     },
     {
       id: 5,
@@ -73,15 +73,7 @@ export const SkillsSection: React.FC = () => {
       title: "Database Management",
       description:
         "Designing and optimizing databases for performance and scalability.",
-      skills: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "DynamoDB"],
-    },
-    {
-      id: 6,
-      icon: <Shield className="w-10 h-10" />,
-      title: "Security & Monitoring",
-      description:
-        "Implementing security best practices and monitoring solutions.",
-      skills: ["SonarQube", "Prometheus", "Grafana", "ELK Stack"],
+      skills: ["MySQL", "MongoDB"],
     },
   ];
 
@@ -160,18 +152,34 @@ export const SkillsSection: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
-              { name: "React", icon: "⚛️" },
-              { name: "Node.js", icon: "🟢" },
-              { name: "Docker", icon: "🐳" },
-              { name: "Kubernetes", icon: "☸️" },
-              { name: "AWS", icon: "☁️" },
-              { name: "TypeScript", icon: "📘" },
-              { name: "Python", icon: "🐍" },
-              { name: "MongoDB", icon: "🍃" },
-              { name: "PostgreSQL", icon: "🐘" },
-              { name: "Jenkins", icon: "🔧" },
-              { name: "Git", icon: "📦" },
-              { name: "Linux", icon: "🐧" },
+             // 💻 Core Frontend & Backend
+  { name: "React", icon: "⚛️" },
+  { name: "Node.js", icon: "🟢" },
+  { name: "Express.js", icon: "⚡" },
+  { name: "Next.js", icon: "▲" },
+
+  // ☁️ DevOps & Cloud
+  { name: "Docker", icon: "🐳" },
+  { name: "AWS", icon: "☁️" },
+  { name: "CI/CD", icon: "🔄" },
+  { name: "GitHub Actions", icon: "⚙️" },
+  { name: "Linux", icon: "🐧" },
+
+  // 🧠 Programming Languages
+  { name: "JavaScript", icon: "🟨" },
+  { name: "TypeScript", icon: "📘" },
+  { name: "Python", icon: "🐍" },
+  { name: "Java", icon: "☕" },
+  { name: "Kotlin", icon: "🟠" },
+
+  // 🗄️ Databases
+  { name: "MongoDB", icon: "🍃" },
+  { name: "MySQL", icon: "🐬" },
+  { name: "Firebase", icon: "🔥" },
+
+  // 🧰 Version Control
+  { name: "Git", icon: "📦" },
+  { name: "GitHub", icon: "🐙" },
             ].map((tech, idx) => (
               <div
                 key={idx}
