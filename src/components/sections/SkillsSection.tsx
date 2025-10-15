@@ -1,353 +1,212 @@
-import React, { useEffect, useRef } from 'react';
-import { useScroll } from '../../context/ScrollContext';
-export const SkillsSection = () => {
-  const {
-    registerSection
-  } = useScroll();
+import React, { useEffect, useRef } from "react";
+import { useScroll } from "../../context/ScrollContext";
+import {
+  Cloud,
+  Code2,
+  Database,
+  GitBranch,
+  Layers,
+  Server,
+  Terminal,
+  Wrench,
+  Boxes,
+  Globe,
+  Shield,
+  Zap,
+} from "lucide-react";
+
+interface Service {
+  id: number;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  skills: string[];
+}
+
+export const SkillsSection: React.FC = () => {
+  const { registerSection } = useScroll();
   const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     if (sectionRef.current) {
-      const {
-        offsetTop,
-        offsetHeight
-      } = sectionRef.current;
-      registerSection('skills', offsetTop, offsetTop + offsetHeight);
+      const { offsetTop, offsetHeight } = sectionRef.current;
+      registerSection("skills", offsetTop, offsetTop + offsetHeight);
     }
   }, [registerSection]);
-  const languageSkills = [{
-    name: 'JavaScript',
-    level: 90,
-    icon: '🟨'
-  }, {
-    name: 'TypeScript',
-    level: 75,
-    icon: '🔷'
-  }, {
-    name: 'Python',
-    level: 85,
-    icon: '🐍'
-  }, {
-    name: 'Java',
-    level: 85,
-    icon: '☕'
-  }, {
-    name: 'Kotlin', 
-    level: 80, 
-    icon: '🟠'
-   }, { 
-    name: 'R',
-    level: 70, 
-    icon: '📈' 
-  },{
-    name: 'HTML/CSS',
-    level: 90,
-    icon: '🎨'
-  }, {
-    name: 'C++',
-    level: 80,
-    icon: '🎨'
-  },{
-    name: 'C',
-    level: 80,
-    icon: '🔣'
-  }];
-  const devopsSkills = [{
-    name: 'Docker',
-    level: 50,
-    icon: '🐳'
-  }, {
-    name: 'AWS',
-    level: 80,
-    icon: '☁️'
-  }, {
-    name: 'CI/CD',
-    level: 75,
-    icon: '🔄'
-  }];
-  const databaseSkills = [{
-    name: 'MongoDB',
-    level: 85,
-    icon: '🍃'
-  },  {
-    name: 'MySQL',
-    level: 85,
-    icon: '🐬'
-  },{
-    name: 'Firebase',
-    level: 80,
-    icon: '🔥'
-  }];
-  const mernSkills = [{
-    name: 'MongoDB',
-    level: 85,
-    icon: '🍃'
-  }, {
-    name: 'Express.js',
-    level: 85,
-    icon: '⚡'
-  }, {
-    name: 'React',
-    level: 90,
-    icon: '⚛️'
-  }, {
-    name: 'Node.js',
-    level: 85,
-    icon: '💚'
-  }, {
-    name: 'Redux',
-    level: 80,
-    icon: '💫'
-  }, {
-    name: 'Next.js',
-    level: 75,
-    icon: '▲'
-  }];
 
-  const toolsSkills = [{
-    name: 'React',
-    level: 90,
-    icon: '⚛️'
-  }, {
-    name: 'Node.js',
-    level: 85,
-    icon: '�'
-  }, {
-    name: 'Express.js',
-    level: 85,
-    icon: '⚡'
-  }, {
-    name: 'MongoDB',
-    level: 85,
-    icon: '🍃'
-  }, {
-    name: 'Git',
-    level: 90,
-    icon: '�'
-  }, {
-    name: 'VS Code',
-    level: 95,
-    icon: '💻'
-  }, {
-    name: 'Postman',
-    level: 90,
-    icon: '📬'
-  }, {
-    name: 'npm/yarn',
-    level: 90,
-    icon: '📦'
-  }];
-  return <section ref={sectionRef} id="skills" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-slate-800 dark:text-white">
-        Technical Skills
-      </h2>
-      <p className="text-center text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
-        My technical expertise spans across various technologies, tools, and
-        platforms that I've used in professional projects and personal
-        development.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Languages */}
-        <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal" style={{
-        transform: 'perspective(1000px)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s ease'
-      }} onMouseMove={e => {
-        if (window.innerWidth >= 768) {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = (y - centerY) / 30;
-          const rotateY = (centerX - x) / 30;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
-      }} onMouseLeave={e => {
-        e.currentTarget.style.transform = 'perspective(1000px)';
-      }}>
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mr-3">
-              <span className="text-xl">💻</span>
+  const services: Service[] = [
+    {
+      id: 1,
+      icon: <Code2 className="w-10 h-10" />,
+      title: "Full-Stack Development",
+      description:
+        "Building scalable web applications with modern frameworks and best practices.",
+      skills: ["React", "Node.js", "TypeScript", "Next.js", "Express"],
+    },
+    {
+      id: 2,
+      icon: <Cloud className="w-10 h-10" />,
+      title: "Cloud Solutions",
+      description:
+        "Architecting and deploying cloud-native applications on major platforms.",
+      skills: ["AWS"],
+    },
+    {
+      id: 3,
+      icon: <GitBranch className="w-10 h-10" />,
+      title: "DevOps Engineering",
+      description:
+        "Implementing CI/CD pipelines and automating deployment workflows.",
+      skills: ["GitHub Actions"],
+    },
+    {
+      id: 4,
+      icon: <Boxes className="w-10 h-10" />,
+      title: "Container Orchestration",
+      description:
+        "Managing containerized applications with Kubernetes and Docker.",
+      skills: ["Docker"],
+    },
+    {
+      id: 5,
+      icon: <Database className="w-10 h-10" />,
+      title: "Database Management",
+      description:
+        "Designing and optimizing databases for performance and scalability.",
+      skills: ["MySQL", "MongoDB"],
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      id="skills"
+      className="section-padding relative overflow-hidden bg-dark-100"
+    >
+      {/* Background decoration */}
+      <div className="absolute top-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16 fade-in-up">
+          <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
+            What I Do
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
+            <span className="text-white">SERVICES AND</span>{" "}
+            <span className="gradient-text">SOLUTIONS</span>
+          </h2>
+          <p className="text-gray-400 text-xl max-w-3xl mx-auto">
+            Providing comprehensive technical solutions from development to deployment
+          </p>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div
+              key={service.id}
+              className="card-dark group hover-glow fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              {/* Icon */}
+              <div className="mb-6 relative">
+                <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-dark-300 transition-all duration-300">
+                  {service.icon}
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/40 transition-all"></div>
+              </div>
+
+              {/* Content */}
+              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
+                {service.title}
+              </h3>
+              <p className="text-gray-400 mb-6 leading-relaxed">
+                {service.description}
+              </p>
+
+              {/* Skills Tags */}
+              <div className="flex flex-wrap gap-2">
+                {service.skills.map((skill, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 text-sm rounded-full bg-dark-200/50 text-gray-300 border border-gray-700 group-hover:border-primary/50 transition-colors"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">
-              Programming Languages
+          ))}
+        </div>
+
+        {/* Tech Stack Section */}
+        <div className="mt-20 fade-in-up delay-500">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold font-heading">
+              <span className="text-white">Technologies I</span>{" "}
+              <span className="gradient-text">Master</span>
             </h3>
           </div>
-          <div className="space-y-4">
-            {languageSkills.map((skill, index) => <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-2">{skill.icon}</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    {skill.level}%
-                  </span>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            {[
+             // 💻 Core Frontend & Backend
+  { name: "React", icon: "⚛️" },
+  { name: "Node.js", icon: "🟢" },
+  { name: "Express.js", icon: "⚡" },
+  { name: "Next.js", icon: "▲" },
+
+  // ☁️ DevOps & Cloud
+  { name: "Docker", icon: "🐳" },
+  { name: "AWS", icon: "☁️" },
+  { name: "CI/CD", icon: "🔄" },
+  { name: "GitHub Actions", icon: "⚙️" },
+  { name: "Linux", icon: "🐧" },
+
+  // 🧠 Programming Languages
+  { name: "JavaScript", icon: "🟨" },
+  { name: "TypeScript", icon: "📘" },
+  { name: "Python", icon: "🐍" },
+  { name: "Java", icon: "☕" },
+  { name: "Kotlin", icon: "🟠" },
+
+  // 🗄️ Databases
+  { name: "MongoDB", icon: "🍃" },
+  { name: "MySQL", icon: "🐬" },
+  { name: "Firebase", icon: "🔥" },
+
+  // 🧰 Version Control
+  { name: "Git", icon: "📦" },
+  { name: "GitHub", icon: "🐙" },
+            ].map((tech, idx) => (
+              <div
+                key={idx}
+                className="card-dark text-center py-6 group cursor-pointer"
+              >
+                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                  {tech.icon}
                 </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style={{
-                width: `${skill.level}%`,
-                transition: 'width 1s ease-in-out'
-              }}></div>
-                </div>
-              </div>)}
+                <p className="text-gray-400 font-medium group-hover:text-primary transition-colors">
+                  {tech.name}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
-        {/* Tools */}
-        <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal reveal-delay-4" style={{
-        transform: 'perspective(1000px)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s ease'
-      }} onMouseMove={e => {
-        if (window.innerWidth >= 768) {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = (y - centerY) / 30;
-          const rotateY = (centerX - x) / 30;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
-      }} onMouseLeave={e => {
-        e.currentTarget.style.transform = 'perspective(1000px)';
-      }}>
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center mr-3">
-              <span className="text-xl">🛠️</span>
-            </div>
-            <h3 className="text-xl font-bold text-orange-600 dark:text-orange-400">
-              Tools & Platforms
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {toolsSkills.map((skill, index) => <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-2">{skill.icon}</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    {skill.level}%
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full" style={{
-                width: `${skill.level}%`,
-                transition: 'width 1s ease-in-out'
-              }}></div>
-                </div>
-              </div>)}
-          </div>
+
+        {/* Call to Action */}
+        <div className="mt-16 text-center fade-in-up delay-600">
+          <p className="text-gray-400 text-lg mb-6">
+            Ready to bring your project to life?
+          </p>
+          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+            <Zap className="w-5 h-5" />
+            Get Started
+          </a>
         </div>
-        {/* DevOps */}
-        <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal reveal-delay-1" style={{
-        transform: 'perspective(1000px)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s ease'
-      }} onMouseMove={e => {
-        if (window.innerWidth >= 768) {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = (y - centerY) / 30;
-          const rotateY = (centerX - x) / 30;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
-      }} onMouseLeave={e => {
-        e.currentTarget.style.transform = 'perspective(1000px)';
-      }}>
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center mr-3">
-              <span className="text-xl">🚀</span>
-            </div>
-            <h3 className="text-xl font-bold text-green-600 dark:text-green-400">
-              DevOps & Cloud
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {devopsSkills.map((skill, index) => <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-2">{skill.icon}</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    {skill.level}%
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-green-500 to-teal-500 rounded-full" style={{
-                width: `${skill.level}%`,
-                transition: 'width 1s ease-in-out'
-              }}></div>
-                </div>
-              </div>)}
-          </div>
-        </div>
-        {/* Databases */}
-        <div className="bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 reveal reveal-delay-2" style={{
-        transform: 'perspective(1000px)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s ease'
-      }} onMouseMove={e => {
-        if (window.innerWidth >= 768) {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = (y - centerY) / 30;
-          const rotateY = (centerX - x) / 30;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
-      }} onMouseLeave={e => {
-        e.currentTarget.style.transform = 'perspective(1000px)';
-      }}>
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mr-3">
-              <span className="text-xl">🗄️</span>
-            </div>
-            <h3 className="text-xl font-bold text-purple-600 dark:text-purple-400">
-              Databases
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {databaseSkills.map((skill, index) => <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-2">{skill.icon}</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {skill.name}
-                    </span>
-                  </div>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
-                    {skill.level}%
-                  </span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" style={{
-                width: `${skill.level}%`,
-                transition: 'width 1s ease-in-out'
-              }}></div>
-                </div>
-              </div>)}
-          </div>
-        </div>
-       
-        
       </div>
-    </section>;
+    </section>
+  );
 };

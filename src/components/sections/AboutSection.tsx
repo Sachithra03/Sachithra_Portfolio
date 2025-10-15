@@ -1,154 +1,257 @@
-import React, { useEffect, useRef } from 'react';
-import { FileTextIcon, DownloadIcon, CodeIcon, ServerIcon, DatabaseIcon, GlobeIcon } from 'lucide-react';
-import { useScroll } from '../../context/ScrollContext';
-export const AboutSection = () => {
-  const {
-    registerSection
-  } = useScroll();
+import React, { useEffect, useRef, useState } from "react";
+import { useScroll } from "../../context/ScrollContext";
+import { Award, Code, Rocket, Users } from "lucide-react";
+
+interface Stat {
+  id: number;
+  percentage: number;
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+}
+
+export const AboutSection: React.FC = () => {
+  const { registerSection } = useScroll();
   const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     if (sectionRef.current) {
-      const {
-        offsetTop,
-        offsetHeight
-      } = sectionRef.current;
-      registerSection('about', offsetTop, offsetTop + offsetHeight);
+      const { offsetTop, offsetHeight } = sectionRef.current;
+      registerSection("about", offsetTop, offsetTop + offsetHeight);
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      observer.observe(sectionRef.current);
+
+      return () => observer.disconnect();
     }
   }, [registerSection]);
-  return <section ref={sectionRef} id="about" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="order-2 lg:order-1">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-800 dark:text-white">
+
+  const stats: Stat[] = [
+    {
+      id: 1,
+      percentage: 95,
+      label: "Code Quality",
+      icon: <Code className="w-8 h-8" />,
+      color: "#00FF87",
+    },
+    {
+      id: 2,
+      percentage: 90,
+      label: "Client Satisfaction",
+      icon: <Users className="w-8 h-8" />,
+      color: "#00CC6C",
+    },
+    {
+      id: 3,
+      percentage: 85,
+      label: "Project Success",
+      icon: <Rocket className="w-8 h-8" />,
+      color: "#00FF87",
+    },
+    {
+      id: 4,
+      percentage: 92,
+      label: "Innovation",
+      icon: <Award className="w-8 h-8" />,
+      color: "#00CC6C",
+    },
+  ];
+
+  const CircularProgress: React.FC<{ percentage: number; color: string; isVisible: boolean }> = ({
+    percentage,
+    color,
+    isVisible,
+  }) => {
+    const radius = 70;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (isVisible ? (percentage / 100) * circumference : 0);
+
+    return (
+      <svg className="w-40 h-40 transform -rotate-90">
+        {/* Background circle */}
+        <circle
+          cx="80"
+          cy="80"
+          r={radius}
+          stroke="rgba(255, 255, 255, 0.1)"
+          strokeWidth="12"
+          fill="none"
+        />
+        {/* Progress circle */}
+        <circle
+          cx="80"
+          cy="80"
+          r={radius}
+          stroke={color}
+          strokeWidth="12"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          style={{
+            transition: "stroke-dashoffset 1.5s ease-in-out",
+          }}
+        />
+      </svg>
+    );
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      id="about"
+      className="section-padding relative overflow-hidden"
+    >
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16 fade-in-up">
+          <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
             About Me
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
+            <span className="text-white">EXPERIENCE AND</span>{" "}
+            <span className="gradient-text">SOUL</span>
           </h2>
-          <p className="text-slate-600 dark:text-slate-300 mb-6 text-lg">
-            Hello! I'm Sachithra, a software engineering student passionate about
-            DevOps and full-stack development.
+          <p className="text-gray-400 text-xl max-w-3xl mx-auto italic">
+            "FAILURE IS THE CONDIMENT THAT GIVES SUCCESS"
           </p>
-          <p className="text-slate-600 dark:text-slate-300 mb-6">
-            Currently pursuing my degree in Software Engineering at SLIIT, I'm
-            focused on building scalable, cloud-native applications and
-            implementing DevOps practices to streamline development workflows.
-          </p>
-          <p className="text-slate-600 dark:text-slate-300 mb-8">
-            When I'm not coding, you can find me exploring new technologies,
-            contributing to open-source projects, or participating in
-            hackathons. I believe in continuous learning and pushing the
-            boundaries of what's possible with modern technologies.
-          </p>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3 flex-shrink-0">
-                <CodeIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-slate-800 dark:text-white">
-                  Frontend
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  React, TypeScript, Next.js
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left Side - Stats */}
+          <div className="grid grid-cols-2 gap-8 fade-in-up delay-200">
+            {stats.map((stat) => (
+              <div
+                key={stat.id}
+                className="flex flex-col items-center justify-center group"
+              >
+                <div className="relative mb-4">
+                  <CircularProgress
+                    percentage={stat.percentage}
+                    color={stat.color}
+                    isVisible={isVisible}
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="text-primary mb-1">{stat.icon}</div>
+                    <p className="text-3xl font-bold text-white">
+                      {stat.percentage}%
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-400 font-medium text-center group-hover:text-primary transition-colors">
+                  {stat.label}
                 </p>
               </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mr-3 flex-shrink-0">
-                <ServerIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-slate-800 dark:text-white">
-                  Backend
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Node.js, Express, Python
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mr-3 flex-shrink-0">
-                <DatabaseIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-slate-800 dark:text-white">
-                  DevOps
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Docker, AWS, CI/CD
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center mr-3 flex-shrink-0">
-                <GlobeIcon className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-slate-800 dark:text-white">
-                  Cloud
-                </h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  AWS, Serverless
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="flex flex-wrap gap-4">
-            <a href="/CV/Sachithra_Indrachapa_Resume.pdf" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium rounded-lg transition-all duration-300 flex items-center">
-              <FileTextIcon size={18} className="mr-2" /> View Resume
-            </a>
-            <a
-              href="/CV/Sachithra_Indrachapa_Resume.pdf"
-              className="py-3 px-6 bg-white/10 backdrop-blur-md border border-white/20 dark:bg-slate-800/20 dark:border-slate-700/20 text-slate-800 dark:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center hover:bg-white/20 dark:hover:bg-slate-700/20"
-              download="Sachithra_Indrachapa_Resume.pdf">
-                <DownloadIcon size={16} className="mr-2" /> Download CV
-            </a>
+
+          {/* Right Side - Content */}
+          <div className="space-y-6 fade-in-up delay-300">
+            <h3 className="text-3xl md:text-4xl font-bold font-heading mb-6">
+              Crafting <span className="gradient-text">Digital Excellence</span>
+            </h3>
+            
+            <p className="text-gray-400 text-lg leading-relaxed">
+              I'm a dedicated Software Engineer and DevOps professional with a passion for 
+              creating robust, scalable solutions. My journey in technology is driven by 
+              continuous learning and the desire to build systems that make a difference.
+            </p>
+
+            <p className="text-gray-400 text-lg leading-relaxed">
+              With expertise in cloud technologies, containerization, and modern development 
+              practices, I bridge the gap between development and operations. My approach 
+              combines technical excellence with practical problem-solving to deliver 
+              high-quality results.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Full-Stack Development</h4>
+                    <p className="text-gray-500 text-sm">React, Node.js, TypeScript</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Cloud Architecture</h4>
+                    <p className="text-gray-500 text-sm">AWS</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">DevOps & CI/CD</h4>
+                    <p className="text-gray-500 text-sm">Docker</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Database Management</h4>
+                    <p className="text-gray-500 text-sm">MySQL, MongoDB</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <a
+                href="#contact"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                Let's Work Together
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
-        <div className="order-1 lg:order-2 flex justify-center">
-          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white/30 dark:border-slate-700/30 shadow-xl" style={{
-          transform: 'perspective(1000px)',
-          transformStyle: 'preserve-3d',
-          transition: 'transform 0.6s ease',
-          boxShadow: '0 0 25px rgba(138, 75, 255, 0.3)'
-        }} onMouseMove={e => {
-          if (window.innerWidth >= 768) {
-            const card = e.currentTarget;
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-          }
-        }} onMouseLeave={e => {
-          e.currentTarget.style.transform = 'perspective(1000px)';
-        }}>
-            <img src="/Photos/profile.jpg" alt="Sachithra Indrachapa" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-blue-600/30 to-transparent"></div>
-            {/* Tech icons floating around the profile image */}
-            <div className="absolute top-5 left-5 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center animate-float">
-              <span className="text-white font-bold text-xs">AWS</span>
-            </div>
-            <div className="absolute top-10 right-5 w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center" style={{
-            animationDelay: '1s',
-            animation: 'float 6s ease-in-out infinite'
-          }}>
-              <span className="text-white font-bold text-xs">Git</span>
-            </div>
-            <div className="absolute bottom-10 left-10 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center" style={{
-            animationDelay: '2s',
-            animation: 'float 7s ease-in-out infinite'
-          }}>
-              <span className="text-white font-bold text-xs">Node</span>
-            </div>
-            <div className="absolute bottom-5 right-10 w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center" style={{
-            animationDelay: '1.5s',
-            animation: 'float 5s ease-in-out infinite'
-          }}>
-              <span className="text-white font-bold text-xs">React</span>
-            </div>
+
+        {/* Additional Info Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 fade-in-up delay-400">
+          <div className="card-dark text-center">
+            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
+            <p className="text-gray-400">Years of Experience</p>
+          </div>
+          <div className="card-dark text-center">
+            <div className="text-4xl font-bold gradient-text mb-2">5+</div>
+            <p className="text-gray-400">Projects Completed</p>
+          </div>
+          <div className="card-dark text-center">
+            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
+            <p className="text-gray-400">Happy Clients</p>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };

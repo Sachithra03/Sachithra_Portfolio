@@ -10,7 +10,7 @@ export const CustomCursor = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    let moveTimer: NodeJS.Timeout;
+    let moveTimer: ReturnType<typeof setTimeout>;
 
     const updateCursorPosition = (e: MouseEvent) => {
       setIsVisible(true);

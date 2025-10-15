@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ExternalLinkIcon, GithubIcon } from 'lucide-react';
 interface ProjectCardProps {
   title: string;
@@ -16,46 +16,79 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   liveUrl,
   githubUrl
 }) => {
-  return <div className="bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl overflow-hidden border border-white/20 dark:border-slate-700/20 shadow-lg transition-all duration-300 hover:shadow-xl" style={{
-    transform: 'perspective(1000px)',
-    transformStyle: 'preserve-3d',
-    transition: 'transform 0.6s ease'
-  }} onMouseMove={e => {
-    if (window.innerWidth >= 768) {
-      const card = e.currentTarget;
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = (y - centerY) / 30;
-      const rotateY = (centerX - x) / 30;
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    }
-  }} onMouseLeave={e => {
-    e.currentTarget.style.transform = 'perspective(1000px)';
-  }}>
-      <div className="h-48 md:h-56 overflow-hidden">
-        <img src={image} alt={`${title} project screenshot`} className="w-full h-full object-cover object-center transform transition-transform duration-500 hover:scale-110" />
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <div 
+      className="group relative rounded-xl overflow-hidden card-dark hover-glow cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Image Container */}
+      <div className="relative h-64 md:h-72 overflow-hidden">
+        <img 
+          src={image} 
+          alt={`${title} project screenshot`} 
+          className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-110" 
+        />
+        
+        {/* Overlay with gradient */}
+        <div className={`absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent transition-opacity duration-300 ${
+          isHovered ? 'opacity-90' : 'opacity-60'
+        }`}></div>
+        
+        {/* Hover Overlay with Links */}
+        <div className={`absolute inset-0 flex items-center justify-center gap-4 transition-opacity duration-300 ${
+          isHovered ? 'opacity-100' : 'opacity-0'
+        }`}>
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-primary text-dark-300 rounded-lg font-semibold hover:bg-primary-400 transition-all transform hover:scale-110"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ExternalLinkIcon size={18} /> 
+              Live Demo
+            </a>
+          )}
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-lg font-semibold hover:bg-white/20 transition-all transform hover:scale-110"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <GithubIcon size={18} />
+              Code
+            </a>
+          )}
+        </div>
       </div>
+      
+      {/* Content */}
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">
+        <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
           {title}
         </h3>
-        <p className="text-slate-600 dark:text-slate-300 mb-4">{description}</p>
-        <div className="flex flex-wrap gap-2 mb-6">
-          {technologies.map((tech, index) => <span key={index} className="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
+        <p className="text-gray-400 mb-4 leading-relaxed line-clamp-2">
+          {description}
+        </p>
+        
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-2">
+          {technologies.map((tech, index) => (
+            <span 
+              key={index} 
+              className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
+            >
               {tech}
-            </span>)}
-        </div>
-        <div className="flex space-x-3">
-          {liveUrl && <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg transition-transform duration-300 hover:scale-105 flex-1">
-              <ExternalLinkIcon size={16} className="mr-2" /> Live Demo
-            </a>}
-          {githubUrl && <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center px-4 py-2 bg-slate-700 dark:bg-slate-600 text-white rounded-lg transition-transform duration-300 hover:scale-105 flex-1">
-              <GithubIcon size={16} className="mr-2" /> Code
-            </a>}
+            </span>
+          ))}
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };

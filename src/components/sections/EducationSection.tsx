@@ -1,127 +1,218 @@
-import React, { useEffect, useRef } from 'react';
-import { useScroll } from '../../context/ScrollContext';
-import { GraduationCapIcon, CalendarIcon, MapPinIcon, AwardIcon } from 'lucide-react';
-export const EducationSection = () => {
-  const {
-    registerSection
-  } = useScroll();
+import React, { useEffect, useRef } from "react";
+import { useScroll } from "../../context/ScrollContext";
+import { GraduationCap, Briefcase, Award, Calendar } from "lucide-react";
+
+interface EducationItem {
+  id: number;
+  type: "education" | "experience";
+  title: string;
+  institution: string;
+  period: string;
+  description: string;
+  achievements?: string[];
+}
+
+export const EducationSection: React.FC = () => {
+  const { registerSection } = useScroll();
   const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     if (sectionRef.current) {
-      const {
-        offsetTop,
-        offsetHeight
-      } = sectionRef.current;
-      registerSection('education', offsetTop, offsetTop + offsetHeight);
+      const { offsetTop, offsetHeight } = sectionRef.current;
+      registerSection("education", offsetTop, offsetTop + offsetHeight);
     }
   }, [registerSection]);
-  const education = [{
-    degree: 'BSc (Hons) in Information Technology, Specialized in Software Engineering',
-    institution: 'Sri Lanka Institute of Information Technology (SLIIT)',
-    period: '2023 – Expected 2027',
-    description: "Pursuing a bachelor's degree in Information Technology with a focus on Software Engineering and DevOps.",
-    gpa: '2.75/4.0',
-    courses: ['Software Engineering Principles', 'Object-Oriented Programming', 'Web Application Development', 'Database Management Systems','Software Quality Assurance',
-  'Cloud Computing Fundamentals',
-  'DevOps Practices',
-  'Agile & Project Management'],
-    icon: '🎓',
-    color: 'from-blue-500 to-purple-500'
-  }, {
-    degree: 'English Language and Literature',
-    institution: 'Aquinas College of Higher Studies',
-    period: 'June 2023 - Jan 2025',
-    description: 'Pursuing English Language and Literature, with a 6-month hold due to academic studies.',
-    courses:  [
-    'English Language',
-    'English Literature',
-    'Academic Writing',
-    'Communication Skills'
+
+  const timeline: EducationItem[] = [
+    {
+      id: 1,
+      type: "education",
+      title: "BSc (Hons) in Information Technology",
+      institution: "Sri Lanka Institute of Information Technology (SLIIT)",
+      period: "2021 - 2025",
+      description:
+        "Specialized in Software Engineering with focus on cloud computing, DevOps practices, and modern web technologies.",
+      achievements: [
+        "Led multiple team projects using Agile methodologies",
+      ],
+    },
+
+    {
+  id: 4,
+  type: "education",
+  title: "Diploma in English Language and Literature",
+  institution: "Aquinas College of Higher Studies",
+  period: "June 2023 - Jan 2025",
+  description:
+    "Completed a comprehensive diploma program focused on English language proficiency, communication, and literature studies.",
+  achievements: [
+    "Enhanced professional communication and writing skills",
+    "Developed strong presentation and interpersonal abilities",
+    "Applied English skills effectively in academic and project contexts",
   ],
-    icon: '📖',
-    color: 'from-purple-500 to-pink-500'
-  }, {
-    degree: 'Advanced Level Certificate',
-    institution: 'Kannangara National College',
-    period: '2019 - 2021',
-    description: 'Studied Technology stream with SFT, ET, and ICT.',
-    courses: ['Science for Technology', 'Engineering Technology', 'Information Technology', 'General English'],
-    icon: '📚',
-    color: 'from-green-500 to-teal-500'
-  }];
-  return <section ref={sectionRef} id="education" className="py-20 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
-      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-slate-800 dark:text-white">
-        Education
-      </h2>
-      <p className="text-center text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
-        My academic journey and qualifications that have shaped my knowledge and
-        expertise in software engineering.
-      </p>
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
-        <div className="space-y-12">
-          {education.map((item, index) => <div key={index} className={`relative flex flex-col md:flex-row gap-8 items-center md:items-start ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-              {/* Timeline dot */}
-              <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-purple-500 z-10 flex items-center justify-center">
-                <span className="text-sm">{item.icon}</span>
-              </div>
-              {/* Content */}
-              <div className={`w-full md:w-5/12 bg-white/30 dark:bg-slate-800/30 backdrop-blur-md rounded-xl p-6 border border-white/20 dark:border-slate-700/20 shadow-lg hover:shadow-xl transition-all duration-300 ${index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}`} style={{
-            transform: 'perspective(1000px)',
-            transformStyle: 'preserve-3d',
-            transition: 'transform 0.6s ease',
-            boxShadow: '0 0 15px rgba(138, 75, 255, 0.2)'
-          }} onMouseMove={e => {
-            if (window.innerWidth >= 768) {
-              const card = e.currentTarget;
-              const rect = card.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              const centerX = rect.width / 2;
-              const centerY = rect.height / 2;
-              const rotateX = (y - centerY) / 30;
-              const rotateY = (centerX - x) / 30;
-              card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            }
-          }} onMouseLeave={e => {
-            e.currentTarget.style.transform = 'perspective(1000px)';
-          }}>
-                <div className={`inline-block px-4 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${item.color} mb-4`}>
-                  {item.period}
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-slate-800 dark:text-white">
-                  {item.degree}
-                </h3>
-                <div className="flex items-center mb-3">
-                  <GraduationCapIcon size={16} className="text-blue-500 dark:text-blue-400 mr-2" />
-                  <h4 className="text-lg font-medium text-blue-600 dark:text-blue-400">
-                    {item.institution}
-                  </h4>
-                </div>
-                <div className="flex items-center mb-3 text-sm text-slate-600 dark:text-slate-400">
-                  <CalendarIcon size={14} className="mr-1" />
-                  <span>{item.period}</span>
-                  <span className="mx-2">•</span>
-                  <AwardIcon size={14} className="mr-1" />
-                  <span>GPA: {item.gpa}</span>
-                </div>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  {item.description}
-                </p>
-                <div className="mt-4">
-                  <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                    Key Courses:
-                  </h5>
-                  <div className="flex flex-wrap gap-2">
-                    {item.courses.map((course, i) => <span key={i} className="px-2 py-1 text-xs bg-white/50 dark:bg-slate-700/50 rounded-md text-slate-700 dark:text-slate-300">
-                        {course}
-                      </span>)}
+},
+ 
+
+    {
+      id: 2,
+      type: "education",
+      title: "Advanced Level (A/L)",
+      institution: "C W W Kannangara National College, Hunumulla",
+      period: "2019 - 2021",
+      description:
+        "Technology stream with subjects in Science for Technology (SFT), Engineering Technology (ET), and Information and Communication Technology (ICT).",
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      id="education"
+      className="section-padding relative overflow-hidden bg-dark-100"
+    >
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16 fade-in-up">
+          <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
+            Journey
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
+            <span className="text-white">EDUCATION &</span>{" "}
+            <span className="gradient-text">EXPERIENCE</span>
+          </h2>
+          <p className="text-gray-400 text-xl max-w-3xl mx-auto">
+            My academic background and professional journey
+          </p>
+        </div>
+
+        {/* Timeline */}
+        <div className="max-w-5xl mx-auto">
+          <div className="relative">
+            {/* Center line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent hidden lg:block"></div>
+
+            {timeline.map((item, index) => {
+              const isLeft = index % 2 === 0;
+              const Icon = item.type === "education" ? GraduationCap : Briefcase;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`relative mb-12 fade-in-up`}
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  <div
+                    className={`lg:flex items-center ${
+                      isLeft ? "lg:flex-row-reverse" : ""
+                    }`}
+                  >
+                    {/* Content Card */}
+                    <div className={`lg:w-5/12 ${isLeft ? "lg:text-right" : ""}`}>
+                      <div className="card-dark group">
+                        {/* Icon Badge */}
+                        <div
+                          className={`inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-dark-300 transition-all ${
+                            isLeft ? "lg:ml-auto" : ""
+                          }`}
+                        >
+                          <Icon className="w-7 h-7" />
+                        </div>
+
+                        {/* Period */}
+                        <div
+                          className={`flex items-center gap-2 text-primary mb-2 ${
+                            isLeft ? "lg:justify-end" : ""
+                          }`}
+                        >
+                          <Calendar className="w-4 h-4" />
+                          <span className="text-sm font-semibold">{item.period}</span>
+                        </div>
+
+                        {/* Title & Institution */}
+                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-400 font-medium mb-4">
+                          {item.institution}
+                        </p>
+
+                        {/* Description */}
+                        <p className="text-gray-400 leading-relaxed mb-4">
+                          {item.description}
+                        </p>
+
+                        {/* Achievements */}
+                        {item.achievements && (
+                          <ul
+                            className={`space-y-2 ${isLeft ? "lg:text-right" : ""}`}
+                          >
+                            {item.achievements.map((achievement, idx) => (
+                              <li
+                                key={idx}
+                                className={`flex items-start gap-2 text-gray-500 text-sm ${
+                                  isLeft ? "lg:flex-row-reverse" : ""
+                                }`}
+                              >
+                                <Award className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                                <span>{achievement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Center dot - hidden on mobile */}
+                    <div className="hidden lg:flex lg:w-2/12 justify-center items-center">
+                      <div className="w-4 h-4 rounded-full bg-primary border-4 border-dark-100 relative z-10 group-hover:scale-125 transition-transform">
+                        <div className="absolute inset-0 rounded-full bg-primary animate-pulse-green"></div>
+                      </div>
+                    </div>
+
+                    {/* Spacer for alternating layout */}
+                    <div className="hidden lg:block lg:w-5/12"></div>
                   </div>
                 </div>
-              </div>
-            </div>)}
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Certifications Preview */}
+        <div className="mt-20 text-center fade-in-up delay-500">
+          <div className="card-dark inline-block">
+            <Award className="w-12 h-12 text-primary mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-white mb-3">
+              Professional Certifications
+            </h3>
+            <p className="text-gray-400 mb-6 max-w-md">
+              Continuously expanding my knowledge through industry-recognized certifications
+            </p>
+            <a
+              href="#certifications"
+              className="btn-outline inline-flex items-center gap-2"
+            >
+              View Certifications
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
