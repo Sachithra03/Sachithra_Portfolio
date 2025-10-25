@@ -56,8 +56,8 @@ export const Navbar = () => {
               scrollToSection('home');
             }}
           >
-            <span className="text-white">PORT</span>
-            <span className="text-primary">FOLIO</span>
+            <span className="text-white">S</span>
+            <span className="text-primary">I</span>
           </a>
 
           {/* Desktop Navigation */}

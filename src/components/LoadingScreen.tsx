@@ -34,8 +34,8 @@ export const LoadingScreen: React.FC = () => {
         {/* Logo Animation */}
         <div className="mb-8">
           <h1 className="text-6xl md:text-8xl font-bold font-heading mb-4">
-            <span className="text-white animate-fade-in">PORT</span>
-            <span className="gradient-text animate-fade-in delay-200">FOLIO</span>
+            <span className="text-white animate-fade-in">Sachithra</span>
+            <span className="gradient-text animate-fade-in delay-200">Indrachapa</span>
           </h1>
           <p className="text-gray-400 text-lg animate-fade-in delay-400">
             Loading awesome experience...
