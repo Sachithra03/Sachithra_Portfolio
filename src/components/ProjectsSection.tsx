@@ -51,7 +51,7 @@ export const ProjectsSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16 fade-in-up">
           <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
-            Portfolio
+            WORK GALLERY
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
             <span className="text-white">LATEST WORKING</span>{" "}
