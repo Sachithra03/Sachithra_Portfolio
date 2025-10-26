@@ -16,6 +16,14 @@ export const CertificationsSection = () => {
     }
   }, [registerSection]);
   const certifications = [{
+  title: 'MongoDB Node.js Developer Path',
+  issuer: 'MongoDB University',
+  date: 'Oct 2025',
+  description: 'Completed a hands-on learning path focused on building and managing data-driven applications using Node.js and MongoDB, including aggregation pipelines, CRUD operations, indexing, and performance optimization.',
+  image: '/certifications/MongoDBNodeJSDeveloper.jpg',
+  color: 'from-emerald-500 to-emerald-100',
+  link: '/certifications/mongodb-nodejs-developer.pdf'
+},{
     title: 'Getting Started with DevOps on AWS',
     issuer: 'AWS Training & Certification',
     date: 'Aug 2025',
