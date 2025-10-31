@@ -41,7 +41,7 @@ export const SkillsSection: React.FC = () => {
       title: "Full-Stack Development",
       description:
         "Building scalable web applications with modern frameworks and best practices.",
-      skills: ["React", "Node.js", "TypeScript", "Next.js", "Express"],
+      skills: ["React", "Node.js", "TypeScript", "Next.js", "Express", "C#", ".NET"],
     },
     {
       id: 2,
@@ -171,6 +171,8 @@ export const SkillsSection: React.FC = () => {
   { name: "Python", icon: "🐍" },
   { name: "Java", icon: "☕" },
   { name: "Kotlin", icon: "🟠" },
+  { name: "C#", icon: "♯" },
+  { name: ".NET", icon: "🔷" },
 
   // 🗄️ Databases
   { name: "MongoDB", icon: "🍃" },
