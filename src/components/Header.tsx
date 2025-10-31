@@ -45,8 +45,7 @@ export const Header: React.FC = () => {
               </h1>
               <p className="text-gray-400 text-lg md:text-xl max-w-xl leading-relaxed">
                 I'm <span className="text-white font-semibold">Sachithra Indrachapa</span>, 
-                a passionate Software Engineer & DevOps Engineer specializing in 
-                building scalable, cloud-native applications and implementing DevOps practices.
+                a creative Software Engineer passionate about turning ideas into impactful, high-quality applications for the web and mobile.
               </p>
             </div>
 
