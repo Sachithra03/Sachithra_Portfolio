@@ -40,39 +40,47 @@ export const SkillsSection: React.FC = () => {
       icon: <Code2 className="w-10 h-10" />,
       title: "Full-Stack Development",
       description:
-        "Building scalable web applications with modern frameworks and best practices.",
+        "Building robust and scalable web applications using modern frameworks and best development practices.",
       skills: ["React", "Node.js", "TypeScript", "Next.js", "Express", "C#", ".NET"],
     },
     {
       id: 2,
       icon: <Cloud className="w-10 h-10" />,
-      title: "Cloud Solutions",
+      title: "Mobile App Development",
       description:
-        "Architecting and deploying cloud-native applications on major platforms.",
-      skills: ["AWS"],
+        "Developing cross-platform mobile applications with elegant UIs and native performance.",
+      skills: ["React Native", "Kotlin"],
     },
     {
       id: 3,
-      icon: <GitBranch className="w-10 h-10" />,
-      title: "DevOps Engineering",
+      icon: <Cloud className="w-10 h-10" />,
+      title: "Cloud Solutions",
       description:
-        "Implementing CI/CD pipelines and automating deployment workflows.",
-      skills: ["GitHub Actions"],
+        "Designing, architecting, and deploying secure cloud-native applications for high availability and performance.",
+      skills: ["AWS"],
     },
     {
       id: 4,
-      icon: <Boxes className="w-10 h-10" />,
-      title: "Container Orchestration",
+      icon: <GitBranch className="w-10 h-10" />,
+      title: "DevOps Engineering",
       description:
-        "Managing containerized applications with Kubernetes and Docker.",
-      skills: ["Docker"],
+        "Streamlining software delivery through automated CI/CD pipelines and deployment workflows.",
+      skills: ["GitHub Actions"],
     },
     {
       id: 5,
+      icon: <Boxes className="w-10 h-10" />,
+      title: "Container Orchestration",
+      description:
+        "Managing containerized applications efficiently with Kubernetes and Docker for scalable environments.",
+      skills: ["Docker"],
+    },
+    {
+      id: 6,
       icon: <Database className="w-10 h-10" />,
       title: "Database Management",
       description:
-        "Designing and optimizing databases for performance and scalability.",
+        "Designing and optimizing databases for performance, security, and scalability.",
       skills: ["MySQL", "MongoDB"],
     },
   ];
