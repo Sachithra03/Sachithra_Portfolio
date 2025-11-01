@@ -160,20 +160,18 @@ export const AboutSection: React.FC = () => {
           {/* Right Side - Content */}
           <div className="space-y-6 fade-in-up delay-300">
             <h3 className="text-3xl md:text-4xl font-bold font-heading mb-6">
-              Crafting <span className="gradient-text">Digital Excellence</span>
+              Crafting <span className="gradient-text">Scalable Digital Solutions</span>
             </h3>
             
             <p className="text-gray-400 text-lg leading-relaxed">
-              I'm a dedicated Software Engineer and DevOps professional with a passion for 
-              creating robust, scalable solutions. My journey in technology is driven by 
-              continuous learning and the desire to build systems that make a difference.
+              I’m a dedicated Software Engineer with a passion for building robust,
+               scalable, and user-focused digital solutions. My journey in technology is 
+               driven by continuous learning and the desire to create impactful systems that make a difference.
             </p>
 
             <p className="text-gray-400 text-lg leading-relaxed">
-              With expertise in cloud technologies, containerization, and modern development 
-              practices, I bridge the gap between development and operations. My approach 
-              combines technical excellence with practical problem-solving to deliver 
-              high-quality results.
+              With expertise in modern web technologies, cloud platforms, and application design,
+               I bridge creativity with technical precision to deliver secure, high-performance applications.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
@@ -182,14 +180,14 @@ export const AboutSection: React.FC = () => {
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Full-Stack Development</h4>
-                    <p className="text-gray-500 text-sm">React, Node.js, TypeScript</p>
+                    <p className="text-gray-500 text-sm">React, Node.js, TypeScript, .NET</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-white font-semibold mb-1">Cloud Architecture</h4>
-                    <p className="text-gray-500 text-sm">AWS</p>
+                    <h4 className="text-white font-semibold mb-1">Cloud & Deployment</h4>
+                    <p className="text-gray-500 text-sm">AWS, Docker</p>
                   </div>
                 </div>
               </div>
@@ -198,15 +196,15 @@ export const AboutSection: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h4 className="text-white font-semibold mb-1">DevOps & CI/CD</h4>
-                    <p className="text-gray-500 text-sm">Docker</p>
+                    <h4 className="text-white font-semibold mb-1">Mobile Development</h4>
+                    <p className="text-gray-500 text-sm">React Native, Kotlin</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Database Management</h4>
-                    <p className="text-gray-500 text-sm">MySQL, MongoDB</p>
+                    <p className="text-gray-500 text-sm">MySQL, MongoDB, Room (SQLite)</p>
                   </div>
                 </div>
               </div>
@@ -239,15 +237,15 @@ export const AboutSection: React.FC = () => {
         {/* Additional Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 fade-in-up delay-400">
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">2+</div>
             <p className="text-gray-400">Years of Experience</p>
           </div>
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">5+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">6+</div>
             <p className="text-gray-400">Projects Completed</p>
           </div>
           <div className="card-dark text-center">
-            <div className="text-4xl font-bold gradient-text mb-2">1+</div>
+            <div className="text-4xl font-bold gradient-text mb-2">2+</div>
             <p className="text-gray-400">Happy Clients</p>
           </div>
         </div>
