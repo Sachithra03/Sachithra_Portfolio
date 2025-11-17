@@ -1,100 +1,102 @@
-Sachithra’s Developer Portfolio
+# 🌟 Sachithra’s Developer Portfolio
 
-A modern, responsive, and animated personal portfolio built using Vite + TypeScript + React, generated initially with Magic Patterns, and fully customized to showcase my software engineering journey, projects, skills, and achievements.
+A modern, responsive, and animated portfolio built using **React, TypeScript, Vite, Tailwind CSS, and Framer Motion**.  
+Designed to showcase my projects, skills, and experience as a Software Engineering undergraduate with a passion for **full-stack development, mobile development, and clean UI/UX**.
 
-This portfolio represents who I am as a developer — a passionate Software Engineering undergraduate, full-stack problem solver, and mobile app builder.
+---
 
-⸻
+## 🚀 Tech Stack
 
-🚀 Tech Stack
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-0EA5E9?style=flat&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-000000?style=flat&logo=framer&logoColor=white)
 
-This portfolio is built with:
-	•	React + TypeScript
-	•	Vite
-	•	Framer Motion (animations)
-	•	Tailwind CSS (UI styling)
-	•	Magic Patterns (initial template)
-	•	Responsive UI – works on all screens
+---
 
-⸻
+## 👨‍💻 About Me
 
-👨‍💻 About Me
+Hi! I’m **Sachithra Indrachapa**, a Software Engineering undergraduate at SLIIT who enjoys building:
 
-Hi, I’m Sachithra Indrachapa, a Software Engineering undergraduate at SLIIT, passionate about:
-	•	Full-stack development (MERN)
-	•	Mobile app development (Kotlin & React Native)
-	•	Cloud & DevOps (AWS, CI/CD, Docker – beginner level)
-	•	Modern UI/UX design
-	•	Building real, impactful applications
+- Full-stack applications (MERN)
+- Android + Mobile apps (Kotlin & React Native)
+- Beautiful front-end experiences
+- Cloud-ready & scalable systems
+- Modern UI/UX with smooth interactions  
 
-This portfolio showcases my projects, experience, and skills to help potential employers and collaborators understand my capabilities.
+This portfolio highlights my technical strengths and project experience.
 
-⸻
+---
 
-🛠️ Featured Projects
+## 🛠️ Featured Projects
 
-🛍️ Xaphora Dress – E-Commerce Platform
+### 🛍️ Xaphora Dress — E-Commerce Platform  
+**MERN · AI Chatbot · Admin Panel**  
+A clothing store with secure authentication, role-based dashboard & AI chatbot.
 
-(MERN · AI Chatbot · Role-Based Admin Panel)
-A clothing store platform with full CRUD, secure login, admin dashboard, and chatbot.
+---
 
-💰 CashBuddy – Personal Finance Manager
+### 💰 CashBuddy — Personal Finance Manager  
+**Kotlin · Android · Room DB**  
+Track income, expenses, budgets, and categories with Material UI.
 
-(Kotlin · Android · Room DB)
-An Android app for tracking income/expenses, budgets, and category-wise insights.
+---
 
-📚 OpenShelf – Mobile Digital Library
+### 📚 OpenShelf — Mobile Digital Library  
+**React Native · Supabase · TensorFlow Lite**  
+AI-powered semantic search + offline learning for students.
 
-(React Native · Supabase · TensorFlow Lite)
-AI-powered semantic search + offline learning access for students.
+---
 
-🚛 EcoTrack – Smart Waste Management System
+### 🚛 EcoTrack — Smart Waste Management  
+**MERN · Maps · Analytics Dashboard**  
+Real-time route tracking, issue reports & municipal dashboards.
 
-(MERN · Maps · Analytics Dashboard)
-Real-time route tracking, issue reporting, and municipal dashboards.
+---
 
-…and more inside the Projects section of the portfolio.
+## 📄 Resume  
+📌 **View Resume (PDF included inside the repo)**
 
-⸻
+---
 
-📄 Resume
+## 📬 Contact Me
 
-You can view my updated resume here:
-👉 View Resume (PDF)￼
+📧 Email: **sachithrai1003@gmail.com**  
+🌐 Portfolio: **https://sachithraindrachapa.vercel.app**  
+🔗 LinkedIn: **https://www.linkedin.com/in/sachithra-indrachapa-9150b8190**  
+🐙 GitHub: **https://github.com/Sachithra03**
 
-⸻
+---
 
-📬 Contact Me
-	•	📧 Email: sachithrai1003@gmail.com
-	•	🌐 Portfolio: https://sachithraindrachapa.vercel.app/
-	•	💼 LinkedIn: https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/
-	•	🧑‍💻 GitHub: https://github.com/Sachithra03
+## ⚙️ Getting Started (Run Locally)
 
-⸻
-
-  🏗️ Getting Started (For Local Development)
-
-If you want to run this portfolio locally:
-
-# 1. Install dependencies
+```bash
+# Install dependencies
 npm install
 
-# 2. Run development server
+# Start development server
 npm run dev
 
-The site will run on http://localhost:5173.
+# The site will run on:
+http://localhost:5173
+```
 
-🎨 Customization
+---
 
-You can modify:
-	•	/src/components → UI components
-	•	/src/sections → hero, projects, skills, contact sections
-	•	/src/assets → images, icons, animations
-	•	/src/styles → custom Tailwind styles
+## 🎨 Customization
 
-⸻
+You can modify the following folders:
 
-📜 License
+- `/src/components` → UI Components  
+- `/src/sections` → Hero, Projects, Skills, Contact  
+- `/src/assets` → Images, Icons  
+- `/src/styles` → Tailwind custom styles  
 
-This project is open-source and available under the MIT License.
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=flat)
