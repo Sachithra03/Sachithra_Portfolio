@@ -16,13 +16,30 @@ export const ProjectsSection = () => {
     }
   }, [registerSection]);
   const projects = [{
+    title: 'Personal Portfolio Website',
+    description: 'Modern, responsive portfolio website to showcase projects, skills, and experience with smooth animations, clean UI, and optimized performance.',
+    image: '/Photos/portfolio-img.png',
+    technologies: [
+  'React',
+  'TypeScript',
+  'Tailwind CSS',
+  'Framer Motion',
+  'Vite'
+  ],
+    liveUrl: 'https://sachithraindrachapa.vercel.app/',
+    githubUrl: 'https://github.com/Sachithra03/Sachithra_Portfolio.git'
+  },
+  
+  {
     title: 'Xaphora Dress - E-Commerce Platform',
     description: 'MERN-based clothing store with role-based access, JWT auth, user management, admin dashboard, and AI-powered customer support.',
     image: '/Photos/xaphora-logo.png',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT', 'Chatgpt API'],
     //liveUrl: '#',
     githubUrl: 'https://github.com/TeamITPY2S2/Xaphora-Dress'
-  },{
+  },
+  
+  {
     title: 'EcoTrack – Smart Waste Management System',
     description: 'Web-based waste management platform with role-based dashboards, JWT authentication, ticket handling, payments, and route/location features using OpenStreetMap.',
     image: '/Photos/eco-track-img.png',
@@ -39,7 +56,6 @@ export const ProjectsSection = () => {
     //liveUrl: '#',
     githubUrl: 'https://github.com/OpenshelfTeam/EcoTrack.git'
   },
-  
   
   {
     title: 'BlogSpace – Personal Blog Platform',
@@ -61,19 +77,31 @@ export const ProjectsSection = () => {
   {
     title: 'CashBuddy – Personal Finance Manager',
     description: 'Android app for tracking income & expenses with offline storage, daily logs, balance overview, and spending reports using Room DB and Material Design.',
-    image: '/Photos/cashbuddy.png',
+    image: '/Photos/cashbuddy-img.png',
     technologies: ['Kotlin', 'Android Studio', 'Room', 'SQLite'],
     githubUrl: 'https://github.com/Sachithra03/CashBuddy'
-  }, {
+  }, 
+  
+  {
     title: 'Online Medicine Ordering System',
-    description: 'Pharmacy system where customers can order medicines and admins manage users and orders with secure role-based access.',
-    image: '/Photos/online_medicine.png',
-    technologies: ['React', 'Redux', 'CoinGecko API', 'Chart.js'],
+    description: 'Web-based pharmacy system where customers can order medicines online and admins manage users, orders, and inventory with secure role-based access.',
+    image: '/Photos/medorder-img.png',
+    technologies: [
+  'Java',
+  'JSP',
+  'Servlets',
+  'SQL',
+  'HTML',
+  'CSS',
+  'JavaScript'
+  ],
     githubUrl: 'https://github.com/Sachithra03/Online-Medicine-Ordering-System'
-  }, {
+  }, 
+  
+  {
     title: 'BetterHelp Recruitment – Online Recruitment Service ',
     description: 'Recruitment platform with role-based dashboards, secure authentication, session management, input validation, and password recovery, deployed locally with XAMPP.',
-    image: '/Photos/betterHelp_recruitment.png',
+    image: '/Photos/betterhelp-img.png',
     technologies: ['HTML', 'CSS', 'PHP', 'MySQL', 'XAMPP'],
    
     githubUrl: 'https://github.com/Sachithra03/BetterHelp-Recruitment-Online-Recruitment-Service'
