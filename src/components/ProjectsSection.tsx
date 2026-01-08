@@ -56,6 +56,22 @@ export const ProjectsSection = () => {
     //liveUrl: '#',
     githubUrl: 'https://github.com/OpenshelfTeam/EcoTrack.git'
   },
+
+  {
+    title: 'OpenShelf – University Library Mobile App',
+    description: 'Mobile library application that allows university students to upload, share, and access study materials with online and offline support, secure authentication, and AI-assisted learning features.',
+    image: '/Photos/openshelf-img.png',
+    technologies: [
+  'React Native CLI',
+  'TypeScript',
+  'Supabase',
+  'PostgreSQL',
+  'AsyncStorage',
+  'OpenRouter API'
+  ],
+    //liveUrl: '#',
+    githubUrl: 'https://github.com/kusal2002/OpenShelf.git'
+  },
   
   {
     title: 'BlogSpace – Personal Blog Platform',
