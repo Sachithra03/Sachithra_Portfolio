@@ -80,8 +80,8 @@ export const SkillsSection: React.FC = () => {
       icon: <Database className="w-10 h-10" />,
       title: "Database Management",
       description:
-        "Designing and optimizing databases for performance, security, and scalability.",
-      skills: ["MySQL", "MongoDB"],
+        "Experienced in working with relational and NoSQL databases for data storage, querying, schema design, and efficient application development.",
+      skills: ["MySQL", "MongoDB", "Firebase", "PostgreSQL"],
     },
   ];
 
@@ -89,29 +89,29 @@ export const SkillsSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="skills"
-      className="section-padding relative overflow-hidden bg-dark-100"
+      className="relative overflow-hidden section-padding bg-dark-100"
     >
       {/* Background decoration */}
-      <div className="absolute top-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+      <div className="absolute left-0 rounded-full top-20 w-96 h-96 bg-primary/5 blur-3xl"></div>
+      <div className="absolute right-0 rounded-full bottom-20 w-96 h-96 bg-primary/5 blur-3xl"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container relative z-10 px-4 mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16 fade-in-up">
-          <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
+        <div className="mb-16 text-center fade-in-up">
+          <p className="mb-4 text-lg font-semibold tracking-wider uppercase text-primary">
             What I Do
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
+          <h2 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl font-heading">
             <span className="text-white">SERVICES AND</span>{" "}
             <span className="gradient-text">SOLUTIONS</span>
           </h2>
-          <p className="text-gray-400 text-xl max-w-3xl mx-auto">
+          <p className="max-w-3xl mx-auto text-xl text-gray-400">
             Providing comprehensive technical solutions from development to deployment
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -119,18 +119,18 @@ export const SkillsSection: React.FC = () => {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Icon */}
-              <div className="mb-6 relative">
-                <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-dark-300 transition-all duration-300">
+              <div className="relative mb-6">
+                <div className="flex items-center justify-center w-20 h-20 transition-all duration-300 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-dark-300">
                   {service.icon}
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/40 transition-all"></div>
+                <div className="absolute w-8 h-8 transition-all rounded-full -top-2 -right-2 bg-primary/20 blur-xl group-hover:bg-primary/40"></div>
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
+              <h3 className="mb-3 text-2xl font-bold text-white transition-colors group-hover:text-primary">
                 {service.title}
               </h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="mb-6 leading-relaxed text-gray-400">
                 {service.description}
               </p>
 
@@ -139,7 +139,7 @@ export const SkillsSection: React.FC = () => {
                 {service.skills.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 text-sm rounded-full bg-dark-200/50 text-gray-300 border border-gray-700 group-hover:border-primary/50 transition-colors"
+                    className="px-3 py-1 text-sm text-gray-300 transition-colors border border-gray-700 rounded-full bg-dark-200/50 group-hover:border-primary/50"
                   >
                     {skill}
                   </span>
@@ -150,55 +150,56 @@ export const SkillsSection: React.FC = () => {
         </div>
 
         {/* Tech Stack Section */}
-        <div className="mt-20 fade-in-up delay-500">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold font-heading">
+        <div className="mt-20 delay-500 fade-in-up">
+          <div className="mb-12 text-center">
+            <h3 className="text-3xl font-bold md:text-4xl font-heading">
               <span className="text-white">Technologies I</span>{" "}
               <span className="gradient-text">Master</span>
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
             {[
-             // 💻 Core Frontend & Backend
-  { name: "React", icon: "⚛️" },
-  { name: "Node.js", icon: "🟢" },
-  { name: "Express.js", icon: "⚡" },
-  { name: "Next.js", icon: "▲" },
+              // 💻 Core Frontend & Backend
+              { name: "React", icon: "⚛️" },
+              { name: "Node.js", icon: "🟢" },
+              { name: "Express.js", icon: "⚡" },
+              { name: "Next.js", icon: "▲" },
 
-  // ☁️ DevOps & Cloud
-  { name: "Docker", icon: "🐳" },
-  { name: "AWS", icon: "☁️" },
-  { name: "CI/CD", icon: "🔄" },
-  { name: "GitHub Actions", icon: "⚙️" },
-  { name: "Linux", icon: "🐧" },
+              // ☁️ DevOps & Cloud
+              { name: "Docker", icon: "🐳" },
+              { name: "AWS", icon: "☁️" },
+              { name: "CI/CD", icon: "🔄" },
+              { name: "GitHub Actions", icon: "⚙️" },
+              { name: "Linux", icon: "🐧" },
 
-  // 🧠 Programming Languages
-  { name: "JavaScript", icon: "🟨" },
-  { name: "TypeScript", icon: "📘" },
-  { name: "Python", icon: "🐍" },
-  { name: "Java", icon: "☕" },
-  { name: "Kotlin", icon: "🟠" },
-  { name: "C#", icon: "♯" },
-  { name: ".NET", icon: "🔷" },
+              // 🧠 Programming Languages
+              { name: "JavaScript", icon: "🟨" },
+              { name: "TypeScript", icon: "📘" },
+              { name: "Python", icon: "🐍" },
+              { name: "Java", icon: "☕" },
+              { name: "Kotlin", icon: "🟠" },
+              { name: "C#", icon: "♯" },
+              { name: ".NET", icon: "🔷" },
 
-  // 🗄️ Databases
-  { name: "MongoDB", icon: "🍃" },
-  { name: "MySQL", icon: "🐬" },
-  { name: "Firebase", icon: "🔥" },
+              // 🗄️ Databases
+              { name: "MongoDB", icon: "🍃" },
+              { name: "MySQL", icon: "🐬" },
+              { name: "Firebase", icon: "🔥" },
+              { name: "PostgreSQL", icon: "🐘" },
 
-  // 🧰 Version Control
-  { name: "Git", icon: "📦" },
-  { name: "GitHub", icon: "🐙" },
+              // 🧰 Version Control
+              { name: "Git", icon: "📦" },
+              { name: "GitHub", icon: "🐙" },
             ].map((tech, idx) => (
               <div
                 key={idx}
-                className="card-dark text-center py-6 group cursor-pointer"
+                className="py-6 text-center cursor-pointer card-dark group"
               >
-                <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                <div className="mb-3 text-4xl transition-transform group-hover:scale-110">
                   {tech.icon}
                 </div>
-                <p className="text-gray-400 font-medium group-hover:text-primary transition-colors">
+                <p className="font-medium text-gray-400 transition-colors group-hover:text-primary">
                   {tech.name}
                 </p>
               </div>
@@ -208,10 +209,10 @@ export const SkillsSection: React.FC = () => {
 
         {/* Call to Action */}
         <div className="mt-16 text-center fade-in-up delay-600">
-          <p className="text-gray-400 text-lg mb-6">
+          <p className="mb-6 text-lg text-gray-400">
             Ready to bring your project to life?
           </p>
-          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+          <a href="#contact" className="inline-flex items-center gap-2 btn-primary">
             <Zap className="w-5 h-5" />
             Get Started
           </a>
