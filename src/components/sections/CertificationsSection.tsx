@@ -16,14 +16,22 @@ export const CertificationsSection = () => {
     }
   }, [registerSection]);
   const certifications = [{
-  title: 'MongoDB Node.js Developer Path',
-  issuer: 'MongoDB University',
-  date: 'Oct 2025',
-  description: 'Completed a hands-on learning path focused on building and managing data-driven applications using Node.js and MongoDB, including aggregation pipelines, CRUD operations, indexing, and performance optimization.',
-  image: '/certifications/MongoDBNodeJSDeveloper.jpg',
-  color: 'from-emerald-500 to-emerald-100',
-  link: '/certifications/mongodb-nodejs-developer.pdf'
-},{
+    title: 'PostgreSQL Essential Training',
+    issuer: 'LinkedIn Learning',
+    date: 'Mar 2026',
+    description: 'Completed hands-on training covering PostgreSQL fundamentals including database creation, SQL queries, data modeling, indexing, and performance optimization for relational database systems.',
+    image: '/certifications/PostgreSQLEssentialTraining.png',
+    color: 'from-blue-500 to-blue-100',
+    link: '/certifications/postgresql-essential-training.pdf'
+  }, {
+    title: 'MongoDB Node.js Developer Path',
+    issuer: 'MongoDB University',
+    date: 'Oct 2025',
+    description: 'Completed a hands-on learning path focused on building and managing data-driven applications using Node.js and MongoDB, including aggregation pipelines, CRUD operations, indexing, and performance optimization.',
+    image: '/certifications/MongoDBNodeJSDeveloper.jpg',
+    color: 'from-emerald-500 to-emerald-100',
+    link: '/certifications/mongodb-nodejs-developer.pdf'
+  }, {
     title: 'Getting Started with DevOps on AWS',
     issuer: 'AWS Training & Certification',
     date: 'Aug 2025',
@@ -41,50 +49,50 @@ export const CertificationsSection = () => {
     link: '/certifications/ServerlessCICD.pdf'
   },
   {
-  title: 'DevOps Workshop',
-  issuer: 'SLIIT Software Engineering Student Community (SESC)',
-  date: 'October 2025',
-  description: 'Certificate of participation for actively attending the DevOps Workshop organized by the SLIIT Software Engineering Student Community on 3rd October 2025.',
-  image: '/certifications/DevOpsWorkshopSLIIT.png',
-  color: 'from-green-500 to-green-100',
-  link: '/certifications/DevOpsWorkshopSLIIT.pdf'
-},
+    title: 'DevOps Workshop',
+    issuer: 'SLIIT Software Engineering Student Community (SESC)',
+    date: 'October 2025',
+    description: 'Certificate of participation for actively attending the DevOps Workshop organized by the SLIIT Software Engineering Student Community on 3rd October 2025.',
+    image: '/certifications/DevOpsWorkshopSLIIT.png',
+    color: 'from-green-500 to-green-100',
+    link: '/certifications/DevOpsWorkshopSLIIT.pdf'
+  },
 
-];
-  return <section ref={sectionRef} id="certifications" className="section-padding relative overflow-hidden bg-dark-100">
-      {/* Background decoration */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16 fade-in-up">
-          <p className="text-primary text-lg font-semibold tracking-wider uppercase mb-4">
-            Achievements
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6">
-            <span className="text-white">PROFESSIONAL</span>{" "}
-            <span className="gradient-text">CERTIFICATIONS</span>
-          </h2>
-          <p className="text-gray-400 text-xl max-w-3xl mx-auto">
-            Industry-recognized certifications validating my expertise in cloud technologies
-          </p>
-        </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+  ];
+  return <section ref={sectionRef} id="certifications" className="relative overflow-hidden section-padding bg-dark-100">
+    {/* Background decoration */}
+    <div className="absolute right-0 rounded-full top-20 w-96 h-96 bg-primary/5 blur-3xl"></div>
+
+    <div className="container relative z-10 px-4 mx-auto">
+      {/* Section Header */}
+      <div className="mb-16 text-center fade-in-up">
+        <p className="mb-4 text-lg font-semibold tracking-wider uppercase text-primary">
+          Achievements
+        </p>
+        <h2 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl font-heading">
+          <span className="text-white">PROFESSIONAL</span>{" "}
+          <span className="gradient-text">CERTIFICATIONS</span>
+        </h2>
+        <p className="max-w-3xl mx-auto text-xl text-gray-400">
+          Industry-recognized certifications validating my expertise in cloud technologies
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 mx-auto md:grid-cols-2 lg:grid-cols-3 max-w-7xl">
         {certifications.map((cert, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className="card-dark hover-glow group fade-in-up"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className={`h-2 bg-gradient-to-r ${cert.color} rounded-t-lg`}></div>
             <div className="p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 p-2">
-                  <img src={cert.image} alt={cert.title} className="w-full h-full object-contain" />
+                <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 p-2 rounded-lg bg-primary/10">
+                  <img src={cert.image} alt={cert.title} className="object-contain w-full h-full" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary transition-colors">
+                  <h3 className="mb-2 text-xl font-bold text-white transition-colors group-hover:text-primary">
                     {cert.title}
                   </h3>
                   <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
@@ -100,22 +108,22 @@ export const CertificationsSection = () => {
                   </div>
                 </div>
               </div>
-              
-              <p className="text-gray-400 leading-relaxed mb-4">
+
+              <p className="mb-4 leading-relaxed text-gray-400">
                 {cert.description}
               </p>
-              
-              <a 
-                href={cert.link} 
-                className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-400 transition-colors group"
+
+              <a
+                href={cert.link}
+                className="inline-flex items-center gap-2 font-semibold transition-colors text-primary hover:text-primary-400 group"
               >
-                View Certificate 
-                <ExternalLinkIcon size={16} className="group-hover:translate-x-1 transition-transform" />
+                View Certificate
+                <ExternalLinkIcon size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </div>
         ))}
       </div>
-      </div>
-    </section>;
+    </div>
+  </section>;
 };
