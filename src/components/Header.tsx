@@ -105,11 +105,11 @@ export const Header: React.FC = () => {
           <div className="relative lg:pl-12 fade-in-up delay-200">
             <div className="relative">
               {/* Decorative frame */}
-              <div className="absolute -top-6 -right-6 w-full h-full border-4 border-primary/30 rounded-2xl"></div>
+              <div className="absolute -top-1 -right-1 w-full h-full border-4 border-primary/60 rounded-2xl"></div>
               
               {/* Image container */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent z-10"></div>
                 <img
                   src="/Photos/profile.jpg"
                   alt="Sachithra Indrachapa"
