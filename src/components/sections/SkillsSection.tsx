@@ -5,13 +5,7 @@ import {
   Code2,
   Database,
   GitBranch,
-  Layers,
-  Server,
-  Terminal,
-  Wrench,
   Boxes,
-  Globe,
-  Shield,
   Zap,
 } from "lucide-react";
 

@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 /* PLEASE NOTE: THESE TAILWIND IMPORTS SHOULD NEVER BE DELETED */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   --primary-green: #00FF87;
@@ -26,9 +26,18 @@ body {
   overflow-x: hidden;
 }
 
-/* Hide default cursor globally */
-* {
-  cursor: none !important;
+/* Hide default cursor on mouse/pointer devices without universal * selector overhead */
+@media (pointer: fine) {
+  body, a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
+}
+
+/* Hardware-accelerate background blur orbs so they don't trigger repaints */
+.blur-3xl {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  pointer-events: none;
 }
 
 /* Custom scrollbar */

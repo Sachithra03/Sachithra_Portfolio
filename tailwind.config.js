@@ -53,8 +53,8 @@ module.exports = {
           '50%': { transform: 'translateY(-20px)' },
         },
         pulseGreen: {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(0, 255, 135, 0.7)' },
-          '50%': { boxShadow: '0 0 0 20px rgba(0, 255, 135, 0)' },
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.04)', opacity: '0.85' },
         },
         slideUp: {
           '0%': { transform: 'translateY(100px)', opacity: '0' },

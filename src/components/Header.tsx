@@ -59,8 +59,8 @@ export const Header: React.FC = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <a
-                href="/CV/Sachithra's Resume.pdf"
-                download="Sachithra's Resume.pdf"
+                href="/CV/Sachithra Indrachapa's Resume.pdf"
+                download="Sachithra Indrachapa's Resume.pdf"
                 className="btn-outline group"
               >
                 <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
@@ -115,6 +115,8 @@ export const Header: React.FC = () => {
                   alt="Sachithra Indrachapa"
                   className="w-full h-auto object-cover"
                   loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
                 />
                 
                 {/* Floating badge */}

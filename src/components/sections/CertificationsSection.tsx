@@ -89,7 +89,7 @@ export const CertificationsSection = () => {
             <div className="p-6">
               <div className="flex items-start gap-4 mb-4">
                 <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 p-2 rounded-lg bg-primary/10">
-                  <img src={cert.image} alt={cert.title} className="object-contain w-full h-full" />
+                  <img src={cert.image} alt={cert.title} loading="lazy" decoding="async" className="object-contain w-full h-full" />
                 </div>
                 <div className="flex-1">
                   <h3 className="mb-2 text-xl font-bold text-white transition-colors group-hover:text-primary">

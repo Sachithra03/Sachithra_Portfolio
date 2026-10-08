@@ -1,4 +1,5 @@
-import React, { useEffect, useState, createContext, useContext, ReactNode } from 'react';
+import React, { useEffect, useState, createContext, useContext, ReactNode, useRef, useCallback, useMemo } from 'react';
+
 interface ScrollContextType {
   scrollY: number;
   scrollProgress: number;
@@ -9,6 +10,7 @@ interface ScrollContextType {
   currentSection: string;
   registerSection: (id: string, top: number, bottom: number) => void;
 }
+
 const ScrollContext = createContext<ScrollContextType>({
   scrollY: 0,
   scrollProgress: 0,
@@ -16,56 +18,59 @@ const ScrollContext = createContext<ScrollContextType>({
   currentSection: '',
   registerSection: () => {}
 });
+
 export const useScroll = () => useContext(ScrollContext);
+
 export const ScrollProvider = ({
   children
 }: {
   children: ReactNode;
 }) => {
-  const [scrollY, setScrollY] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [sections, setSections] = useState<Record<string, {
-    top: number;
-    bottom: number;
-  }>>({});
-  const [currentSection, setCurrentSection] = useState('');
-  const registerSection = (id: string, top: number, bottom: number) => {
-    setSections(prev => ({
-      ...prev,
-      [id]: {
-        top,
-        bottom
-      }
-    }));
-  };
+  const sectionsRef = useRef<Record<string, { top: number; bottom: number }>>({});
+  const [currentSection, setCurrentSection] = useState('home');
+  const currentSectionRef = useRef('home');
+
+  const registerSection = useCallback((id: string, top: number, bottom: number) => {
+    sectionsRef.current[id] = { top, bottom };
+  }, []);
+
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setScrollY(scrollPosition);
-      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(scrollPosition / documentHeight, 1);
-      setScrollProgress(progress);
-      // Determine current section
-      for (const [id, {
-        top,
-        bottom
-      }] of Object.entries(sections)) {
-        if (scrollPosition >= top - 200 && scrollPosition < bottom - 200) {
-          setCurrentSection(id);
-          break;
-        }
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY;
+          for (const [id, { top, bottom }] of Object.entries(sectionsRef.current)) {
+            if (scrollPosition >= top - 250 && scrollPosition < bottom - 250) {
+              if (currentSectionRef.current !== id) {
+                currentSectionRef.current = id;
+                setCurrentSection(id);
+              }
+              break;
+            }
+          }
+          ticking = false;
+        });
       }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections]);
-  return <ScrollContext.Provider value={{
-    scrollY,
-    scrollProgress,
-    sections,
+  }, []);
+
+  const value = useMemo(() => ({
+    scrollY: 0,
+    scrollProgress: 0,
+    sections: sectionsRef.current,
     currentSection,
     registerSection
-  }}>
+  }), [currentSection, registerSection]);
+
+  return (
+    <ScrollContext.Provider value={value}>
       {children}
-    </ScrollContext.Provider>;
+    </ScrollContext.Provider>
+  );
 };
