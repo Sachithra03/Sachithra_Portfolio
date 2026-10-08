@@ -16,6 +16,44 @@ export const ProjectsSection = () => {
     }
   }, [registerSection]);
   const projects = [{
+  title: 'Luvi Clothing',
+  description: 'Full stack clothing e commerce platform with product management, shopping cart, checkout, sewing requests, authentication, order management, secure payments, and cloud based image and video storage.',
+  image: '/Photos/luvi-clothing.png',
+  technologies: [
+    'Next.js',
+    'TypeScript',
+    'React',
+    'MongoDB',
+    'Mongoose',
+    'Jest',
+    'PayHere',
+    'Cloudflare R2'
+  ],
+  liveUrl: 'https://luvi-clothing.vercel.app/',
+  githubUrl: 'https://github.com/Sachithra03/luvi-clothing.git'
+},
+
+{
+  title: 'SolarCharge Finder',
+  description: 'Full stack EV charging discovery and marketplace platform featuring geolocation based station discovery, advanced filtering, JWT and OAuth authentication, RBAC, reviews, analytics, Dockerized deployment, CI/CD, and automated testing.',
+  image: '/Photos/solar-charge-finder.png',
+  technologies: [
+    'Node.js',
+    'Express',
+    'MongoDB',
+    'React',
+    'Vite',
+    'Docker',
+    'GitHub Actions',
+    'Jest',
+    'Artillery',
+    'Vercel'
+  ],
+  liveUrl: 'https://solar-charge-finder.vercel.app/',
+  githubUrl: 'https://github.com/SolarCharge-Finder/SolarCharge-Finder.git'
+},
+
+{
     title: 'Personal Portfolio Website',
     description: 'Modern, responsive portfolio website to showcase projects, skills, and experience with smooth animations, clean UI, and optimized performance.',
     image: '/Photos/portfolio-img.png',
