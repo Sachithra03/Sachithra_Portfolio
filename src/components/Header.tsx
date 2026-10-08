@@ -115,7 +115,7 @@ export const Header: React.FC = () => {
                   alt="Sachithra Indrachapa"
                   className="w-full h-auto object-cover"
                   loading="eager"
-                  fetchPriority="high"
+                  fetchpriority="high"
                   decoding="async"
                 />
                 
