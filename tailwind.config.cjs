@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -28,8 +28,8 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['Newsreader', 'Cormorant Garamond', 'Georgia', 'serif'],
-        sans: ['Plus Jakarta Sans', 'Inter', '-apple-system', 'sans-serif'],
+        serif: ['Space Grotesk', 'Newsreader', 'Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['Inter', 'Plus Jakarta Sans', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
     },
