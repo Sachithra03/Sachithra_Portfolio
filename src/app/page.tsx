@@ -20,42 +20,240 @@ import {
   Mail,
   FileText,
 } from 'lucide-react';
+import { ContactForm } from '@/components/ContactForm';
 
 export const dynamic = 'force-dynamic';
 
-async function getPortfolioData() {
-  await connectToDatabase();
-
-  const [
-    profileDoc,
-    projects,
-    certificates,
-    experiences,
-    educations,
-    skills,
-    notes,
-    socials,
-  ] = await Promise.all([
-    Profile.findOne().lean(),
-    Project.find().sort({ order: 1, createdAt: -1 }).lean(),
-    Certificate.find().sort({ order: 1, issueDate: -1 }).lean(),
-    Experience.find().sort({ order: 1, startDate: -1 }).lean(),
-    Education.find().sort({ order: 1, startDate: -1 }).lean(),
-    Skill.find().sort({ category: 1, order: 1 }).lean(),
-    Note.find({ published: true }).sort({ publishedAt: -1, createdAt: -1 }).lean(),
-    SocialLink.find({ isPublic: true }).sort({ order: 1 }).lean(),
-  ]);
-
+// Fallback data when database is unavailable (offline mode, sandboxed runners, etc.)
+function getFallbackData() {
   return {
-    profile: profileDoc ? JSON.parse(JSON.stringify(profileDoc)) : null,
-    projects: JSON.parse(JSON.stringify(projects)),
-    certificates: JSON.parse(JSON.stringify(certificates)),
-    experiences: JSON.parse(JSON.stringify(experiences)),
-    educations: JSON.parse(JSON.stringify(educations)),
-    skills: JSON.parse(JSON.stringify(skills)),
-    notes: JSON.parse(JSON.stringify(notes)),
-    socials: JSON.parse(JSON.stringify(socials)),
+    profile: {
+      fullName: 'Sachithra Indrachapa',
+      title: 'Full-Stack Software Engineer',
+      headline: 'SOFTWARE ENGINEER / SRI LANKA',
+      bio: 'I am a Software Engineering undergraduate at SLIIT, passionate about building meaningful digital products through modern web technologies, full stack development and DevOps.',
+      location: 'Colombo, Sri Lanka',
+      email: 'sachithrai1003@gmail.com',
+      phone: '+94 71 859 6632',
+      avatarImageId: '6b027f0374981c35017dd701',
+      resumeFileId: '6b027f0774981c35017dd70c',
+      availableForHire: true,
+    },
+    projects: [
+      {
+        _id: 'proj_1',
+        title: 'Luvi Clothing',
+        slug: 'luvi-clothing',
+        description: 'Full stack clothing e-commerce platform with product management, shopping cart, checkout, sewing requests, authentication, order management, and secure payments.',
+        coverImageId: '6b027f0874981c35017dd714',
+        technologies: ['Next.js', 'TypeScript', 'React', 'MongoDB', 'Mongoose', 'Jest', 'PayHere'],
+        liveUrl: 'https://luvi-clothing.vercel.app/',
+        githubUrl: 'https://github.com/Sachithra03/luvi-clothing.git',
+        status: 'completed',
+        featured: true,
+      },
+      {
+        _id: 'proj_2',
+        title: 'SolarCharge Finder',
+        slug: 'solar-charge-finder',
+        description: 'Full stack EV charging discovery and marketplace platform featuring geolocation-based station discovery, advanced filtering, JWT and OAuth authentication, RBAC, reviews, and analytics.',
+        coverImageId: '6b027f1874981c35017dd71d',
+        technologies: ['Node.js', 'Express', 'MongoDB', 'React', 'Vite', 'Docker', 'GitHub Actions', 'Jest', 'Artillery'],
+        liveUrl: 'https://solar-charge-finder.vercel.app/',
+        githubUrl: 'https://github.com/SolarCharge-Finder/SolarCharge-Finder.git',
+        status: 'completed',
+        featured: true,
+      },
+      {
+        _id: 'proj_3',
+        title: 'Personal Portfolio CMS',
+        slug: 'personal-portfolio-cms',
+        description: 'Minimal editorial developer portfolio and headless CMS powered by Next.js App Router, MongoDB Atlas, and GridFS binary file streaming.',
+        technologies: ['Next.js', 'TypeScript', 'MongoDB', 'GridFS', 'Mongoose', 'Zod', 'Vanilla CSS'],
+        liveUrl: 'https://sachithraindrachapa.vercel.app/',
+        githubUrl: 'https://github.com/Sachithra03/Sachithra_Portfolio.git',
+        status: 'completed',
+        featured: true,
+      },
+      {
+        _id: 'proj_4',
+        title: 'Xaphora Dress - E-Commerce Platform',
+        slug: 'xaphora-dress',
+        description: 'MERN-based clothing store with role-based access, JWT auth, user management, admin dashboard, and AI-powered customer support.',
+        technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT', 'ChatGPT API'],
+        githubUrl: 'https://github.com/TeamITPY2S2/Xaphora-Dress',
+        status: 'completed',
+        featured: false,
+      },
+      {
+        _id: 'proj_5',
+        title: 'EcoTrack – Smart Waste Management System',
+        slug: 'eco-track',
+        description: 'Web-based waste management platform with role-based dashboards, JWT authentication, ticket handling, payments, and route/location features using OpenStreetMap.',
+        technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'JWT', 'OpenStreetMap'],
+        githubUrl: 'https://github.com/OpenshelfTeam/EcoTrack.git',
+        status: 'completed',
+        featured: false,
+      },
+      {
+        _id: 'proj_6',
+        title: 'OpenShelf – University Library Mobile App',
+        slug: 'openshelf-library',
+        description: 'Mobile library application allowing university students to upload, share, and access study materials with online and offline support, secure authentication, and AI-assisted learning.',
+        technologies: ['React Native CLI', 'TypeScript', 'Supabase', 'PostgreSQL', 'AsyncStorage'],
+        githubUrl: 'https://github.com/kusal2002/OpenShelf.git',
+        status: 'completed',
+        featured: false,
+      },
+    ],
+    certificates: [
+      {
+        _id: 'cert_1',
+        title: 'PostgreSQL Essential Training',
+        issuer: 'LinkedIn Learning',
+        issueDate: new Date('2026-03-01'),
+        credentialUrl: 'https://www.linkedin.com/learning/certificates/postgresql-essential-training',
+        fileId: '6b027f2174981c35017dd722',
+      },
+      {
+        _id: 'cert_2',
+        title: 'Software Development Life Cycle (SDLC)',
+        issuer: 'LinkedIn Learning',
+        issueDate: new Date('2026-03-01'),
+        credentialUrl: 'https://www.linkedin.com/learning/certificates/software-development-life-cycle-sdlc',
+        fileId: '6b027f2874981c35017dd724',
+      },
+      {
+        _id: 'cert_3',
+        title: 'DevOps with GitHub and Docker',
+        issuer: 'LinkedIn Learning',
+        issueDate: new Date('2026-03-01'),
+        credentialUrl: 'https://www.linkedin.com/learning/certificates/devops-foundations-github-actions-docker',
+        fileId: '6b027f2c74981c35017dd726',
+      },
+      {
+        _id: 'cert_4',
+        title: 'Web Design for Beginners',
+        issuer: 'University of Moratuwa',
+        issueDate: new Date('2024-06-01'),
+        credentialUrl: '',
+        fileId: '6b027f2e74981c35017dd728',
+      },
+      {
+        _id: 'cert_5',
+        title: 'Front-End Development: Build an E-Commerce Website',
+        issuer: 'LinkedIn Learning',
+        issueDate: new Date('2024-05-01'),
+        credentialUrl: '',
+        fileId: '6b027f3274981c35017dd72a',
+      },
+    ],
+    experiences: [
+      {
+        _id: 'exp_1',
+        company: 'Academic Projects & Independent Engineering',
+        role: 'Full-Stack Software Engineer',
+        location: 'Colombo, Sri Lanka',
+        startDate: new Date('2023-01-01'),
+        current: true,
+        description: 'Architecting scalable web applications, cross-platform mobile systems, and database streaming pipelines.',
+        achievements: [
+          'Engineered Luvi Clothing e-commerce platform with Next.js and PayHere checkout',
+          'Built SolarCharge Finder EV marketplace with Docker containerization and Artillery benchmark testing',
+          'Authored production portfolio with MongoDB GridFS zero-memory chunk streaming',
+        ],
+      },
+    ],
+    educations: [
+      {
+        _id: 'edu_1',
+        institution: 'Sri Lanka Institute of Information Technology (SLIIT)',
+        degree: 'B.Sc. (Hons) in Information Technology Specialising in Software Engineering',
+        fieldOfStudy: 'Software Engineering',
+        startDate: new Date('2022-06-01'),
+        endDate: new Date('2026-06-01'),
+        current: true,
+        grade: 'Undergraduate',
+        description: 'Comprehensive study of distributed computing, data structures, algorithms, object-oriented design, database architectures, and DevOps.',
+      },
+    ],
+    skills: [],
+    notes: [
+      {
+        _id: 'note_1',
+        title: 'Eliminating Multi-Cloud Bloat: Moving to Database-Native Binary Storage',
+        slug: 'eliminating-multi-cloud-bloat-mongodb-gridfs',
+        summary: 'Why dual-brain architectures with external object stores introduce unnecessary cognitive overhead for personal portfolio CMS platforms, and how GridFS chunk streaming solves it.',
+        published: true,
+      },
+      {
+        _id: 'note_2',
+        title: 'Building Resilient Microservices with Docker and Automated CI/CD',
+        slug: 'building-resilient-microservices-docker-cicd',
+        summary: 'Practical lessons learned from building and load testing the SolarCharge Finder EV charging platform with Artillery and GitHub Actions.',
+        published: true,
+      },
+    ],
+    socials: [
+      {
+        _id: 'soc_1',
+        platform: 'GitHub',
+        url: 'https://github.com/Sachithra03',
+        label: 'GitHub',
+        isPublic: true,
+      },
+      {
+        _id: 'soc_2',
+        platform: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/',
+        label: 'LinkedIn',
+        isPublic: true,
+      },
+    ],
   };
+}
+
+async function getPortfolioData() {
+  try {
+    await connectToDatabase();
+
+    const [
+      profileDoc,
+      projects,
+      certificates,
+      experiences,
+      educations,
+      skills,
+      notes,
+      socials,
+    ] = await Promise.all([
+      Profile.findOne().lean(),
+      Project.find().sort({ order: 1, createdAt: -1 }).lean(),
+      Certificate.find().sort({ order: 1, issueDate: -1 }).lean(),
+      Experience.find().sort({ order: 1, startDate: -1 }).lean(),
+      Education.find().sort({ order: 1, startDate: -1 }).lean(),
+      Skill.find().sort({ category: 1, order: 1 }).lean(),
+      Note.find({ published: true }).sort({ publishedAt: -1, createdAt: -1 }).lean(),
+      SocialLink.find({ isPublic: true }).sort({ order: 1 }).lean(),
+    ]);
+
+    // If database returned empty collections (or not seeded), merge with fallback
+    const fallback = getFallbackData();
+
+    return {
+      profile: profileDoc ? JSON.parse(JSON.stringify(profileDoc)) : fallback.profile,
+      projects: projects && projects.length > 0 ? JSON.parse(JSON.stringify(projects)) : fallback.projects,
+      certificates: certificates && certificates.length > 0 ? JSON.parse(JSON.stringify(certificates)) : fallback.certificates,
+      experiences: experiences && experiences.length > 0 ? JSON.parse(JSON.stringify(experiences)) : fallback.experiences,
+      educations: educations && educations.length > 0 ? JSON.parse(JSON.stringify(educations)) : fallback.educations,
+      skills: skills && skills.length > 0 ? JSON.parse(JSON.stringify(skills)) : fallback.skills,
+      notes: notes && notes.length > 0 ? JSON.parse(JSON.stringify(notes)) : fallback.notes,
+      socials: socials && socials.length > 0 ? JSON.parse(JSON.stringify(socials)) : fallback.socials,
+    };
+  } catch (err) {
+    console.warn('[PORTFOLIO] Database connection error, serving static fallback:', err);
+    return getFallbackData();
+  }
 }
 
 export default async function HomePage() {
@@ -67,15 +265,16 @@ export default async function HomePage() {
     educations,
     skills,
     notes,
+    socials,
   } = await getPortfolioData();
 
   const avatarUrl = profile?.avatarImageId
     ? `/api/files/${profile.avatarImageId}`
-    : '/Photos/profile.jpg';
+    : '/api/files/6b027f0374981c35017dd701';
 
   const resumeUrl = profile?.resumeFileId
     ? `/api/files/${profile.resumeFileId}?download=true`
-    : '/CV/Sachithra Indrachapa\'s Resume.pdf';
+    : '/api/files/6b027f0774981c35017dd70c?download=true';
 
   // Split projects into 2 featured and remaining compact
   const featuredProjects = projects.slice(0, 2);
@@ -107,12 +306,12 @@ export default async function HomePage() {
             <div>
               <div className="kicker-wrapper">
                 <span className="kicker-dot" />
-                <span>Full-Stack Software Engineer</span>
+                <span>SOFTWARE ENGINEER / SRI LANKA</span>
               </div>
 
               <h1
                 style={{
-                  fontSize: 'clamp(3rem, 6vw, 4.8rem)',
+                  fontSize: 'clamp(3rem, 6.2vw, 4.8rem)',
                   lineHeight: 1.08,
                   marginBottom: '1.75rem',
                   color: 'var(--text-ink)',
@@ -131,18 +330,63 @@ export default async function HomePage() {
                   marginBottom: '2.5rem',
                 }}
               >
-                <p>Passionate about turning ideas into high-impact software.</p>
-                <p style={{ color: 'var(--text-muted)' }}>
-                  Specialized in scalable full-stack web and mobile applications with minimalist architecture.
+                <p>
+                  I am a Software Engineering undergraduate at SLIIT, passionate about building meaningful digital products through modern web technologies, full stack development and DevOps.
                 </p>
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
                 <a href="#projects" className="btn-ink-primary">
-                  Explore Work <ArrowDown size={15} />
+                  Explore Projects <ArrowDown size={15} />
                 </a>
                 <a href="#about" className="btn-ink-secondary">
-                  About me
+                  About Me
+                </a>
+              </div>
+
+              {/* Quick Links Row */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1.5rem',
+                  flexWrap: 'wrap',
+                  paddingTop: '1.25rem',
+                  borderTop: '1px solid var(--border-hairline)',
+                }}
+              >
+                <a
+                  href={resumeUrl}
+                  download="Sachithra_Indrachapa_Resume.pdf"
+                  className="btn-editorial-text"
+                >
+                  <FileText size={15} /> Download CV ↗
+                </a>
+                <a
+                  href="https://github.com/Sachithra03"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-editorial-text"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <Github size={15} /> GitHub ↗
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-editorial-text"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <Linkedin size={15} /> LinkedIn ↗
+                </a>
+                <a
+                  href="mailto:sachithrai1003@gmail.com"
+                  className="btn-editorial-text"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <Mail size={15} /> Email ↗
                 </a>
               </div>
             </div>
@@ -160,12 +404,20 @@ export default async function HomePage() {
                       height: '100%',
                       objectFit: 'cover',
                       display: 'block',
-                      filter: 'grayscale(25%) contrast(1.05)',
+                      filter: 'contrast(1.03)',
                     }}
                   />
-                  <div className="photo-vertical-caption">
-                    EST. 2024 • SLIIT SE
+                </div>
+                <div className="photo-caption">
+                  <div style={{ fontWeight: 600, letterSpacing: '0.12em', color: 'var(--text-ink)', fontSize: '0.78rem' }}>
+                    SACHITHRA INDRACHAPA
                   </div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem', marginTop: '0.2rem', letterSpacing: '0.15em' }}>
+                    SOFTWARE ENGINEERING / SLIIT
+                  </div>
+                </div>
+                <div className="photo-vertical-caption">
+                  EST. 2024 • SLIIT
                 </div>
               </div>
             </div>
@@ -181,9 +433,10 @@ export default async function HomePage() {
           <div className="ticker-content">
             <span className="ticker-item"><span className="ticker-star">✦</span> FULL-STACK SYSTEMS</span>
             <span className="ticker-item"><span className="ticker-star">✦</span> NEXT.JS APP ROUTER</span>
-            <span className="ticker-item"><span className="ticker-star">✦</span> MONGODB & GRIDFS</span>
+            <span className="ticker-item"><span className="ticker-star">✦</span> MONGODB ATLAS & GRIDFS</span>
             <span className="ticker-item"><span className="ticker-star">✦</span> DEVOPS & CI/CD</span>
             <span className="ticker-item"><span className="ticker-star">✦</span> CLEAN MINIMAL ARCHITECTURE</span>
+            <span className="ticker-item"><span className="ticker-star">✦</span> SLIIT UNDERGRADUATE</span>
           </div>
         </div>
       </div>
@@ -255,13 +508,17 @@ export default async function HomePage() {
                 <span className="quick-facts-val">Colombo, Sri Lanka</span>
               </div>
               <div className="quick-facts-row">
+                <span className="quick-facts-label">Core Stack</span>
+                <span className="quick-facts-val">TypeScript, Next.js, Mongo</span>
+              </div>
+              <div className="quick-facts-row">
                 <span className="quick-facts-label">Storage</span>
                 <span className="quick-facts-val">MongoDB Atlas & GridFS</span>
               </div>
               <div className="quick-facts-row">
                 <span className="quick-facts-label">Resume</span>
                 <span className="quick-facts-val">
-                  <a href={resumeUrl} download className="btn-editorial-text" style={{ fontSize: '0.8rem' }}>
+                  <a href={resumeUrl} download="Sachithra_Indrachapa_Resume.pdf" className="btn-editorial-text" style={{ fontSize: '0.8rem' }}>
                     Download PDF ↗
                   </a>
                 </span>
@@ -297,22 +554,22 @@ export default async function HomePage() {
               {
                 num: '01',
                 category: 'FRONTEND',
-                tools: 'React, Next.js, TypeScript, Tailwind CSS, Vanilla CSS, State Management',
+                tools: 'React, Next.js, TypeScript, Tailwind CSS, Vanilla CSS, Redux, State Management',
               },
               {
                 num: '02',
                 category: 'BACKEND',
-                tools: 'Node.js, Express, Mongoose, RESTful APIs, C#, .NET Framework',
+                tools: 'Node.js, Express, Mongoose, RESTful APIs, C#, .NET Framework, Clean Architecture',
               },
               {
                 num: '03',
-                category: 'DATABASE',
+                category: 'DATABASES',
                 tools: 'MongoDB & GridFS Chunk Streaming, PostgreSQL, MySQL, SQLite, Room DB',
               },
               {
                 num: '04',
-                category: 'DEVOPS',
-                tools: 'AWS Cloud Infrastructure, Docker, GitHub Actions, CI/CD Automated Pipelines',
+                category: 'DEVOPS & CLOUD',
+                tools: 'AWS Cloud Infrastructure, Docker, GitHub Actions, CI/CD Automated Pipelines, Linux',
               },
               {
                 num: '05',
@@ -321,8 +578,8 @@ export default async function HomePage() {
               },
               {
                 num: '06',
-                category: 'TESTING',
-                tools: 'Jest, Artillery Load Testing, Unit Testing, Performance Benchmarking',
+                category: 'TESTING & QA',
+                tools: 'Jest, Artillery Load Testing, Unit Testing, Performance Benchmarking, Cypress',
               },
             ].map((row, idx) => (
               <div key={idx} className="editorial-list-row">
@@ -358,6 +615,9 @@ export default async function HomePage() {
               <h2 className="section-header-title">
                 Projects & builds<span className="accent-dot">.</span>
               </h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.35rem' }}>
+                Selected software and web applications engineered recently.
+              </p>
             </div>
             <span className="section-counter">03</span>
           </div>
@@ -637,6 +897,60 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
+
+            {/* TERMINAL NOTE 3 */}
+            <div
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-card)',
+                borderRadius: 'var(--radius-xs)',
+                boxShadow: 'var(--shadow-card)',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1.25fr',
+                gap: '2.5rem',
+                padding: '2.5rem',
+                alignItems: 'center',
+              }}
+              className="terminal-card-grid"
+            >
+              <div>
+                <span className="kicker-wrapper" style={{ fontSize: '0.68rem', marginBottom: '0.5rem' }}>
+                  Full-Stack Architecture
+                </span>
+                <h3 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text-ink)' }}>
+                  Optimizing Next.js 14 App Router with Streaming Server Components
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-body)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+                  Techniques for achieving instant First Contentful Paint by streaming dynamic database payloads and caching immutable media through native HTTP headers.
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <Link href="#contact" className="btn-editorial-text">
+                    Discuss Architecture &rarr;
+                  </Link>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                    6 MIN READ
+                  </span>
+                </div>
+              </div>
+
+              {/* Terminal Window Mockup */}
+              <div className="terminal-window">
+                <div className="terminal-header">
+                  <span className="terminal-dot red" />
+                  <span className="terminal-dot yellow" />
+                  <span className="terminal-dot green" />
+                  <span className="terminal-title">cache-headers.ts</span>
+                </div>
+                <div className="terminal-content">
+                  <span style={{ color: 'var(--code-comment)' }}>// Fast HTTP caching for immutable GridFS assets</span>{'\n'}
+                  <span style={{ color: 'var(--code-keyword)' }}>export const</span> headers = {'{\n'}
+                  {'  '}<span style={{ color: 'var(--code-string)' }}>&apos;Cache-Control&apos;</span>: <span style={{ color: 'var(--code-string)' }}>&apos;public, max-age=31536000, immutable&apos;</span>,{'\n'}
+                  {'  '}<span style={{ color: 'var(--code-string)' }}>&apos;ETag&apos;</span>: `&quot;${'{'}file.md5{'}'}&quot;`,{'\n'}
+                  {'  '}<span style={{ color: 'var(--code-string)' }}>&apos;Content-Type&apos;</span>: file.contentType || <span style={{ color: 'var(--code-string)' }}>&apos;application/octet-stream&apos;</span>,{'\n'}
+                  {'}'};
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -805,7 +1119,7 @@ export default async function HomePage() {
                   STORAGE: MONGO GRIDFS
                 </p>
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                  VERIFIED ATTESTATIONS: 5 CERTIFICATES
+                  VERIFIED ATTESTATIONS: {certificates.length} CERTIFICATES
                 </p>
               </div>
             </div>
@@ -879,9 +1193,9 @@ export default async function HomePage() {
             <span className="section-counter">07</span>
           </div>
 
-          <div style={{ maxWidth: '820px', marginBottom: '3rem' }}>
+          <div style={{ maxWidth: '880px', marginBottom: '3rem' }}>
             <p style={{ fontSize: '1.25rem', color: 'var(--text-body)', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-              Have an interesting engineering project, opportunity, or just want to discuss distributed architectures and clean code?
+              Have an interesting engineering project, opportunity, or just want to discuss distributed architectures and clean code? Open for full-time software engineering roles, internships, and technical collaborations.
             </p>
 
             {/* Giant Editorial Email Headline from Screenshot */}
@@ -905,7 +1219,7 @@ export default async function HomePage() {
 
             {/* Metadata Contact Table */}
             <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-card)', borderRadius: 'var(--radius-xs)' }}>
-              <div className="quick-facts-row" style={{ padding: '1rem 1.5rem' }}>
+              <div className="quick-facts-row" style={{ padding: '1.1rem 1.5rem' }}>
                 <span className="quick-facts-label">Direct Email</span>
                 <span className="quick-facts-val">
                   <a href="mailto:sachithrai1003@gmail.com" className="btn-editorial-text">
@@ -913,15 +1227,15 @@ export default async function HomePage() {
                   </a>
                 </span>
               </div>
-              <div className="quick-facts-row" style={{ padding: '1rem 1.5rem' }}>
+              <div className="quick-facts-row" style={{ padding: '1.1rem 1.5rem' }}>
                 <span className="quick-facts-label">Phone</span>
                 <span className="quick-facts-val">+94 71 859 6632</span>
               </div>
-              <div className="quick-facts-row" style={{ padding: '1rem 1.5rem' }}>
+              <div className="quick-facts-row" style={{ padding: '1.1rem 1.5rem' }}>
                 <span className="quick-facts-label">Location</span>
                 <span className="quick-facts-val">Colombo, Sri Lanka (UTC+05:30)</span>
               </div>
-              <div className="quick-facts-row" style={{ padding: '1rem 1.5rem' }}>
+              <div className="quick-facts-row" style={{ padding: '1.1rem 1.5rem' }}>
                 <span className="quick-facts-label">Social Channels</span>
                 <span className="quick-facts-val" style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
                   <a href="https://github.com/Sachithra03" target="_blank" rel="noopener noreferrer" className="btn-editorial-text">
@@ -933,6 +1247,9 @@ export default async function HomePage() {
                 </span>
               </div>
             </div>
+
+            {/* Interactive Contact Form */}
+            <ContactForm />
           </div>
         </div>
       </section>

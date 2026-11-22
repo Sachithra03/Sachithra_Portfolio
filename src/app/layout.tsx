@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Link from 'next/link';
-import { Lock } from 'lucide-react';
+import { Navigation } from '@/components/Navigation';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://sachithra.dev'),
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: '%s | Sachithra Indrachapa',
   },
   description:
-    'Software Engineering undergraduate at SLIIT specializing in scalable full-stack web and mobile systems, distributed architectures, and minimalist design.',
+    'Software Engineering undergraduate at SLIIT specializing in modern web technologies, full stack development and DevOps with clean minimalist architecture.',
   keywords: [
     'Sachithra Indrachapa',
     'Software Engineer',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Sachithra Indrachapa — Software Engineer',
-    description: 'Portfolio & Headless CMS powered by Next.js App Router and MongoDB GridFS.',
+    description: 'Minimal Editorial Portfolio & Headless CMS powered by Next.js and MongoDB GridFS.',
   },
   robots: {
     index: true,
@@ -49,106 +49,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Editorial Top Navigation */}
-        <header
-          style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 40,
-            backgroundColor: 'rgba(247, 244, 238, 0.94)',
-            backdropFilter: 'blur(10px)',
-            borderBottom: '1px solid var(--border-hairline)',
-          }}
-        >
-          <div
-            className="container"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: '4.25rem',
-            }}
-          >
-            <Link
-              href="/"
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.35rem',
-                fontWeight: 600,
-                letterSpacing: '-0.02em',
-                color: 'var(--text-ink)',
-                display: 'inline-flex',
-                alignItems: 'baseline',
-              }}
-            >
-              Sachithra<span className="accent-dot">.</span>
-            </Link>
+        <Navigation />
 
-            <nav
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '2rem',
-              }}
-              className="desktop-nav"
-            >
-              <Link href="/#about" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                About
-              </Link>
-              <Link href="/#stack" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Stack
-              </Link>
-              <Link href="/#projects" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Projects
-              </Link>
-              <Link href="/#notes" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Writing
-              </Link>
-              <Link href="/#timeline" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Timeline
-              </Link>
-              <Link href="/#credentials" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Credentials
-              </Link>
-              <Link href="/#contact" style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
-                Contact
-              </Link>
-
-              <a
-                href="/api/files/6b027f0774981c35017dd70c?download=true"
-                download="Sachithra_Indrachapa_Resume.pdf"
-                className="btn-ink-primary"
-                style={{ padding: '0.45rem 1.1rem', fontSize: '0.8rem' }}
-              >
-                Resume ↗
-              </a>
-
-              <Link
-                href="/admin/dashboard"
-                title="Admin Control Center"
-                style={{
-                  color: 'var(--text-muted)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '4px',
-                }}
-              >
-                <Lock size={15} />
-              </Link>
-            </nav>
-          </div>
-        </header>
-
-        {/* Main Content */}
+        {/* Main Editorial Content */}
         <main>{children}</main>
 
-        {/* Editorial Minimal Footer */}
+        {/* Minimal Editorial Footer */}
         <footer
           style={{
-            borderTop: '1px solid var(--border-hairline)',
-            backgroundColor: 'var(--bg-canvas)',
+            borderTop: '1px solid var(--border)',
+            backgroundColor: 'var(--bg-main)',
             padding: '4rem 0 3rem 0',
-            marginTop: '4rem',
+            marginTop: '5rem',
           }}
         >
           <div className="container">
@@ -166,40 +78,43 @@ export default function RootLayout({
                 <p
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '1.4rem',
+                    fontSize: '1.45rem',
                     fontWeight: 600,
                     marginBottom: '0.4rem',
+                    color: 'var(--text-primary)',
                   }}
                 >
                   Sachithra Indrachapa<span className="accent-dot">.</span>
                 </p>
-                <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', maxWidth: '320px' }}>
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: '340px', lineHeight: 1.6 }}>
                   Software Engineering undergraduate at SLIIT crafting high-integrity web & mobile systems.
                 </p>
               </div>
 
-              <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '3.5rem', flexWrap: 'wrap' }}>
                 <div>
                   <span className="kicker-wrapper" style={{ fontSize: '0.68rem', marginBottom: '0.5rem' }}>Index</span>
-                  <ul style={{ listStyle: 'none', lineHeight: 2, fontSize: '0.88rem', color: 'var(--text-body)' }}>
+                  <ul style={{ listStyle: 'none', lineHeight: 2, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
                     <li><Link href="/#about">About</Link></li>
+                    <li><Link href="/#stack">Stack</Link></li>
                     <li><Link href="/#projects">Projects</Link></li>
                     <li><Link href="/#notes">Writing</Link></li>
-                    <li><Link href="/#timeline">Timeline</Link></li>
+                    <li><Link href="/#experience">Experience</Link></li>
+                    <li><Link href="/#education">Education</Link></li>
                   </ul>
                 </div>
 
                 <div>
                   <span className="kicker-wrapper" style={{ fontSize: '0.68rem', marginBottom: '0.5rem' }}>Location</span>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>Colombo, Sri Lanka</p>
-                  <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>UTC+05:30 (IST)</p>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', fontWeight: 500 }}>Colombo, Sri Lanka</p>
+                  <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>UTC+05:30 (IST)</p>
                 </div>
               </div>
             </div>
 
             <div
               style={{
-                borderTop: '1px solid var(--border-hairline)',
+                borderTop: '1px solid var(--border)',
                 paddingTop: '2rem',
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -207,7 +122,7 @@ export default function RootLayout({
                 flexWrap: 'wrap',
                 gap: '1rem',
                 fontSize: '0.8rem',
-                color: 'var(--text-muted)',
+                color: 'var(--text-secondary)',
               }}
             >
               <p>© {new Date().getFullYear()} Sachithra Indrachapa. All rights reserved.</p>
