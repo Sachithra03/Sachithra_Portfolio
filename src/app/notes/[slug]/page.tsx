@@ -44,14 +44,16 @@ export default async function NoteDetailPage({ params }: NotePageProps) {
       <article className="container-narrow">
         {/* Back Link */}
         <Link
-          href="/#notes"
+          href="/#writing"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.4rem',
-            color: 'var(--text-muted)',
+            color: 'var(--muted-foreground)',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.85rem',
+            fontSize: '0.82rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
             marginBottom: '2.5rem',
           }}
         >

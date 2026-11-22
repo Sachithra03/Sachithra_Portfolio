@@ -51,14 +51,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       <div className="container-narrow">
         {/* Back Link */}
         <Link
-          href="/#projects"
+          href="/#work"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.4rem',
-            color: 'var(--text-muted)',
+            color: 'var(--muted-foreground)',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.85rem',
+            fontSize: '0.82rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
             marginBottom: '2.5rem',
           }}
         >
