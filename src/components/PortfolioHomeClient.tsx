@@ -24,6 +24,16 @@ interface PortfolioHomeClientProps {
   };
 }
 
+function safeYear(val: any, fallback = ''): string {
+  if (!val) return fallback;
+  const d = new Date(val);
+  if (isNaN(d.getTime())) {
+    if (typeof val === 'string' && val.length >= 4) return val.slice(0, 4);
+    return fallback;
+  }
+  return String(d.getFullYear());
+}
+
 export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
@@ -590,7 +600,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 >
                   <div>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 700 }}>
-                      {new Date(exp.startDate).getFullYear()} — {exp.current ? 'PRESENT' : '2025'}
+                      {safeYear(exp.startDate, '2023')} — {exp.current ? 'PRESENT' : safeYear(exp.endDate, '2025')}
                     </span>
                     <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
                       {exp.location}
@@ -627,7 +637,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 >
                   <div>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 700 }}>
-                      {new Date(edu.startDate).getFullYear()} — {edu.endDate ? new Date(edu.endDate).getFullYear() : '2026'}
+                      {safeYear(edu.startDate, '2022')} — {edu.endDate ? safeYear(edu.endDate, '2026') : '2026'}
                     </span>
                     <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
                       ACADEMIC DEGREE

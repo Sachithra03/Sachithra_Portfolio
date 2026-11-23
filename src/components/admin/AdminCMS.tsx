@@ -39,6 +39,34 @@ type Tab =
   | 'profile'
   | 'socials';
 
+function safeDateInput(val?: string | Date | null): string {
+  if (!val) return '';
+  const d = new Date(val);
+  if (isNaN(d.getTime())) {
+    if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val)) return val;
+    if (typeof val === 'string' && /^\d{4}$/.test(val)) return `${val}-01-01`;
+    return '';
+  }
+  return d.toISOString().split('T')[0];
+}
+
+function safeDisplayYear(val?: string | Date | null, fallback = 'Present'): string {
+  if (!val) return fallback;
+  const d = new Date(val);
+  if (isNaN(d.getTime())) {
+    if (typeof val === 'string' && val.length >= 4) return val.slice(0, 4);
+    return fallback;
+  }
+  return String(d.getFullYear());
+}
+
+function safeDisplayDateMonthYear(val?: string | Date | null, fallback = '—'): string {
+  if (!val) return fallback;
+  const d = new Date(val);
+  if (isNaN(d.getTime())) return typeof val === 'string' ? val : fallback;
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
 interface AdminCMSProps {
   initialEmail: string;
 }
@@ -448,7 +476,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                 setEditingItem({
                   title: '',
                   issuer: '',
-                  issueDate: new Date().toISOString().split('T')[0],
+                  issueDate: safeDateInput(new Date()),
                   description: '',
                   credentialUrl: '',
                   coverImageId: '',
@@ -492,7 +520,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                       <p style={{ fontSize: '0.8rem', color: 'var(--accent-burnt)' }}>{cert.issuer}</p>
                     </td>
                     <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
-                      {new Date(cert.issueDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                      {safeDisplayDateMonthYear(cert.issueDate)}
                     </td>
                     <td>
                       {cert.fileId ? (
@@ -509,7 +537,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                           onClick={() => {
                             setEditingItem({
                               ...cert,
-                              issueDate: new Date(cert.issueDate).toISOString().split('T')[0],
+                              issueDate: safeDateInput(cert.issueDate),
                             });
                             setActiveModal('certificate');
                           }}
@@ -545,7 +573,8 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                   role: '',
                   location: 'Sri Lanka',
                   employmentType: 'full-time',
-                  startDate: new Date().toISOString().split('T')[0],
+                  startDate: safeDateInput(new Date()),
+                  endDate: '',
                   current: true,
                   description: '',
                   achievements: [],
@@ -574,7 +603,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                       <p style={{ fontSize: '0.85rem', color: 'var(--accent-burnt)' }}>{exp.company} — {exp.location}</p>
                     </td>
                     <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
-                      {new Date(exp.startDate).getFullYear()} - {exp.current ? 'Present' : exp.endDate ? new Date(exp.endDate).getFullYear() : 'Present'}
+                      {safeDisplayYear(exp.startDate, '—')} - {exp.current ? 'Present' : safeDisplayYear(exp.endDate, 'Present')}
                     </td>
                     <td><span className="tag-editorial">{exp.employmentType}</span></td>
                     <td>
@@ -583,8 +612,8 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                           onClick={() => {
                             setEditingItem({
                               ...exp,
-                              startDate: new Date(exp.startDate).toISOString().split('T')[0],
-                              endDate: exp.endDate ? new Date(exp.endDate).toISOString().split('T')[0] : '',
+                              startDate: safeDateInput(exp.startDate),
+                              endDate: safeDateInput(exp.endDate),
                             });
                             setActiveModal('experience');
                           }}
@@ -619,7 +648,8 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                   institution: '',
                   degree: '',
                   fieldOfStudy: '',
-                  startDate: new Date().toISOString().split('T')[0],
+                  startDate: safeDateInput(new Date()),
+                  endDate: '',
                   current: false,
                   grade: '',
                   description: '',
@@ -653,8 +683,8 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                           onClick={() => {
                             setEditingItem({
                               ...edu,
-                              startDate: new Date(edu.startDate).toISOString().split('T')[0],
-                              endDate: edu.endDate ? new Date(edu.endDate).toISOString().split('T')[0] : '',
+                              startDate: safeDateInput(edu.startDate),
+                              endDate: safeDateInput(edu.endDate),
                             });
                             setActiveModal('education');
                           }}
@@ -1239,6 +1269,721 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
               <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
               <button type="submit" className="btn-editorial-primary">Save Certificate</button>
+            </div>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* MODAL: Experience Create / Edit */}
+      {activeModal === 'experience' && editingItem && (
+        <ModalWrapper
+          title={editingItem._id ? 'Edit Experience' : 'Add Experience Record'}
+          onClose={() => setActiveModal(null)}
+        >
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const url = editingItem._id ? `/api/admin/experience/${editingItem._id}` : '/api/admin/experience';
+              const method = editingItem._id ? 'PUT' : 'POST';
+              try {
+                const payload = {
+                  ...editingItem,
+                  achievements: Array.isArray(editingItem.achievements)
+                    ? editingItem.achievements
+                    : typeof editingItem.achievements === 'string'
+                      ? editingItem.achievements.split('\n').map((s: string) => s.trim()).filter(Boolean)
+                      : [],
+                  technologies: Array.isArray(editingItem.technologies)
+                    ? editingItem.technologies
+                    : typeof editingItem.technologies === 'string'
+                      ? editingItem.technologies.split(',').map((s: string) => s.trim()).filter(Boolean)
+                      : [],
+                  order: Number(editingItem.order) || 0,
+                  current: Boolean(editingItem.current),
+                  endDate: editingItem.current ? undefined : (editingItem.endDate || undefined),
+                };
+                const res = await fetch(url, {
+                  method,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const errData = await res.json();
+                  throw new Error(errData.error || 'Failed to save experience');
+                }
+                showNotification(`Experience ${editingItem._id ? 'updated' : 'created'} successfully`);
+                setActiveModal(null);
+                refreshData();
+              } catch (err: unknown) {
+                showNotification(err instanceof Error ? err.message : 'Error', 'error');
+              }
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Job Title / Role</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Full-Stack Engineer"
+                  value={editingItem.role || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, role: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Company / Organization</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Luvi Clothing"
+                  value={editingItem.company || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, company: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Location</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Colombo, Sri Lanka (or Remote)"
+                  value={editingItem.location || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, location: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Employment Type</label>
+                <select
+                  value={editingItem.employmentType || 'full-time'}
+                  onChange={(e) => setEditingItem({ ...editingItem, employmentType: e.target.value })}
+                  style={{ width: '100%' }}
+                >
+                  <option value="full-time">Full-time</option>
+                  <option value="part-time">Part-time</option>
+                  <option value="internship">Internship</option>
+                  <option value="contract">Contract</option>
+                  <option value="freelance">Freelance</option>
+                </select>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Start Date</label>
+                <input
+                  type="date"
+                  required
+                  value={safeDateInput(editingItem.startDate)}
+                  onChange={(e) => setEditingItem({ ...editingItem, startDate: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                  End Date {editingItem.current && <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Present)</span>}
+                </label>
+                <input
+                  type="date"
+                  disabled={editingItem.current}
+                  value={editingItem.current ? '' : safeDateInput(editingItem.endDate)}
+                  onChange={(e) => setEditingItem({ ...editingItem, endDate: e.target.value })}
+                  style={{ width: '100%', opacity: editingItem.current ? 0.5 : 1 }}
+                />
+              </div>
+            </div>
+
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={Boolean(editingItem.current)}
+                onChange={(e) => setEditingItem({ ...editingItem, current: e.target.checked, endDate: e.target.checked ? '' : editingItem.endDate })}
+              />
+              Currently working in this role
+            </label>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Description</label>
+              <textarea
+                rows={3}
+                required
+                placeholder="High-level summary of responsibilities, architecture, achievements..."
+                value={editingItem.description || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                Key Achievements (One bullet point per line)
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Architected responsive web application&#10;Integrated secure payment gateway"
+                value={Array.isArray(editingItem.achievements) ? editingItem.achievements.join('\n') : (editingItem.achievements || '')}
+                onChange={(e) => setEditingItem({ ...editingItem, achievements: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                Technologies (comma separated)
+              </label>
+              <input
+                type="text"
+                placeholder="Next.js, TypeScript, Docker, MongoDB"
+                value={Array.isArray(editingItem.technologies) ? editingItem.technologies.join(', ') : (editingItem.technologies || '')}
+                onChange={(e) => setEditingItem({ ...editingItem, technologies: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', alignItems: 'center' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Display Order</label>
+                <input
+                  type="number"
+                  value={editingItem.order ?? 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, order: parseInt(e.target.value, 10) || 0 })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <FileUploader
+                label="Company Logo (GridFS)"
+                documentType="company-logo"
+                currentFileId={editingItem.logoFileId}
+                onUploadSuccess={(fileId) => setEditingItem({ ...editingItem, logoFileId: fileId })}
+              />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
+              <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
+              <button type="submit" className="btn-editorial-primary">Save Experience</button>
+            </div>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* MODAL: Education Create / Edit */}
+      {activeModal === 'education' && editingItem && (
+        <ModalWrapper
+          title={editingItem._id ? 'Edit Education' : 'Add Education Record'}
+          onClose={() => setActiveModal(null)}
+        >
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const url = editingItem._id ? `/api/admin/education/${editingItem._id}` : '/api/admin/education';
+              const method = editingItem._id ? 'PUT' : 'POST';
+              try {
+                const payload = {
+                  ...editingItem,
+                  achievements: Array.isArray(editingItem.achievements)
+                    ? editingItem.achievements
+                    : typeof editingItem.achievements === 'string'
+                      ? editingItem.achievements.split('\n').map((s: string) => s.trim()).filter(Boolean)
+                      : [],
+                  order: Number(editingItem.order) || 0,
+                  current: Boolean(editingItem.current),
+                  endDate: editingItem.current ? undefined : (editingItem.endDate || undefined),
+                };
+                const res = await fetch(url, {
+                  method,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const errData = await res.json();
+                  throw new Error(errData.error || 'Failed to save education');
+                }
+                showNotification(`Education ${editingItem._id ? 'updated' : 'created'} successfully`);
+                setActiveModal(null);
+                refreshData();
+              } catch (err: unknown) {
+                showNotification(err instanceof Error ? err.message : 'Error', 'error');
+              }
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Degree / Qualification</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. BSc (Hons) in Information Technology Specialising in Software Engineering"
+                value={editingItem.degree || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, degree: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Institution / University</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Sri Lanka Institute of Information Technology (SLIIT)"
+                  value={editingItem.institution || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, institution: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Field of Study</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Software Engineering"
+                  value={editingItem.fieldOfStudy || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, fieldOfStudy: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Start Date</label>
+                <input
+                  type="date"
+                  required
+                  value={safeDateInput(editingItem.startDate)}
+                  onChange={(e) => setEditingItem({ ...editingItem, startDate: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                  End Date {editingItem.current && <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Expected / Present)</span>}
+                </label>
+                <input
+                  type="date"
+                  disabled={editingItem.current}
+                  value={editingItem.current ? '' : safeDateInput(editingItem.endDate)}
+                  onChange={(e) => setEditingItem({ ...editingItem, endDate: e.target.value })}
+                  style={{ width: '100%', opacity: editingItem.current ? 0.5 : 1 }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={Boolean(editingItem.current)}
+                  onChange={(e) => setEditingItem({ ...editingItem, current: e.target.checked, endDate: e.target.checked ? '' : editingItem.endDate })}
+                />
+                Currently enrolled here
+              </label>
+
+              <div style={{ flex: 1 }}>
+                <input
+                  type="text"
+                  placeholder="Grade / Honors (e.g. Dean's List, First Class)"
+                  value={editingItem.grade || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, grade: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Description</label>
+              <textarea
+                rows={3}
+                required
+                placeholder="Overview of curriculum, coursework, focus areas..."
+                value={editingItem.description || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                Key Achievements (One bullet point per line)
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Completed specialization in Cloud Systems&#10;Selected for Student Ambassador program"
+                value={Array.isArray(editingItem.achievements) ? editingItem.achievements.join('\n') : (editingItem.achievements || '')}
+                onChange={(e) => setEditingItem({ ...editingItem, achievements: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', alignItems: 'center' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Display Order</label>
+                <input
+                  type="number"
+                  value={editingItem.order ?? 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, order: parseInt(e.target.value, 10) || 0 })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <FileUploader
+                label="Institution Logo (GridFS)"
+                documentType="education-logo"
+                currentFileId={editingItem.logoFileId}
+                onUploadSuccess={(fileId) => setEditingItem({ ...editingItem, logoFileId: fileId })}
+              />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
+              <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
+              <button type="submit" className="btn-editorial-primary">Save Education</button>
+            </div>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* MODAL: Skill Create / Edit */}
+      {activeModal === 'skill' && editingItem && (
+        <ModalWrapper
+          title={editingItem._id ? 'Edit Skill' : 'Add Technical Skill'}
+          onClose={() => setActiveModal(null)}
+        >
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const url = editingItem._id ? `/api/admin/skills/${editingItem._id}` : '/api/admin/skills';
+              const method = editingItem._id ? 'PUT' : 'POST';
+              try {
+                const payload = {
+                  ...editingItem,
+                  proficiency: Number(editingItem.proficiency) || 85,
+                  order: Number(editingItem.order) || 0,
+                };
+                const res = await fetch(url, {
+                  method,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const errData = await res.json();
+                  throw new Error(errData.error || 'Failed to save skill');
+                }
+                showNotification(`Skill ${editingItem._id ? 'updated' : 'created'} successfully`);
+                setActiveModal(null);
+                refreshData();
+              } catch (err: unknown) {
+                showNotification(err instanceof Error ? err.message : 'Error', 'error');
+              }
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Skill Name</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Next.js, Docker, MongoDB"
+                value={editingItem.name || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Category</label>
+                <select
+                  value={editingItem.category || 'Frontend'}
+                  onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
+                  style={{ width: '100%' }}
+                >
+                  <option value="Frontend">Frontend</option>
+                  <option value="Backend">Backend</option>
+                  <option value="Mobile">Mobile</option>
+                  <option value="Cloud & DevOps">Cloud & DevOps</option>
+                  <option value="Database">Database</option>
+                  <option value="Tools">Tools</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                  Proficiency ({editingItem.proficiency || 85}%)
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={editingItem.proficiency ?? 85}
+                  onChange={(e) => setEditingItem({ ...editingItem, proficiency: parseInt(e.target.value, 10) || 0 })}
+                  style={{ width: '100%', marginTop: '0.5rem' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Icon Name (Lucide icon)</label>
+                <input
+                  type="text"
+                  placeholder="Code, Server, Database, Cloud..."
+                  value={editingItem.iconName || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, iconName: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Display Order</label>
+                <input
+                  type="number"
+                  value={editingItem.order ?? 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, order: parseInt(e.target.value, 10) || 0 })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
+              <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
+              <button type="submit" className="btn-editorial-primary">Save Skill</button>
+            </div>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* MODAL: Note Create / Edit */}
+      {activeModal === 'note' && editingItem && (
+        <ModalWrapper
+          title={editingItem._id ? 'Edit Note' : 'Add Note from the Terminal'}
+          onClose={() => setActiveModal(null)}
+        >
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const url = editingItem._id ? `/api/admin/notes/${editingItem._id}` : '/api/admin/notes';
+              const method = editingItem._id ? 'PUT' : 'POST';
+              try {
+                const payload = {
+                  ...editingItem,
+                  tags: Array.isArray(editingItem.tags)
+                    ? editingItem.tags
+                    : typeof editingItem.tags === 'string'
+                      ? editingItem.tags.split(',').map((s: string) => s.trim()).filter(Boolean)
+                      : [],
+                  readTimeMinutes: Number(editingItem.readTimeMinutes) || 3,
+                  published: Boolean(editingItem.published),
+                };
+                const res = await fetch(url, {
+                  method,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const errData = await res.json();
+                  throw new Error(errData.error || 'Failed to save note');
+                }
+                showNotification(`Note ${editingItem._id ? 'updated' : 'created'} successfully`);
+                setActiveModal(null);
+                refreshData();
+              } catch (err: unknown) {
+                showNotification(err instanceof Error ? err.message : 'Error', 'error');
+              }
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Title</label>
+              <input
+                type="text"
+                required
+                value={editingItem.title || ''}
+                onChange={(e) => {
+                  const title = e.target.value;
+                  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                  setEditingItem({ ...editingItem, title, slug: editingItem.slug || slug });
+                }}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Slug (URL identifier)</label>
+              <input
+                type="text"
+                required
+                value={editingItem.slug || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, slug: e.target.value })}
+                style={{ width: '100%', fontFamily: 'var(--font-mono)' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Brief Summary</label>
+              <textarea
+                rows={2}
+                required
+                value={editingItem.summary || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, summary: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Full Content (Markdown / Text)</label>
+              <textarea
+                rows={6}
+                required
+                value={editingItem.content || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, content: e.target.value })}
+                style={{ width: '100%', fontFamily: 'var(--font-mono)', fontSize: '0.88rem' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Tags (comma separated)</label>
+                <input
+                  type="text"
+                  placeholder="Architecture, DevOps, React"
+                  value={Array.isArray(editingItem.tags) ? editingItem.tags.join(', ') : (editingItem.tags || '')}
+                  onChange={(e) => setEditingItem({ ...editingItem, tags: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Estimated Read Time (minutes)</label>
+                <input
+                  type="number"
+                  min="1"
+                  value={editingItem.readTimeMinutes ?? 3}
+                  onChange={(e) => setEditingItem({ ...editingItem, readTimeMinutes: parseInt(e.target.value, 10) || 3 })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <FileUploader
+              label="Cover Image (GridFS, optional)"
+              documentType="note-cover"
+              currentFileId={editingItem.coverImageId}
+              onUploadSuccess={(fileId) => setEditingItem({ ...editingItem, coverImageId: fileId })}
+            />
+
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={Boolean(editingItem.published)}
+                onChange={(e) => setEditingItem({ ...editingItem, published: e.target.checked })}
+              />
+              Publish to live website
+            </label>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
+              <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
+              <button type="submit" className="btn-editorial-primary">Save Note</button>
+            </div>
+          </form>
+        </ModalWrapper>
+      )}
+
+      {/* MODAL: Social Link Create / Edit */}
+      {activeModal === 'social' && editingItem && (
+        <ModalWrapper
+          title={editingItem._id ? 'Edit Social Link' : 'Add Social Link'}
+          onClose={() => setActiveModal(null)}
+        >
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const url = editingItem._id ? `/api/admin/socials/${editingItem._id}` : '/api/admin/socials';
+              const method = editingItem._id ? 'PUT' : 'POST';
+              try {
+                const payload = {
+                  ...editingItem,
+                  order: Number(editingItem.order) || 0,
+                  isPublic: Boolean(editingItem.isPublic),
+                };
+                const res = await fetch(url, {
+                  method,
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const errData = await res.json();
+                  throw new Error(errData.error || 'Failed to save social link');
+                }
+                showNotification(`Social link ${editingItem._id ? 'updated' : 'created'} successfully`);
+                setActiveModal(null);
+                refreshData();
+              } catch (err: unknown) {
+                showNotification(err instanceof Error ? err.message : 'Error', 'error');
+              }
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Platform Name</label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. GitHub, LinkedIn, X / Twitter"
+                value={editingItem.platform || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, platform: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Profile URL</label>
+              <input
+                type="url"
+                required
+                placeholder="https://..."
+                value={editingItem.url || ''}
+                onChange={(e) => setEditingItem({ ...editingItem, url: e.target.value })}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Icon</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Github, Linkedin, Twitter, Mail, Globe"
+                  value={editingItem.icon || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, icon: e.target.value })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Display Order</label>
+                <input
+                  type="number"
+                  value={editingItem.order ?? 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, order: parseInt(e.target.value, 10) || 0 })}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={editingItem.isPublic ?? true}
+                onChange={(e) => setEditingItem({ ...editingItem, isPublic: e.target.checked })}
+              />
+              Show publicly in portfolio
+            </label>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
+              <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
+              <button type="submit" className="btn-editorial-primary">Save Social Link</button>
             </div>
           </form>
         </ModalWrapper>
