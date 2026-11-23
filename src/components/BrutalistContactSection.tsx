@@ -173,7 +173,7 @@ export function BrutalistContactSection() {
                   Phone / WhatsApp
                 </span>
                 <p style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                  +94 71 859 6632
+                  +94 76 394 7735
                 </p>
               </div>
 
