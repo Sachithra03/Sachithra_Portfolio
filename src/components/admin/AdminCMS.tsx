@@ -1906,19 +1906,129 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+                Categories & Topics (Select all that apply)
+              </label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                {([
+                  'Architecture',
+                  'DevOps',
+                  'Full-Stack',
+                  'Databases',
+                  'Engineering',
+                  'Mobile',
+                  'Design',
+                  'Career',
+                ] as const).map((cat) => {
+                  const normalizeTag = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                  const currentTags: string[] = Array.isArray(editingItem.tags)
+                    ? editingItem.tags
+                    : typeof editingItem.tags === 'string'
+                      ? editingItem.tags.split(',').map((s: string) => s.trim()).filter(Boolean)
+                      : [];
+                  const isChecked = currentTags.some((t) => normalizeTag(t) === normalizeTag(cat));
+                  return (
+                    <label
+                      key={cat}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        padding: '0.4rem 0.75rem',
+                        borderRadius: '2px',
+                        border: isChecked ? '1px solid var(--accent-burnt)' : '1px solid var(--border-medium)',
+                        backgroundColor: isChecked ? 'var(--accent-burnt-soft)' : 'var(--bg-surface)',
+                        color: isChecked ? 'var(--accent-burnt)' : 'var(--text-secondary)',
+                        fontSize: '0.82rem',
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: isChecked ? 700 : 500,
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {
+                          let updated: string[];
+                          if (isChecked) {
+                            updated = currentTags.filter((t) => normalizeTag(t) !== normalizeTag(cat));
+                          } else {
+                            updated = [...currentTags, cat];
+                          }
+                          setEditingItem({ ...editingItem, tags: updated });
+                        }}
+                        style={{ cursor: 'pointer', accentColor: 'var(--accent-burnt)' }}
+                      />
+                      <span>{cat.toUpperCase()}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Tags (comma separated)</label>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                  Additional Custom Tags (Optional, comma-separated)
+                </label>
                 <input
                   type="text"
-                  placeholder="Architecture, DevOps, React"
-                  value={Array.isArray(editingItem.tags) ? editingItem.tags.join(', ') : (editingItem.tags || '')}
-                  onChange={(e) => setEditingItem({ ...editingItem, tags: e.target.value })}
+                  placeholder="e.g. Next.js, Docker, Microservices, PayHere"
+                  value={
+                    Array.isArray(editingItem.tags)
+                      ? editingItem.tags
+                          .filter(
+                            (t: string) =>
+                              ![
+                                'architecture',
+                                'devops',
+                                'fullstack',
+                                'databases',
+                                'engineering',
+                                'mobile',
+                                'design',
+                                'career',
+                              ].includes(t.toLowerCase().replace(/[^a-z0-9]/g, ''))
+                          )
+                          .join(', ')
+                      : typeof editingItem.tags === 'string'
+                        ? editingItem.tags
+                        : ''
+                  }
+                  onChange={(e) => {
+                    const customTags = e.target.value
+                      .split(',')
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    const currentTags: string[] = Array.isArray(editingItem.tags)
+                      ? editingItem.tags
+                      : typeof editingItem.tags === 'string'
+                        ? editingItem.tags.split(',').map((s: string) => s.trim()).filter(Boolean)
+                        : [];
+                    const presetTags = currentTags.filter((t: string) =>
+                      [
+                        'architecture',
+                        'devops',
+                        'fullstack',
+                        'databases',
+                        'engineering',
+                        'mobile',
+                        'design',
+                        'career',
+                      ].includes(t.toLowerCase().replace(/[^a-z0-9]/g, ''))
+                    );
+                    setEditingItem({ ...editingItem, tags: [...presetTags, ...customTags] });
+                  }}
                   style={{ width: '100%' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>Estimated Read Time (minutes)</label>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.3rem' }}>
+                  Estimated Read Time (minutes)
+                </label>
                 <input
                   type="number"
                   min="1"

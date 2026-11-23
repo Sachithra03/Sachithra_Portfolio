@@ -21,12 +21,25 @@ export function InteractiveWritingsTable({ notes }: InteractiveWritingsTableProp
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  const categories = ['ALL', 'ARCHITECTURE', 'DEVOPS', 'FULL-STACK', 'DATABASES'];
+  const categories = ['ALL', 'ARCHITECTURE', 'DEVOPS', 'FULL-STACK', 'DATABASES', 'ENGINEERING', 'MOBILE'];
+
+  const normalize = (str: string) => str.replace(/[^A-Z0-9]/gi, '').toUpperCase();
 
   const filteredNotes = notes.filter((note) => {
     if (selectedCategory === 'ALL') return true;
-    return note.tags?.some((t) => t.toUpperCase().includes(selectedCategory));
+    const targetNorm = normalize(selectedCategory);
+    return note.tags?.some((t) => normalize(t).includes(targetNorm));
   });
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return '2026.04.10';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '2026.04.10';
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}.${m}.${day}`;
+  };
 
   return (
     <div>
@@ -131,7 +144,7 @@ export function InteractiveWritingsTable({ notes }: InteractiveWritingsTableProp
                     color: 'var(--muted-foreground)',
                   }}
                 >
-                  2026.04.10
+                  {formatDate(note.publishedAt)}
                 </span>
 
                 <div className="hide-mobile-col">
