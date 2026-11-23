@@ -265,7 +265,7 @@ async function getPortfolioData() {
       profile: profileDoc ? JSON.parse(JSON.stringify(profileDoc)) : fallback.profile,
       projects: projects && projects.length > 0 ? JSON.parse(JSON.stringify(projects)) : fallback.projects,
       certificates: certificates && certificates.length > 0 ? JSON.parse(JSON.stringify(certificates)) : fallback.certificates,
-      experiences: experiences && experiences.length > 0 ? JSON.parse(JSON.stringify(experiences)) : fallback.experiences,
+      experiences: Array.isArray(experiences) ? JSON.parse(JSON.stringify(experiences)) : fallback.experiences,
       educations: educations && educations.length > 0 ? JSON.parse(JSON.stringify(educations)) : fallback.educations,
       skills: skills && skills.length > 0 ? JSON.parse(JSON.stringify(skills)) : fallback.skills,
       notes: notes && notes.length > 0 ? JSON.parse(JSON.stringify(notes)) : fallback.notes,
