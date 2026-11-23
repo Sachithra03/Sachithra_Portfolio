@@ -19,6 +19,7 @@ const ExperienceSchema = z.object({
   technologies: z.array(z.string()).default([]),
   logoFileId: z.string().optional().nullable(),
   order: z.number().default(0),
+  isVisible: z.boolean().default(true).optional(),
 });
 
 export async function GET(req: NextRequest) {

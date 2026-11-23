@@ -252,7 +252,7 @@ async function getPortfolioData() {
       Profile.findOne().lean(),
       Project.find().sort({ order: 1, createdAt: -1 }).lean(),
       Certificate.find().sort({ order: 1, issueDate: -1 }).lean(),
-      Experience.find().sort({ order: 1, startDate: -1 }).lean(),
+      Experience.find({ isVisible: { $ne: false } }).sort({ order: 1, startDate: -1 }).lean(),
       Education.find().sort({ order: 1, startDate: -1 }).lean(),
       Skill.find().sort({ category: 1, order: 1 }).lean(),
       Note.find({ published: true }).sort({ publishedAt: -1, createdAt: -1 }).lean(),

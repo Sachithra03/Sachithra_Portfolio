@@ -13,6 +13,7 @@ export interface IExperience extends Document {
   technologies: string[];
   logoFileId?: mongoose.Types.ObjectId;
   order: number;
+  isVisible: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -74,6 +75,11 @@ const ExperienceSchema = new Schema<IExperience>(
     order: {
       type: Number,
       default: 0,
+      index: true,
+    },
+    isVisible: {
+      type: Boolean,
+      default: true,
       index: true,
     },
   },

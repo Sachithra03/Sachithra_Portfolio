@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     await connectToDatabase();
-    const experiences = await Experience.find().sort({ order: 1, startDate: -1 });
+    const experiences = await Experience.find({ isVisible: { $ne: false } }).sort({ order: 1, startDate: -1 });
     return NextResponse.json({ success: true, experiences });
   } catch (error: unknown) {
     const errorMsg = error instanceof Error ? error.message : 'Failed to fetch experience';

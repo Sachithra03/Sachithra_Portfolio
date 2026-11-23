@@ -26,6 +26,7 @@ import {
   Image as ImageIcon,
   RefreshCw,
   Eye,
+  EyeOff,
 } from 'lucide-react';
 
 type Tab =
@@ -172,6 +173,23 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
       refreshData();
     } catch (err: unknown) {
       showNotification(err instanceof Error ? err.message : 'Delete failed', 'error');
+    }
+  };
+
+  // Toggle Experience Visibility
+  const toggleExperienceVisibility = async (exp: any) => {
+    const newVisibility = exp.isVisible === false ? true : false;
+    try {
+      const res = await fetch(`/api/admin/experience/${exp._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isVisible: newVisibility }),
+      });
+      if (!res.ok) throw new Error('Failed to update visibility');
+      showNotification(`"${exp.role}" set to ${newVisibility ? 'public' : 'hidden'}`);
+      refreshData();
+    } catch (err: unknown) {
+      showNotification(err instanceof Error ? err.message : 'Error', 'error');
     }
   };
 
@@ -579,6 +597,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                   description: '',
                   achievements: [],
                   technologies: [],
+                  isVisible: true,
                   order: experiences.length + 1,
                 });
                 setActiveModal('experience');
@@ -592,6 +611,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                   <th>Company & Role</th>
                   <th>Period</th>
                   <th>Type</th>
+                  <th>Visibility</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -607,6 +627,37 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                     </td>
                     <td><span className="tag-editorial">{exp.employmentType}</span></td>
                     <td>
+                      <button
+                        onClick={() => toggleExperienceVisibility(exp)}
+                        className={exp.isVisible !== false ? 'tag-accent' : 'tag-editorial'}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          cursor: 'pointer',
+                          padding: '0.35rem 0.65rem',
+                          fontSize: '0.78rem',
+                          fontFamily: 'var(--font-mono)',
+                          border: exp.isVisible !== false ? '1px solid var(--accent-burnt)' : '1px solid var(--border-medium)',
+                          backgroundColor: exp.isVisible !== false ? 'var(--accent-burnt-soft)' : 'transparent',
+                          color: exp.isVisible !== false ? 'var(--accent-burnt)' : 'var(--text-muted)',
+                        }}
+                        title={exp.isVisible !== false ? 'Public on portfolio. Click to hide.' : 'Hidden from portfolio. Click to make public.'}
+                      >
+                        {exp.isVisible !== false ? (
+                          <>
+                            <Eye size={13} />
+                            <span>PUBLIC</span>
+                          </>
+                        ) : (
+                          <>
+                            <EyeOff size={13} />
+                            <span>HIDDEN</span>
+                          </>
+                        )}
+                      </button>
+                    </td>
+                    <td>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
                         <button
                           onClick={() => {
@@ -614,6 +665,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                               ...exp,
                               startDate: safeDateInput(exp.startDate),
                               endDate: safeDateInput(exp.endDate),
+                              isVisible: exp.isVisible !== false,
                             });
                             setActiveModal('experience');
                           }}
@@ -1300,6 +1352,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                       : [],
                   order: Number(editingItem.order) || 0,
                   current: Boolean(editingItem.current),
+                  isVisible: editingItem.isVisible !== false,
                   endDate: editingItem.current ? undefined : (editingItem.endDate || undefined),
                 };
                 const res = await fetch(url, {
@@ -1463,6 +1516,15 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
               />
             </div>
 
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', cursor: 'pointer', marginTop: '0.25rem' }}>
+              <input
+                type="checkbox"
+                checked={editingItem.isVisible !== false}
+                onChange={(e) => setEditingItem({ ...editingItem, isVisible: e.target.checked })}
+              />
+              Show publicly on portfolio (Visible)
+            </label>
+
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem', marginTop: '1.5rem' }}>
               <button type="button" onClick={() => setActiveModal(null)} className="btn-editorial-secondary">Cancel</button>
               <button type="submit" className="btn-editorial-primary">Save Experience</button>
@@ -1492,6 +1554,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
                       : [],
                   order: Number(editingItem.order) || 0,
                   current: Boolean(editingItem.current),
+                  isVisible: editingItem.isVisible !== false,
                   endDate: editingItem.current ? undefined : (editingItem.endDate || undefined),
                 };
                 const res = await fetch(url, {

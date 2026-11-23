@@ -37,6 +37,7 @@ export async function PUT(
     Object.assign(existing, body);
     if (body.startDate) existing.startDate = new Date(body.startDate);
     if (body.endDate) existing.endDate = new Date(body.endDate);
+    if (body.isVisible !== undefined) existing.isVisible = Boolean(body.isVisible);
 
     await existing.save();
     return NextResponse.json({ success: true, experience: existing });
