@@ -26,9 +26,24 @@ export function BrutalistContactSection() {
     setStatus('submitting');
     setErrorMessage('');
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_0o4otsc';
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_fjv9ivl';
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'kLqZck-2vG2bSXG9I';
+    // Fetch live configuration from server (enables instant updates without re-building client chunks)
+    let serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_0o4otsc';
+    let templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_fjv9ivl';
+    let publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'kLqZck-2vG2bSXG9I';
+    let recipientEmail = 'sachithrai1003@gmail.com';
+
+    try {
+      const cfgRes = await fetch('/api/contact/config');
+      if (cfgRes.ok) {
+        const cfg = await cfgRes.json();
+        if (cfg.serviceId) serviceId = cfg.serviceId;
+        if (cfg.templateId) templateId = cfg.templateId;
+        if (cfg.publicKey) publicKey = cfg.publicKey;
+        if (cfg.recipientEmail) recipientEmail = cfg.recipientEmail;
+      }
+    } catch {
+      // Non-fatal, use defaults
+    }
 
     const templateParams = {
       name: formData.name,
@@ -38,12 +53,12 @@ export function BrutalistContactSection() {
       from_name: formData.name,
       from_email: formData.email,
       reply_to: formData.email,
-      to_email: 'sachithrai1003@gmail.com',
+      to_email: recipientEmail,
       to_name: 'Sachithra Indrachapa',
     };
 
     let emailSent = false;
-    let apiSaved = false;
+    let emailErrorMsg = '';
 
     // 1. Dispatch email directly to Sachithra's Gmail inbox via EmailJS
     try {
@@ -52,32 +67,34 @@ export function BrutalistContactSection() {
       });
       if (emailRes.status === 200 || emailRes.text === 'OK') {
         emailSent = true;
+      } else {
+        emailErrorMsg = `EmailJS error (${emailRes.status}): ${emailRes.text}`;
       }
-    } catch (emailErr: unknown) {
+    } catch (emailErr: any) {
+      emailErrorMsg = emailErr?.text || emailErr?.message || 'EmailJS rejected transmission';
       console.warn('[EmailJS] Direct inbox transmission warning:', emailErr);
     }
 
-    // 2. Persist to MongoDB through /api/contact as an immutable record
+    // 2. Persist to MongoDB through /api/contact as an immutable audit record
     try {
-      const res = await fetch('/api/contact', {
+      await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      if (res.ok) {
-        apiSaved = true;
-      }
     } catch (apiErr: unknown) {
       console.warn('[Contact API] Backup record warning:', apiErr);
     }
 
-    if (emailSent || apiSaved) {
+    if (emailSent) {
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } else {
       setStatus('error');
       setErrorMessage(
-        'Unable to dispatch message at this moment. Please copy sachithrai1003@gmail.com to reach out directly.'
+        emailErrorMsg.includes('template ID not found')
+          ? 'EmailJS template ID not found. Please verify your Template ID at https://dashboard.emailjs.com/admin/templates and set NEXT_PUBLIC_EMAILJS_TEMPLATE_ID in your .env.local.'
+          : emailErrorMsg || 'Failed to dispatch email directly. Please use the direct mail link below.'
       );
     }
   };
@@ -311,17 +328,37 @@ export function BrutalistContactSection() {
                   <div
                     style={{
                       display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.75rem',
-                      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                      flexDirection: 'column',
+                      gap: '0.65rem',
+                      padding: '0.85rem 1rem',
+                      backgroundColor: 'rgba(239, 68, 68, 0.08)',
                       border: '1px solid #EF4444',
-                      color: '#EF4444',
+                      color: 'var(--foreground)',
                       fontSize: '0.82rem',
                     }}
                   >
-                    <AlertCircle size={16} />
-                    <span>{errorMessage}</span>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', color: '#EF4444' }}>
+                      <AlertCircle size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <span style={{ lineHeight: 1.5 }}>{errorMessage}</span>
+                    </div>
+
+                    <a
+                      href={`mailto:sachithrai1003@gmail.com?subject=${encodeURIComponent(
+                        formData.subject || 'Portfolio Inquiry'
+                      )}&body=${encodeURIComponent(
+                        `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+                      )}`}
+                      className="btn-brutalist-primary"
+                      style={{
+                        alignSelf: 'flex-start',
+                        fontSize: '0.72rem',
+                        padding: '0.45rem 0.85rem',
+                        marginTop: '0.25rem',
+                      }}
+                    >
+                      <Send size={12} />
+                      TRANSMIT VIA MAIL CLIENT (GMAIL) ↗
+                    </a>
                   </div>
                 )}
 
