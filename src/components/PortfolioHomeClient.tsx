@@ -8,6 +8,7 @@ import { OrangeTickerStrip } from './OrangeTickerStrip';
 import { AmbientTerminalClip } from './AmbientTerminalClip';
 import { InteractiveProjectsTable } from './InteractiveProjectsTable';
 import { InteractiveWritingsTable } from './InteractiveWritingsTable';
+import { InteractiveCertificates } from './InteractiveCertificates';
 import { BrutalistContactSection } from './BrutalistContactSection';
 import { ExternalLink, Download, FileText, ArrowDown, Layers, Terminal } from 'lucide-react';
 
@@ -696,65 +697,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
               Formal foundation<span style={{ color: 'var(--accent)' }}>.</span>
             </h2>
 
-            <div style={{ border: '1px solid var(--line)', backgroundColor: 'var(--background)' }}>
-              {certificates.map((cert: any, idx: number) => {
-                const numStr = String(idx + 1).padStart(2, '0');
-                return (
-                  <div
-                    key={cert._id}
-                    style={{
-                      padding: '1.35rem 1.5rem',
-                      borderBottom: idx === certificates.length - 1 ? 'none' : '1px solid var(--line)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      gap: '1rem',
-                      transition: 'background-color 0.15s ease',
-                    }}
-                    className="cert-row"
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 700 }}>
-                        {numStr}
-                      </span>
-                      <div>
-                        <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                          {cert.title}
-                        </h4>
-                        <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)', marginTop: '0.2rem' }}>
-                          {cert.issuer} • {new Date(cert.issueDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                      {cert.fileId && (
-                        <a
-                          href={`/api/files/${cert.fileId}?download=true`}
-                          download={`${cert.title}.pdf`}
-                          className="btn-brutalist-primary"
-                          style={{ fontSize: '0.72rem', padding: '0.45rem 0.85rem' }}
-                        >
-                          <Download size={13} /> PDF CERT ↗
-                        </a>
-                      )}
-                      {cert.credentialUrl && (
-                        <a
-                          href={cert.credentialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-brutalist-secondary"
-                          style={{ fontSize: '0.72rem', padding: '0.45rem 0.85rem' }}
-                        >
-                          VERIFY <ExternalLink size={13} />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <InteractiveCertificates certificates={certificates} />
           </div>
         </section>
 
