@@ -7,3 +7,4 @@ export * from './Skill';
 export * from './Profile';
 export * from './Note';
 export * from './SocialLink';
+export * from './ContactMessage';

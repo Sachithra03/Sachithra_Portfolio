@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Send, CheckCircle2, AlertCircle, Copy, Check, Loader2 } from 'lucide-react';
 
 export function BrutalistContactSection() {
@@ -25,21 +26,59 @@ export function BrutalistContactSection() {
     setStatus('submitting');
     setErrorMessage('');
 
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_0o4otsc';
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_fjv9ivl';
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'kLqZck-2vG2bSXG9I';
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      from_name: formData.name,
+      from_email: formData.email,
+      reply_to: formData.email,
+      to_email: 'sachithrai1003@gmail.com',
+      to_name: 'Sachithra Indrachapa',
+    };
+
+    let emailSent = false;
+    let apiSaved = false;
+
+    // 1. Dispatch email directly to Sachithra's Gmail inbox via EmailJS
+    try {
+      const emailRes = await emailjs.send(serviceId, templateId, templateParams, {
+        publicKey: publicKey,
+      });
+      if (emailRes.status === 200 || emailRes.text === 'OK') {
+        emailSent = true;
+      }
+    } catch (emailErr: unknown) {
+      console.warn('[EmailJS] Direct inbox transmission warning:', emailErr);
+    }
+
+    // 2. Persist to MongoDB through /api/contact as an immutable record
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      if (res.ok) {
+        apiSaved = true;
+      }
+    } catch (apiErr: unknown) {
+      console.warn('[Contact API] Backup record warning:', apiErr);
+    }
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to dispatch message.');
-
+    if (emailSent || apiSaved) {
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err: unknown) {
+    } else {
       setStatus('error');
-      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong.');
+      setErrorMessage(
+        'Unable to dispatch message at this moment. Please copy sachithrai1003@gmail.com to reach out directly.'
+      );
     }
   };
 

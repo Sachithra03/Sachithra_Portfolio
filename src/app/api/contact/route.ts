@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { connectToDatabase } from '@/lib/db/mongodb';
+import { ContactMessage } from '@/models/ContactMessage';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -13,11 +15,26 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = contactSchema.parse(body);
 
-    // Log the contact message cleanly
+    // Persist message to database
+    try {
+      await connectToDatabase();
+      await ContactMessage.create({
+        name: validated.name,
+        email: validated.email,
+        subject: validated.subject,
+        message: validated.message,
+      });
+    } catch (dbErr) {
+      console.warn('[Contact Route] Failed to persist message to database:', dbErr);
+      // Non-fatal, continue with dispatch
+    }
+
+    // Log the contact message
     console.log('[Contact Message Received]', {
       name: validated.name,
       email: validated.email,
       subject: validated.subject,
+      recipient: process.env.CONTACT_RECIPIENT_EMAIL || 'sachithrai1003@gmail.com',
       timestamp: new Date().toISOString(),
     });
 
