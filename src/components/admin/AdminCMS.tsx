@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -17,11 +17,9 @@ import {
   Plus,
   Trash2,
   Edit2,
-  Upload,
   Check,
   AlertCircle,
   ExternalLink,
-  Search,
   FileText,
   Image as ImageIcon,
   RefreshCw,
@@ -75,7 +73,6 @@ interface AdminCMSProps {
 export function AdminCMS({ initialEmail }: AdminCMSProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // Data states
@@ -89,18 +86,15 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
   const [profile, setProfile] = useState<any>(null);
   const [socials, setSocials] = useState<any[]>([]);
 
-  // Search filter
-  const [searchTerm, setSearchTerm] = useState('');
-
   // Modals
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [editingItem, setEditingItem] = useState<any>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ type: string; id: string; name: string } | null>(null);
 
-  const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
+  const showNotification = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 4000);
-  };
+  }, []);
 
   const handleLogout = async () => {
     await fetch('/api/admin/auth/logout', { method: 'POST' });
@@ -109,8 +103,7 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
   };
 
   // Fetch data on tab change
-  const refreshData = async () => {
-    setLoading(true);
+  const refreshData = useCallback(async () => {
     try {
       if (activeTab === 'overview') {
         const res = await fetch('/api/admin/stats');
@@ -151,14 +144,12 @@ export function AdminCMS({ initialEmail }: AdminCMSProps) {
       }
     } catch {
       showNotification('Failed to synchronize data from server', 'error');
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [activeTab, showNotification]);
 
   useEffect(() => {
     refreshData();
-  }, [activeTab]);
+  }, [refreshData]);
 
   // Generic delete handler
   const executeDelete = async () => {

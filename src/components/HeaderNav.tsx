@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Lock, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Lock, Menu, X } from 'lucide-react';
 
 interface HeaderNavProps {
   currentTheme: 'light' | 'dark';

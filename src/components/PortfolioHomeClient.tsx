@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { FlowFieldCanvas } from './FlowFieldCanvas';
 import { HeaderNav } from './HeaderNav';
 import { OrangeTickerStrip } from './OrangeTickerStrip';
@@ -10,7 +9,7 @@ import { InteractiveProjectsTable } from './InteractiveProjectsTable';
 import { InteractiveWritingsTable } from './InteractiveWritingsTable';
 import { InteractiveCertificates } from './InteractiveCertificates';
 import { BrutalistContactSection } from './BrutalistContactSection';
-import { ExternalLink, Download, FileText, ArrowDown, Layers, Terminal } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 interface PortfolioHomeClientProps {
   data: {
@@ -140,7 +139,6 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
     certificates,
     experiences,
     educations,
-    skills,
     notes,
   } = data;
 
@@ -619,7 +617,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 EXPERIENCE &amp; ACADEMIC TIMELINE
               </div>
 
-              {experiences.map((exp: any, idx: number) => (
+              {experiences.map((exp: any) => (
                 <div
                   key={exp._id}
                   style={{
@@ -641,7 +639,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                   </div>
                   <div>
                     <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', fontWeight: 700, color: 'var(--foreground)' }}>
-                      {exp.role} <span style={{ color: 'var(--muted-foreground)', fontWeight: 400 }}>// {exp.company}</span>
+                      {exp.role} <span style={{ color: 'var(--muted-foreground)', fontWeight: 400 }}>{'// '}{exp.company}</span>
                     </h3>
                     <p style={{ fontSize: '0.95rem', color: 'var(--muted-foreground)', lineHeight: 1.7, marginTop: '0.5rem', marginBottom: '0.75rem' }}>
                       {exp.description}
@@ -657,7 +655,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 </div>
               ))}
 
-              {educations.map((edu: any, idx: number) => (
+              {educations.map((edu: any) => (
                 <div
                   key={edu._id}
                   style={{

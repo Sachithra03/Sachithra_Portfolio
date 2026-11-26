@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ExternalLink, Github, ArrowUpRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { ExternalLink, Github, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ProjectItem {
   _id: string;

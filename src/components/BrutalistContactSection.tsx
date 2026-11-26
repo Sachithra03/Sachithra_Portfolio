@@ -30,7 +30,7 @@ export function BrutalistContactSection() {
     let serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_0o4otsc';
     let templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_fjv9ivl';
     let publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'kLqZck-2vG2bSXG9I';
-    let recipientEmail = 'sachithrai1003@gmail.com';
+    const recipientEmail = 'sachithrai1003@gmail.com';
 
     try {
       const cfgRes = await fetch('/api/contact/config');
