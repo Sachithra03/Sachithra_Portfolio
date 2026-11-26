@@ -130,17 +130,17 @@ export function BrutalistContactSection() {
               marginBottom: '0.35rem',
             }}
           >
-            DIRECT INQUIRY — CLICK TO COPY
+            DIRECT INQUIRY: CLICK TO COPY
           </span>
           <span
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.6rem, 3.8vw, 2.8rem)',
+              fontSize: 'clamp(1rem, 5vw, 2.8rem)',
               fontWeight: 700,
               letterSpacing: '-0.02em',
               color: 'var(--foreground)',
               display: 'block',
-              wordBreak: 'break-all',
+              whiteSpace: 'nowrap',
             }}
           >
             sachithrai1003@gmail.com
@@ -236,35 +236,67 @@ export function BrutalistContactSection() {
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem' }}>
                   Developer Networks
                 </span>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <a
-                    href="https://github.com/Sachithra03"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.78rem',
-                      color: 'var(--accent)',
-                      textDecoration: 'none',
-                      fontWeight: 600,
-                    }}
-                  >
-                    GitHub ↗
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.78rem',
-                      color: 'var(--accent)',
-                      textDecoration: 'none',
-                      fontWeight: 600,
-                    }}
-                  >
-                    LinkedIn ↗
-                  </a>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    gap: '1px',
+                    border: '1px solid var(--line)',
+                    backgroundColor: 'var(--line)',
+                  }}
+                >
+                  {[
+                    { number: '01', name: 'GitHub', href: 'https://github.com/Sachithra03' },
+                    {
+                      number: '02',
+                      name: 'LinkedIn',
+                      href: 'https://www.linkedin.com/in/sachithra-indrachapa-9150b8190/',
+                    },
+                  ].map((network) => (
+                    <a
+                      key={network.name}
+                      href={network.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${network.name} profile in a new tab`}
+                      className="network-link"
+                      style={{
+                        minWidth: 0,
+                        padding: '0.9rem 1rem',
+                        backgroundColor: 'var(--background)',
+                        color: 'var(--foreground)',
+                        textDecoration: 'none',
+                        transition: 'background-color 0.15s ease, color 0.15s ease',
+                      }}
+                    >
+                      <div
+                        className="network-link-index"
+                        style={{
+                          fontFamily: 'var(--font-mono)',
+                          fontSize: '0.7rem',
+                          color: 'var(--muted-foreground)',
+                        }}
+                      >
+                        {network.number}
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                          marginTop: '0.3rem',
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '1rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        <span>{network.name}</span>
+                        <span aria-hidden="true">↗</span>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -502,6 +534,17 @@ export function BrutalistContactSection() {
         .btn-submit-brutalist:hover {
           background-color: var(--accent) !important;
           color: #ffffff !important;
+        }
+        .network-link:hover {
+          background-color: var(--accent) !important;
+          color: #ffffff !important;
+        }
+        .network-link:hover .network-link-index {
+          color: #ffffff !important;
+        }
+        .network-link:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: -2px;
         }
         @media (max-width: 860px) {
           .contact-split-grid {

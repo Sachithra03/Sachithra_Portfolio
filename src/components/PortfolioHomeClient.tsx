@@ -44,6 +44,8 @@ function safeYear(val: any, fallback = ''): string {
 export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [typedRole, setTypedRole] = useState(HERO_ROLES[0]);
+  const [githubRepoCount, setGithubRepoCount] = useState<number | null>(null);
+  const [githubRepoCountError, setGithubRepoCountError] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('sachithra_theme') as 'light' | 'dark' | null;
@@ -55,6 +57,29 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
         document.documentElement.classList.remove('dark');
       }
     }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch('/api/github/repositories', {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        const result: { count?: unknown } = await response.json();
+        if (!response.ok || typeof result.count !== 'number' || !Number.isInteger(result.count)) {
+          throw new Error('Public GitHub repository count is unavailable');
+        }
+        setGithubRepoCount(result.count);
+      })
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) return;
+        console.error('[GitHub repositories] Failed to load public repository count:', error);
+        setGithubRepoCountError(true);
+      });
+
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
@@ -118,10 +143,6 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
     skills,
     notes,
   } = data;
-
-  const avatarUrl = profile?.avatarImageId
-    ? `/api/files/${profile.avatarImageId}`
-    : '/api/files/6b027f0374981c35017dd701';
 
   const resumeUrl = profile?.resumeFileId
     ? `/api/files/${profile.resumeFileId}?download=true`
@@ -378,10 +399,11 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1.4fr 1fr',
-                gap: '3.5rem',
-                alignItems: 'center',
+                gridTemplateColumns: 'minmax(0, 1fr)',
+                gap: '0',
+                alignItems: 'start',
                 marginBottom: '4rem',
+                maxWidth: '900px',
               }}
               className="about-grid"
             >
@@ -402,54 +424,6 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                   </a>
                 </div>
               </div>
-
-              {/* Right Portrait with Brutalist Mount */}
-              <div>
-                <div
-                  style={{
-                    border: '1px solid var(--line)',
-                    backgroundColor: 'var(--secondary)',
-                    padding: '0.75rem',
-                    boxShadow: '6px 6px 0px var(--line)',
-                  }}
-                >
-                  <div
-                    style={{
-                      aspectRatio: '4/4.5',
-                      overflow: 'hidden',
-                      border: '1px solid var(--line)',
-                      backgroundColor: 'var(--background)',
-                    }}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={avatarUrl}
-                      alt={profile?.fullName || 'Sachithra Indrachapa'}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        display: 'block',
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      paddingTop: '0.75rem',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.68rem',
-                      textTransform: 'uppercase',
-                      color: 'var(--foreground)',
-                    }}
-                  >
-                    <span>SACHITHRA INDRACHAPA</span>
-                    <span style={{ color: 'var(--accent)' }}>SLIIT / SE</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* 4 Metric Counter Cards (from Kusal's site) */}
@@ -466,7 +440,14 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 { num: '2+', label: 'YEARS DEV EXPERIENCE' },
                 { num: '8+', label: 'PRODUCTION BUILDS SHIPPED' },
                 { num: '100%', label: 'CODE INTEGRITY & COMMITS' },
-                { num: '5+', label: 'VERIFIED ACCREDITATIONS' },
+                {
+                  num: githubRepoCountError ? 'N/A' : githubRepoCount === null ? '...' : String(githubRepoCount),
+                  label: githubRepoCountError
+                    ? 'GITHUB COUNT UNAVAILABLE'
+                    : githubRepoCount === null
+                      ? 'LOADING GITHUB COUNT'
+                      : 'PUBLIC GITHUB REPOSITORIES',
+                },
               ].map((m, idx) => (
                 <div
                   key={idx}
@@ -835,6 +816,13 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
         @media (max-width: 900px) {
           .hero-action-grid {
             grid-template-columns: 1fr 1fr !important;
+          }
+          .timeline-row {
+            grid-template-columns: minmax(0, 1fr) !important;
+            gap: 0.75rem !important;
+          }
+          .timeline-row > div {
+            min-width: 0;
           }
           .about-grid {
             grid-template-columns: 1fr !important;

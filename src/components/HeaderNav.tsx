@@ -89,9 +89,8 @@ export function HeaderNav({ currentTheme, onToggleTheme, resumeUrl }: HeaderNavP
           {[
             { href: '#about', label: 'ABOUT' },
             { href: '#work', label: 'WORK' },
-            { href: '#stack', label: 'STACK' },
+            { href: '#stack', label: 'SKILLS' },
             { href: '#writing', label: 'WRITING' },
-            { href: '#credentials', label: 'CREDENTIALS' },
             { href: '#contact', label: 'CONTACT' },
           ].map((item) => (
             <Link
@@ -232,10 +231,9 @@ export function HeaderNav({ currentTheme, onToggleTheme, resumeUrl }: HeaderNavP
           {[
             { href: '#about', label: '01 ABOUT' },
             { href: '#work', label: '02 WORK' },
-            { href: '#stack', label: '03 STACK' },
+            { href: '#stack', label: '03 SKILLS' },
             { href: '#writing', label: '04 WRITING' },
-            { href: '#credentials', label: '05 CREDENTIALS' },
-            { href: '#contact', label: '06 CONTACT' },
+            { href: '#contact', label: '05 CONTACT' },
           ].map((item) => (
             <Link
               key={item.href}
