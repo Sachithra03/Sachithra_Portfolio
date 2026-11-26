@@ -73,6 +73,7 @@ export async function GET(
     if (errorMsg.includes('not found')) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] File retrieval failed:', error);
+    return NextResponse.json({ error: 'File retrieval failed' }, { status: 500 });
   }
 }

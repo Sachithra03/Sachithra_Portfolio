@@ -10,7 +10,7 @@ export async function GET() {
     const experiences = await Experience.find({ isVisible: { $ne: false } }).sort({ order: 1, startDate: -1 });
     return NextResponse.json({ success: true, experiences });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch experience';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch experience:', error);
+    return NextResponse.json({ error: 'Failed to load experience' }, { status: 500 });
   }
 }

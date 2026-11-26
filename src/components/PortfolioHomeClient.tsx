@@ -25,6 +25,12 @@ interface PortfolioHomeClientProps {
   };
 }
 
+const HERO_ROLES = [
+  'Software Engineer',
+  'Full-Stack Developer',
+  'Mobile App Developer',
+];
+
 function safeYear(val: any, fallback = ''): string {
   if (!val) return fallback;
   const d = new Date(val);
@@ -37,6 +43,7 @@ function safeYear(val: any, fallback = ''): string {
 
 export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [typedRole, setTypedRole] = useState(HERO_ROLES[0]);
 
   useEffect(() => {
     const saved = localStorage.getItem('sachithra_theme') as 'light' | 'dark' | null;
@@ -48,6 +55,47 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
         document.documentElement.classList.remove('dark');
       }
     }
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let roleIndex = 0;
+    let characterIndex = HERO_ROLES[0].length;
+    let deleting = true;
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const step = () => {
+      const currentRole = HERO_ROLES[roleIndex];
+
+      if (deleting) {
+        characterIndex -= 1;
+        setTypedRole(currentRole.slice(0, characterIndex));
+
+        if (characterIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % HERO_ROLES.length;
+          timeout = setTimeout(step, 250);
+        } else {
+          timeout = setTimeout(step, 45);
+        }
+        return;
+      }
+
+      const nextRole = HERO_ROLES[roleIndex];
+      characterIndex += 1;
+      setTypedRole(nextRole.slice(0, characterIndex));
+
+      if (characterIndex === nextRole.length) {
+        deleting = true;
+        timeout = setTimeout(step, 1200);
+      } else {
+        timeout = setTimeout(step, 80);
+      }
+    };
+
+    timeout = setTimeout(step, 1200);
+    return () => clearTimeout(timeout);
   }, []);
 
   const toggleTheme = () => {
@@ -186,8 +234,11 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                 }}
               >
                 <span style={{ color: 'var(--muted-foreground)' }}>&gt;</span>
-                <span>Full-Stack Engineer &amp; DevOps Specialist</span>
-                <span className="cursor-blink" style={{ color: 'var(--accent)', fontWeight: 700 }}>_</span>
+                <span className="visually-hidden">
+                  Software Engineer, Full-Stack Developer, Mobile App Developer
+                </span>
+                <span aria-hidden="true">{typedRole}</span>
+                <span aria-hidden="true" className="cursor-blink" style={{ color: 'var(--accent)', fontWeight: 700 }}>_</span>
               </div>
 
               <div
@@ -207,7 +258,7 @@ export function PortfolioHomeClient({ data }: PortfolioHomeClientProps) {
                     maxWidth: '680px',
                   }}
                 >
-                  Software Engineering undergraduate at SLIIT. Building robust full-stack applications, scalable cloud infrastructure, and streaming data architectures with Next.js, Node.js, and MongoDB. Available for hire.
+                  Software Engineering undergraduate focused on full-stack web and mobile app development. I build responsive applications with Next.js, Node.js, and React Native. Available for opportunities.
                 </p>
 
                 {/* Ambient Terminal Clip */}

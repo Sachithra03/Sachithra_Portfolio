@@ -10,7 +10,7 @@ export async function GET() {
     const notes = await Note.find({ published: true }).sort({ publishedAt: -1, createdAt: -1 });
     return NextResponse.json({ success: true, notes });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch notes';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch notes:', error);
+    return NextResponse.json({ error: 'Failed to load notes' }, { status: 500 });
   }
 }

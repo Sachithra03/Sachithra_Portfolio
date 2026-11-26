@@ -10,7 +10,7 @@ export async function GET() {
     const certificates = await Certificate.find().sort({ order: 1, issueDate: -1 });
     return NextResponse.json({ success: true, certificates });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch certificates';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch certificates:', error);
+    return NextResponse.json({ error: 'Failed to load certificates' }, { status: 500 });
   }
 }

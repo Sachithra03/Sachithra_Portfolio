@@ -39,7 +39,6 @@ export function BrutalistContactSection() {
         if (cfg.serviceId) serviceId = cfg.serviceId;
         if (cfg.templateId) templateId = cfg.templateId;
         if (cfg.publicKey) publicKey = cfg.publicKey;
-        if (cfg.recipientEmail) recipientEmail = cfg.recipientEmail;
       }
     } catch {
       // Non-fatal, use defaults

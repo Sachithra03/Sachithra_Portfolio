@@ -1,34 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Terminal, Activity, Database, Cpu } from 'lucide-react';
-
 export function AmbientTerminalClip() {
-  const [logs, setLogs] = useState<string[]>([
-    'INIT_SYSTEM: mounting MongoDB Atlas cluster @ ap-southeast-1',
-    'GRIDFS_BUCKET: initialized chunk_size=261120 bytes',
-    'STREAM_PIPE: active zero-copy pipeline connected',
-    'SYS_STATUS: optimal throughput 12ms round-trip latency',
-  ]);
-
-  useEffect(() => {
-    const candidateLines = [
-      'STREAM: GET /api/files/avatar [200 OK] 548KB in 14ms',
-      'CACHE_HIT: ETag "6b027f0774981" [304 Not Modified]',
-      'GC_OPTIMIZER: heap delta +0.4MB within threshold',
-      'KERNEL_SYSCTL: TCP BBR congestion control verified',
-      'MONITOR: health check pulse verified (200 OK)',
-      'MONGODB: Atlas connection pool warm (5/10 active)',
-      'DISPATCH: contact form inquiry verified and routed',
-    ];
-
-    const timer = setInterval(() => {
-      const newLine = candidateLines[Math.floor(Math.random() * candidateLines.length)];
-      setLogs((prev) => [...prev.slice(-4), newLine]);
-    }, 3800);
-
-    return () => clearInterval(timer);
-  }, []);
+  const messages = [
+    'SYSTEM: Portfolio console preview',
+    'MONITOR: Illustrative UI, not a live health check',
+    'CONTENT: Public portfolio content displayed',
+    'STATUS: No backend logs or metrics shown',
+  ];
 
   return (
     <div
@@ -58,11 +36,11 @@ export function AmbientTerminalClip() {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ width: '7px', height: '7px', backgroundColor: 'var(--accent)', display: 'inline-block' }} />
-          <span>ENGINE_RUNTIME // 2026.07</span>
+          <span>PORTFOLIO_STATUS // UI PREVIEW</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--muted-foreground)' }}>
           <span style={{ color: '#10B981' }}>● LIVE</span>
-          <span>SLIIT_NODE_01</span>
+          <span>PORTFOLIO_NODE_01</span>
         </div>
       </div>
 
@@ -81,11 +59,11 @@ export function AmbientTerminalClip() {
           justifyContent: 'flex-end',
         }}
       >
-        {logs.map((log, i) => (
-          <div key={i} style={{ display: 'flex', gap: '0.5rem', opacity: 0.6 + i * 0.1 }}>
+        {messages.map((message, i) => (
+          <div key={message} style={{ display: 'flex', gap: '0.5rem', opacity: 0.6 + i * 0.1 }}>
             <span style={{ color: 'var(--accent)' }}>&gt;</span>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {log}
+              {message}
             </span>
           </div>
         ))}
@@ -110,13 +88,13 @@ export function AmbientTerminalClip() {
         }}
       >
         <div style={{ padding: '0.45rem', borderRight: '1px solid var(--line)' }}>
-          LATENCY: <span style={{ color: 'var(--foreground)', fontWeight: 600 }}>12ms</span>
+          FEED: <span style={{ color: 'var(--foreground)', fontWeight: 600 }}>DECORATIVE</span>
         </div>
         <div style={{ padding: '0.45rem', borderRight: '1px solid var(--line)' }}>
-          STORE: <span style={{ color: 'var(--foreground)', fontWeight: 600 }}>GRIDFS</span>
+          DATA: <span style={{ color: 'var(--foreground)', fontWeight: 600 }}>PUBLIC</span>
         </div>
         <div style={{ padding: '0.45rem' }}>
-          STACK: <span style={{ color: 'var(--accent)', fontWeight: 600 }}>NEXT 14</span>
+          MODE: <span style={{ color: 'var(--accent)', fontWeight: 600 }}>UI PREVIEW</span>
         </div>
       </div>
     </div>

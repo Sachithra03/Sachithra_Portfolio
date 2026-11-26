@@ -10,7 +10,7 @@ export async function GET() {
     const profile = await Profile.findOne();
     return NextResponse.json({ success: true, profile });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch profile';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch profile:', error);
+    return NextResponse.json({ error: 'Failed to load profile' }, { status: 500 });
   }
 }

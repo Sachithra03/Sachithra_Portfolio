@@ -10,7 +10,7 @@ export async function GET() {
     const educations = await Education.find().sort({ order: 1, startDate: -1 });
     return NextResponse.json({ success: true, educations });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch education';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch education:', error);
+    return NextResponse.json({ error: 'Failed to load education' }, { status: 500 });
   }
 }

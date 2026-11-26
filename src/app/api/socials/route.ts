@@ -10,7 +10,7 @@ export async function GET() {
     const socials = await SocialLink.find({ isPublic: true }).sort({ order: 1 });
     return NextResponse.json({ success: true, socials });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch social links';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch social links:', error);
+    return NextResponse.json({ error: 'Failed to load social links' }, { status: 500 });
   }
 }

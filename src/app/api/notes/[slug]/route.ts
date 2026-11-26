@@ -19,7 +19,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, note });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch note';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch note:', error);
+    return NextResponse.json({ error: 'Failed to load note' }, { status: 500 });
   }
 }

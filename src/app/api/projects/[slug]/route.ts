@@ -19,7 +19,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, project });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch project detail';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch project:', error);
+    return NextResponse.json({ error: 'Failed to load project' }, { status: 500 });
   }
 }

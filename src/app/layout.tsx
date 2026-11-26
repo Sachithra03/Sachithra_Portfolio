@@ -4,18 +4,19 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://sachithra.dev'),
   title: {
-    default: 'Sachithra Indrachapa / Full-Stack Software Engineer & DevOps',
+    default: 'Sachithra Indrachapa / Software Engineer & Full-Stack Developer',
     template: '%s | Sachithra Indrachapa',
   },
   description:
-    'Sachithra Indrachapa — Full-Stack Software Engineer & DevOps undergraduate at SLIIT, based in Colombo, Sri Lanka. Building high-performance distributed systems, Next.js applications, and MongoDB GridFS streaming platforms.',
+    'Sachithra Indrachapa is a Software Engineering undergraduate focused on full-stack web and mobile app development with Next.js, Node.js, and React Native.',
   keywords: [
     'Sachithra Indrachapa',
     'Full-Stack Developer',
     'Software Engineer',
-    'Next.js 14',
-    'MongoDB Atlas GridFS',
-    'DevOps',
+    'Mobile App Developer',
+    'Software Engineering',
+    'React Native',
+    'Next.js',
     'SLIIT',
     'Colombo Sri Lanka',
   ],
@@ -26,13 +27,13 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://sachithra.dev',
     title: 'Sachithra Indrachapa / Full-Stack Software Engineer',
-    description: 'Building high-performance web & mobile systems with Next.js & MongoDB GridFS.',
+    description: 'Software Engineering undergraduate focused on full-stack web and mobile app development.',
     siteName: 'Sachithra Indrachapa',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Sachithra Indrachapa / Software Engineer',
-    description: 'Modern Brutalist Portfolio powered by Next.js and MongoDB GridFS.',
+    description: 'Software Engineering undergraduate focused on full-stack web and mobile app development.',
   },
   robots: {
     index: true,

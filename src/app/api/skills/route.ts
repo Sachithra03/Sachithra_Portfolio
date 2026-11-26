@@ -10,7 +10,7 @@ export async function GET() {
     const skills = await Skill.find().sort({ category: 1, order: 1 });
     return NextResponse.json({ success: true, skills });
   } catch (error: unknown) {
-    const errorMsg = error instanceof Error ? error.message : 'Failed to fetch skills';
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    console.error('[Public API] Failed to fetch skills:', error);
+    return NextResponse.json({ error: 'Failed to load skills' }, { status: 500 });
   }
 }
